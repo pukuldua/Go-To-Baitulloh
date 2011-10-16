@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "registration";
+$route['default_controller'] = "Check_availability";
 $route['404_override'] = '';
 
 
