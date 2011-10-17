@@ -9,7 +9,7 @@ class Log_model extends CI_Model {
 	
 	function log($id_acc = NULL, $kode_reg, $id_user2 = NULL, $log)
 	{
-		$datestring = "%Y-%m-%d %h:%i:%s";
+		$datestring = "Y-m-d h:i:s";
 		$time = time();
 		$ip_addr = $this->input->ip_address();
 		
