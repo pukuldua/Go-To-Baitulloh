@@ -224,9 +224,9 @@
 				<!--  start nav -->
 				<div class="nav">
 					<div class="table">
-						<ul class="current"><li><a href="#nogo"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="current"><li><a href="<?php echo site_url('check_availability')?>"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="select"><li><a href="#nogo"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="select"><li><a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 						<? if($this->session->userdata('email') == 1){ ?>
 						<ul class="select"><li><a href="#nogo"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
