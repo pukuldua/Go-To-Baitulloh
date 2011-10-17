@@ -202,9 +202,9 @@
 				<!-- start nav-right -->
 				<div id="nav-right">
 					<div class="nav-divider">&nbsp;</div>
-					<div class="showhide-account"><img src="images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+					<div class="showhide-account"><img src="<?=base_url()?>images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 					<div class="nav-divider">&nbsp;</div>
-					<a href="" id="logout"><img src="images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+					<a href="" id="logout"><img src="<?=base_url()?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
 					<div class="clear">&nbsp;</div>
 				
 					<!--  start account-content -->	
@@ -224,11 +224,11 @@
 				<!--  start nav -->
 				<div class="nav">
 					<div class="table">
-						<ul class="current"><li><a href="#nogo"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="current"><li><a href="<?=site_url()?>/registration"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="select"><li><a href="#nogo"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="select"><li><a href="<?=site_url()?>/login"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						<? if($this->session->userdata('email') == 1){ ?>
+						<? if($this->session->userdata('email') != NULL){ ?>
 						<ul class="select"><li><a href="#nogo"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>		
 						
@@ -280,11 +280,11 @@
 
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 					<tr>
-						<th rowspan="3" class="sized"><img src="images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+						<th rowspan="3" class="sized"><img src="<?=base_url()?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
 						<th class="topleft"></th>
 						<td id="tbl-border-top">&nbsp;</td>
 						<th class="topright"></th>
-						<th rowspan="3" class="sized"><img src="images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+						<th rowspan="3" class="sized"><img src="<?=base_url()?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
 					</tr>
 					
 					<tr>
