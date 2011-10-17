@@ -14,7 +14,6 @@ class Accounts_model extends CI_Model {
 		
 		return $this->db->get();
 	}
-<<<<<<< HEAD
 	
 	function insert_new_account($data){
 		$this->db->trans_begin();
@@ -26,8 +25,5 @@ class Accounts_model extends CI_Model {
 			$this->db->trans_commit();
 	}
 }
-=======
-}
 
 ?>
->>>>>>> ad618296b6aa16b4caa9e5a98759616d81707d5d

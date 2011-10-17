@@ -39,8 +39,8 @@ class Registration extends CI_Controller {
 			
 			$data = $this->load_data_form();
 			$this->accounts_model->insert_new_account($data);
-
-			$this->log_model->log('REGISTER new account, EMAIL = '.$data['EMAIL'].', KODE_REGISTRASI = '.$data['KODE_REGISTRASI']);
+						
+			$this->log_model->log($data['KODE_REGISTRASI'], 'REGISTER new account, EMAIL = '.$data['EMAIL'].', KODE_REGISTRASI = '.$data['KODE_REGISTRASI']);
 
 			//set session notifikasi
 			//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
@@ -64,7 +64,7 @@ class Registration extends CI_Controller {
 
 		$data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
 								'EMAIL' => $email, 'PASSWORD' =>$pwd, 'NO_ID_CARD' => $id_card, 'TELP' => $telp, 
-								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-j-d"), 'STATUS' => 0);
+								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-m-d"), 'STATUS' => 0);
 		
 		return $data_field;
     }
