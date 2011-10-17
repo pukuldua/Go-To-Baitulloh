@@ -7,18 +7,18 @@
 		<!-- ICON -->
 		<link rel="icon" type="image/x-icon" href="<?php base_url() ?>images/favicon.ico" />
 		
-		<link rel="stylesheet" href="<?php base_url();?>css/screen.css" type="text/css" media="screen" title="default" />
+		<link rel="stylesheet" href="<?php echo base_url();?>css/screen.css" type="text/css" media="screen" title="default" />
 		<!--[if IE]>
 		<link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
 		<![endif]-->
 
 		<!--  jquery core -->
-		<script src="<?php base_url();?>js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
 		 
 		<!--  checkbox styling script -->
-		<script src="<?php base_url();?>js/jquery/ui.core.js" type="text/javascript"></script>
-		<script src="<?php base_url();?>js/jquery/ui.checkbox.js" type="text/javascript"></script>
-		<script src="<?php base_url();?>js/jquery/jquery.bind.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/ui.core.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/ui.checkbox.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.bind.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('input').checkBox();
@@ -33,7 +33,7 @@
 		<![if !IE 7]>
 
 		<!--  styled select box script version 1 -->
-		<script src="<?php base_url();?>js/jquery/jquery.selectbox-0.5.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.selectbox-0.5.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
 			$('.styledselect').selectbox({ inputClass: "selectbox_styled" });
@@ -43,7 +43,7 @@
 		<![endif]>
 
 		<!--  styled select box script version 2 --> 
-		<script src="<?php base_url();?>js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
 			$('.styledselect_form_1').selectbox({ inputClass: "styledselect_form_1" });
@@ -52,7 +52,7 @@
 		</script>
 
 		<!--  styled select box script version 3 --> 
-		<script src="<?php base_url();?>js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
 			$('.styledselect_pages').selectbox({ inputClass: "styledselect_pages" });
@@ -60,7 +60,7 @@
 		</script>
 
 		<!--  styled file upload script --> 
-		<script src="<?php base_url();?>js/jquery/jquery.filestyle.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.filestyle.js" type="text/javascript"></script>
 		<script type="text/javascript" charset="utf-8">
 		$(function() {
 			$("input.file_1").filestyle({ 
@@ -73,11 +73,11 @@
 		</script>
 
 		<!-- Custom jquery scripts -->
-		<script src="<?php base_url();?>js/jquery/custom_jquery.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/custom_jquery.js" type="text/javascript"></script>
 		 
 		<!-- Tooltips -->
-		<script src="<?php base_url();?>js/jquery/jquery.tooltip.js" type="text/javascript"></script>
-		<script src="<?php base_url();?>js/jquery/jquery.dimensions.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.tooltip.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.dimensions.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function() {
 			$('a.info-tooltip ').tooltip({
@@ -93,9 +93,9 @@
 		</script> 
 
 		<!--  date picker script -->
-		<link rel="stylesheet" href="<?php base_url();?>css/datePicker.css" type="text/css" />
-		<script src="<?php base_url();?>js/jquery/date.js" type="text/javascript"></script>
-		<script src="<?php base_url();?>js/jquery/jquery.datePicker.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="<?php echo base_url();?>css/datePicker.css" type="text/css" />
+		<script src="<?php echo base_url();?>js/jquery/date.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.datePicker.js" type="text/javascript"></script>
 		<script type="text/javascript" charset="utf-8">
 			$(function()
 			{
@@ -165,7 +165,7 @@
 		</script>
 
 		<!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-		<script src="<?php base_url();?>js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
+		<script src="<?php echo base_url();?>js/jquery/jquery.pngFix.pack.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 			$(document).pngFix( );
@@ -182,7 +182,7 @@
 
 				<!-- start logo -->
 				<div id="logo">
-					<a href=""><img src="<?php base_url();?>images/shared/logo.png" width="320" height="73" alt="" /></a>
+					<a href=""><img src="<?php echo base_url();?>images/shared/logo.png" width="320" height="73" alt="" /></a>
 				</div>
 				<!-- end logo -->
 
