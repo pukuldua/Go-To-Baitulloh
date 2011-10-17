@@ -198,6 +198,7 @@
 		<div class="nav-outer-repeat"> 
 			<!--  start nav-outer -->
 			<div class="nav-outer"> 
+				<? if($this->session->userdata('email') == 1){ ?>
 				<!-- start nav-right -->
 				<div id="nav-right">
 					<div class="nav-divider">&nbsp;</div>
@@ -218,13 +219,16 @@
 					<!--  end account-content -->
 				</div>
 				<!-- end nav-right -->
-				
+				<? }?>
+								
 				<!--  start nav -->
 				<div class="nav">
 					<div class="table">
 						<ul class="current"><li><a href="#nogo"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						
+						<ul class="select"><li><a href="#nogo"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<div class="nav-divider">&nbsp;</div>
+						<? if($this->session->userdata('email') == 1){ ?>
 						<ul class="select"><li><a href="#nogo"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>		
 						
@@ -253,7 +257,7 @@
 						
 						<ul class="select"><li><a href="#nogo"><b>Rooming</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						
+						<? }?>
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>

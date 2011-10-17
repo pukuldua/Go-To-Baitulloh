@@ -13,7 +13,16 @@ class Registration extends CI_Controller {
 	}
 	
 	function front(){
-		$data['content'] = $this->load->view('form',null,true);
+		$this->load->model('province_model');
+		$province = $this->province_model->get_all_province();
+
+		$province_options['0'] = '-- Pilih Propinsi --';
+		foreach($province->result() as $row){
+				$province_options[$row->ID_PROPINSI] = $row->NAMA_PROPINSI;
+		}
+			
+		$data['province_options'] = $province_options;
+		$data['content'] = $this->load->view('form_registration',$data,true);
 		$this->load->view('front',$data);
 	}
 }
