@@ -14,48 +14,36 @@ class Check_availability extends CI_Controller {
 	}
 	
 	function front(){
-		$data['content'] = $this->load->view('form_check_availability',null,true);
+		$this->load->model('group_departure_model');
+		$this->load->model('program_class_model');
+		
+		$group = $this->group_departure_model->get_all_group();
+		$program = $this->program_class_model->get_all_program();
+
+		$group_options['0'] = '-- Pilih Group --';
+		foreach($group->result() as $row){
+				$group_options[$row->ID_GROUP] = $row->KODE_GROUP;
+		}
+		
+		$program_options['0'] = '-- Pilih Program --';
+		foreach($program->result() as $row){
+				$program_options[$row->ID_PROGRAM] = $row->NAMA_PROGRAM;
+		}
+			
+		$data['group_options'] = $group_options;
+		$data['program_options'] = $program_options;
+		$data['content'] = $this->load->view('form_check_availability',$data,true);
 		$this->load->view('front',$data);
 	}
 	
 	function do_check(){
 		if ($this->cek_validasi() == FALSE){
-			$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
-			$this->input($id_kajiUlang);
+			//$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
+			$this->front();
 		}
 		else{
 		}
 	}
-	
-	//load default data dari database untuk form
-    function load_data_from_db() {
-            $this->load->model('kaji_ulang_model','mKaji');
-            $this->load->model('pegawai_model', 'mPegawai');
-
-            $kondisi = array('STATUS'=>'1');
-
-            $kaji_ulang = $this->mKaji->get_kaji_ulang($id_kajiUlang);
-            $pegawai = $this->mPegawai->get_pegawai_where($kondisi);
-
-            $options_petugas['0'] = '-- Pilih Petugas --';
-            foreach($pegawai->result() as $row){
-                    $options_petugas[$row->ID_PEGAWAI] = $row->NAMA_PEGAWAI;
-            }
-
-            $options_keputusan = array('-- Pilih Keputusan --','Direkomendasi',
-                                        'Tidak Direkomendasikan');
-
-            $this->data_base['options_petugas'] = $options_petugas;
-            $this->data_base['options_keputusan'] = $options_keputusan;
-            $this->data_base['id_kaji_ulang'] = $id_kajiUlang;
-            $this->data_base['no_lab'] = $kaji_ulang->row()->NO_LAB;
-            $this->data_base['analis'] = $kaji_ulang->row()->PETUGAS_UJI_KADAR_AIR;
-            
-            $this->jenis_uji['uji_ka'] = $kaji_ulang->row()->UJI_KADAR_AIR;
-            $this->jenis_uji['uji_kg'] = $kaji_ulang->row()->UJI_KEMURNIAN_GENETIK;
-            $this->jenis_uji['uji_kf'] = $kaji_ulang->row()->UJI_KEMURNIAN_FISIK;
-            $this->jenis_uji['uji_dt'] = $kaji_ulang->row()->UJI_DAYA_TUMBUH;
-    }
 
     function load_data_form($id_kajiUlang) {
             $group = ($this->input->post('kadar_air1')=='' ? NULL : $this->input->post('kadar_air1'));
@@ -78,16 +66,17 @@ class Check_availability extends CI_Controller {
 		//setting rules
 		$config = array(
 				array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'kelas_program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>'required|numeric'),
 				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>'numeric'),
 				array('field'=>'no_bed','label'=>'Child No Bed', 'rules'=>'numeric'),
+				array('field'=>'infant','label'=>'Infant', 'rules'=>'numeric'),
 				array('field'=>'kamar','label'=>'Kamar', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'jml_kamar','label'=>'Jumlah', 'rules'=>'callback_cek_dropdown'),
 		);
 
 		$this->form_validation->set_rules($config);
-		$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
+		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
 
 		return $this->form_validation->run();
     }
@@ -95,7 +84,7 @@ class Check_availability extends CI_Controller {
     //cek pilihan sdh bener ap blm
     function cek_dropdown($value){
 		if($value==0){
-				$this->form_validation->set_message('cek_dropdown', 'Choose one option of %s');
+				$this->form_validation->set_message('cek_dropdown', 'Please choose one %s from the list !');
 				return FALSE;
 		}else
 				return TRUE;
