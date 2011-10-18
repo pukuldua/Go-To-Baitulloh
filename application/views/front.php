@@ -5,7 +5,7 @@
 		<title>Online Registration - Kamilah Wisata</title>
 		
 		<!-- ICON -->
-		<link rel="icon" type="image/x-icon" href="<?php base_url() ?>images/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>images/favicon.ico" />
 		
 		<link rel="stylesheet" href="<?php echo base_url();?>css/screen.css" type="text/css" media="screen" title="default" />
 		<!--[if IE]>
@@ -198,13 +198,13 @@
 		<div class="nav-outer-repeat"> 
 			<!--  start nav-outer -->
 			<div class="nav-outer"> 
-				<? if($this->session->userdata('email') == NULL){ ?>
+				<? if($this->session->userdata('email') != NULL){ ?>
 				<!-- start nav-right -->
 				<div id="nav-right">
 					<div class="nav-divider">&nbsp;</div>
 					<div class="showhide-account"><img src="<?php echo base_url();?>images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 					<div class="nav-divider">&nbsp;</div>
-					<a href="" id="logout"><img src="<?php echo base_url();?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+					<a href="logout" id="logout"><img src="<?php echo base_url();?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
 					<div class="clear">&nbsp;</div>
 				
 					<!--  start account-content -->	
@@ -224,9 +224,10 @@
 				<!--  start nav -->
 				<div class="nav">
 					<div class="table">
+                    	<? if($this->session->userdata('email') == NULL) { ?>
 						<ul class="current"><li><a href="<?php echo site_url('check_availability')?>"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="select"><li><a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="select"><li><a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul><? } ?>
 						<div class="nav-divider">&nbsp;</div>
 						<? if($this->session->userdata('email') != NULL){ ?>
 						<ul class="select"><li><a href="#nogo"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
@@ -275,9 +276,12 @@
 		<div id="content-outer">
 			<!-- start content -->
 			<div id="content">
-
+				<? if($this->session->userdata('email') == NULL) {
+				?>
 				<div id="page-heading"><h1>:: Registration Process ::</h1></div>
-
+				<? } else { ?>
+				<div id="page-heading"><h1><i>Assalamualaikum, <strong><? echo ucwords($this->session->userdata('nama')); ?></strong></i></h1></div>
+                <? } ?>
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 					<tr>
 						<th rowspan="3" class="sized"><img src="<?php echo base_url();?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
