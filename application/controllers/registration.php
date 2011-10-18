@@ -48,6 +48,11 @@ class Registration extends CI_Controller {
 		}
     }
 	
+	function show_notification(){
+		$data['content'] = $this->load->view('notification',null,true);
+		$this->load->view('front',$data);
+	}
+	
 	function load_data_form() {
 		$nama = $this->input->post('nama');
 		$email = $this->input->post('email');
