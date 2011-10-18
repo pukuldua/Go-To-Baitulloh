@@ -40,7 +40,7 @@ class Registration extends CI_Controller {
 			$data = $this->load_data_form();
 			$this->accounts_model->insert_new_account($data);
 						
-			$this->log_model->log($data['KODE_REGISTRASI'], 'REGISTER new account, EMAIL = '.$data['EMAIL'].', KODE_REGISTRASI = '.$data['KODE_REGISTRASI']);
+			$this->log_model->log(null, $data['KODE_REGISTRASI'], null, 'REGISTER new account, EMAIL = '.$data['EMAIL'].', KODE_REGISTRASI = '.$data['KODE_REGISTRASI']);
 
 			//set session notifikasi
 			//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
@@ -59,7 +59,7 @@ class Registration extends CI_Controller {
 		$id_card = $this->input->post('id_card');
 		$kode = $this->input->post('recaptcha_challenge_field');
 		
-		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 5);
+		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
 		$pwd = substr(md5('password-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
 
 		$data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 

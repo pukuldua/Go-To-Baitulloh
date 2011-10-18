@@ -1,3 +1,4 @@
+<?php echo form_open('check_availability/do_check'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
@@ -23,47 +24,73 @@
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<th valign="top">Group:</th>
-					<td>
-						<select  class="styledselect_form_1">
-							<option value="">All</option>
-							<option value="">Products</option>
-							<option value="">Categories</option>
-							<option value="">Clients</option>
-							<option value="">News</option>
-						</select>
+					<td>	
+						<? $group = 0; if(set_value('group')!='') $group = set_value('group');
+							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect_form_1"'); ?>
 					</td>
-					<td></td>
+					<td>
+						<? if(form_error('group') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('group'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
 					<th valign="top">Kelas Program:</th>
-					<td>
-						<select  class="styledselect_form_1">
-							<option value="">All</option>
-							<option value="">Products</option>
-							<option value="">Categories</option>
-							<option value="">Clients</option>
-							<option value="">News</option>
-						</select>
+					<td>	
+						<? $program = 0; if(set_value('program')!='') $program = set_value('program');
+							echo form_dropdown('program', $program_options, $program,'id="program" class="styledselect_form_1"'); ?>
 					</td>
 					<td>
+						<? if(form_error('program') != '') {?>
 						<div class="error-left"></div>
-						<div class="error-inner"></div>
+						<div class="error-inner"><?php echo form_error('program'); ?></div>
+						<? }?>
 					</td>
 				</tr>
 				<tr>
+					<? form_error('jml_adult') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Jumlah Adult:</th>
-					<td><input type="text" class="inp-form" /></td>
-					<td></td>
+					<td><input type="text" name="jml_adult" value="<?php echo set_value('jml_adult');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('jml_adult') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('jml_adult'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
-					<th valign="top">Child With Bed:</th>
-					<td><input type="text" class="inp-form-error" /></td>
-					<td></td>
+					<? form_error('with_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th valign="top">Child With Bed (*):</th>
+					<td><input type="text" name="with_bed" value="<?php echo set_value('with_bed');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('with_bed') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('with_bed'); ?></div>
+						<? }?>
+					</td>
 				</tr> 
 				<tr>
+					<? form_error('no_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Child No Bed:</th>
-					<td><input type="text" class="inp-form" /></td>
-					<td></td>
+					<td><input type="text" name="no_bed" value="<?php echo set_value('no_bed');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('no_bed') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('no_bed'); ?></div>
+						<? }?>
+					</td>
+				</tr>
+				<tr>
+					<? form_error('infant') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th valign="top">Infant:</th>
+					<td><input type="text" name="infant" value="<?php echo set_value('infant');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('infant') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('infant'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
 					<th valign="top">Kamar:</th>
@@ -125,7 +152,7 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td valign="top">
-						<input type="button" value="" class="form-submit" />
+						<input type="submit" value="" class="form-submit" />
 					</td>
 					<td></td>
 				</tr>
@@ -203,4 +230,4 @@
 </table>
 		 
 <div class="clear"></div>
-		 
+<? echo form_close(); ?>		 
