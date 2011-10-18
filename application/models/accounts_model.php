@@ -14,6 +14,16 @@ class Accounts_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+	
+	function insert_new_account($data){
+		$this->db->trans_begin();
+		$this->db->insert('accounts', $data);
+		
+		if ($this->db->trans_status() === FALSE)
+			$this->db->trans_rollback();
+		else
+			$this->db->trans_commit();
+	}
 }
 
 ?>
