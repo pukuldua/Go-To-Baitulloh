@@ -5,7 +5,7 @@
 		<title>Online Registration - Kamilah Wisata</title>
 		
 		<!-- ICON -->
-		<link rel="icon" type="image/x-icon" href="<?php base_url() ?>images/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>images/favicon.ico" />
 		
 		<link rel="stylesheet" href="<?php echo base_url();?>css/screen.css" type="text/css" media="screen" title="default" />
 		<!--[if IE]>
