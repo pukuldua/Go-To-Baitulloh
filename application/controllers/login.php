@@ -64,15 +64,18 @@ class Login extends CI_Controller {
 				redirect('beranda');
 			}
 			//apabila login tidak sesuai dengan email dan password maka user akan masuk halaman login
-			else{ 
-				redirect('login/form');
+			else{
+				$data['cek_form'] = 1;
+				$data['cek_error'] = "-error";
+				$data['content'] = $this->load->view('form_login', $data, true);
+				$this->load->view('front', $data);
 			}
 		
 		} 
 		else 
 		{
 		
-			$this->form();
+			$this->form(1);
 		
 		} // end foreach		
 		
@@ -80,9 +83,18 @@ class Login extends CI_Controller {
 	
 	
 	
-	function form()
+	function form($cek_form = NULL)
 	{
-		$data['content'] = $this->load->view('form_login', '', true);
+		if($cek_form == NULL) 
+		{
+			$data['cek_error'] = NULL;
+			
+		}else{
+			
+			$data['cek_error'] = "-error";
+		}
+		
+		$data['content'] = $this->load->view('form_login',$data, true);
 		$this->load->view('front', $data);
 	}
 	

@@ -811,6 +811,16 @@ font-family: Tahoma;
 	background: url(../images/forms/error_left.gif) no-repeat;
 }
 
+.error-left-both {
+	float:left;
+	width:9px;
+	height:32px;
+	margin-left: 0px;
+	margin-bottom:10px;
+	background: url(../images/forms/error_left.gif) no-repeat center;
+}
+
+
 .error-inner {
 	float:left;
 	padding: 7px 10px 0 4px;
