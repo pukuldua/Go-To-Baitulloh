@@ -24,6 +24,15 @@ class Accounts_model extends CI_Model {
 		else
 			$this->db->trans_commit();
 	}
+	
+	function cek_forgot($email)
+	{
+		$this->db->select('KODE_REGISTRASI, NAMA_USER, EMAIL, PASSWORD');
+		$this->db->from('accounts');
+		$this->db->where('EMAIL', $email);
+		
+		return $this->db->get();
+	}
 }
 
 ?>
