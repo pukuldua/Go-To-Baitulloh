@@ -25,7 +25,7 @@
 				<tr>
 					<? form_error('nama') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Nama (*):</th>
-					<td><input type="text" name="nama" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="nama" value="<?php echo set_value('nama');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nama') != '') {?>
 						<div class="error-left"></div>
@@ -47,7 +47,7 @@
 				<tr>
 					<? form_error('telp') == '' || form_error('mobile') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Telp / Mobile (*):</th>
-					<td><input type="text" name="telp" class="<? echo $class;?>" /> &nbsp; / &nbsp;<input type="text" name="mobile" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="telp" value="<?php echo set_value('telp');?>" class="<? echo $class;?>" /> &nbsp; / &nbsp;<input type="text" name="mobile" value="<?php echo set_value('mobile');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('telp') != '' || form_error('mobile') != '') {?>
 						<div class="error-left"></div>
@@ -71,7 +71,7 @@
 				<tr>
 					<? form_error('kota') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Kota (*):</th>
-					<td><input type="text" name="kota" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="kota" value="<?php echo set_value('kota');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('kota') != '') {?>
 						<div class="error-left"></div>
@@ -82,7 +82,7 @@
 				<tr>
 					<? form_error('alamat') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Alamat (*):</th>
-					<td><input type="text" name="alamat" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="alamat" value="<?php echo set_value('alamat');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('alamat') != '') {?>
 						<div class="error-left"></div>
@@ -93,7 +93,7 @@
 				<tr>
 					<? form_error('id_card') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">No ID Card (i.e. KTP *):</th>
-					<td><input type="text" name="id_card" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="id_card" value="<?php echo set_value('id_card');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('id_card') != '') {?>
 						<div class="error-left"></div>
@@ -131,69 +131,6 @@
 				</tr>
 			</table>
 			<!-- end id-form  -->
-		</td>
-		
-		<td>
-			<!--  start related-activities -->
-			<div id="related-activities">
-				
-				<!--  start related-act-top -->
-				<div id="related-act-top">
-					<img src="<?php echo base_url();?>images/forms/header_related_act.gif" width="271" height="43" alt="" />
-				</div>
-				<!-- end related-act-top -->
-					
-				<!--  start related-act-bottom -->
-				<div id="related-act-bottom">
-					<!--  start related-act-inner -->
-					<div id="related-act-inner">
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Add another product</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_minus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Delete products</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Edit categories</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							<div class="clear"></div>						
-					</div>
-					<!-- end related-act-inner -->
-						
-					<div class="clear"></div>			
-				</div>
-				<!-- end related-act-bottom -->
-			</div>
-			<!-- end related-activities -->
 		</td>
 	</tr>
 	<tr>

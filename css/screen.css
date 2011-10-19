@@ -680,6 +680,12 @@ a:hover.action-delete	{
 	width: 64px;
 	}
 	
+	.styledselect-kamar	{
+	border: 1px solid #acacac;
+	margin-right: 3px;
+	padding: 3px;
+	width: 160px;
+	}
 	
 #step-holder {
 font-family: Tahoma;
@@ -813,6 +819,7 @@ font-family: Tahoma;
 	margin-bottom:10px;
 	background: url(../images/forms/error_left.gif) no-repeat center;
 }
+
 
 .error-inner {
 	float:left;

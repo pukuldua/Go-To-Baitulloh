@@ -1,3 +1,4 @@
+<?php echo form_open('check_availability/do_check'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
@@ -23,109 +24,115 @@
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<th valign="top">Group:</th>
-					<td>
-						<select  class="styledselect_form_1">
-							<option value="">All</option>
-							<option value="">Products</option>
-							<option value="">Categories</option>
-							<option value="">Clients</option>
-							<option value="">News</option>
-						</select>
+					<td>	
+						<? $group = 0; if(set_value('group')!='') $group = set_value('group');
+							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect_form_1"'); ?>
 					</td>
-					<td></td>
+					<td>
+						<? if(form_error('group') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('group'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
 					<th valign="top">Kelas Program:</th>
-					<td>
-						<select  class="styledselect_form_1">
-							<option value="">All</option>
-							<option value="">Products</option>
-							<option value="">Categories</option>
-							<option value="">Clients</option>
-							<option value="">News</option>
-						</select>
+					<td>	
+						<? $program = 0; if(set_value('program')!='') $program = set_value('program');
+							echo form_dropdown('program', $program_options, $program,'id="program" class="styledselect_form_1"'); ?>
 					</td>
 					<td>
+						<? if(form_error('program') != '') {?>
 						<div class="error-left"></div>
-						<div class="error-inner"></div>
+						<div class="error-inner"><?php echo form_error('program'); ?></div>
+						<? }?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top">Jumlah Adult:</th>
-					<td><input type="text" class="inp-form" /></td>
-					<td></td>
+					<? form_error('jml_adult') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th valign="top">Jumlah Adult (*):</th>
+					<td><input type="text" name="jml_adult" value="<?php echo set_value('jml_adult');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('jml_adult') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('jml_adult'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
+					<? form_error('with_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Child With Bed:</th>
-					<td><input type="text" class="inp-form-error" /></td>
-					<td></td>
+					<td><input type="text" name="with_bed" value="<?php echo set_value('with_bed');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('with_bed') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('with_bed'); ?></div>
+						<? }?>
+					</td>
 				</tr> 
 				<tr>
+					<? form_error('no_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Child No Bed:</th>
-					<td><input type="text" class="inp-form" /></td>
-					<td></td>
+					<td><input type="text" name="no_bed" value="<?php echo set_value('no_bed');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('no_bed') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('no_bed'); ?></div>
+						<? }?>
+					</td>
+				</tr>
+				<tr>
+					<? form_error('infant') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th valign="top">Infant:</th>
+					<td><input type="text" name="infant" value="<?php echo set_value('infant');?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('infant') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('infant'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
 					<th valign="top">Kamar:</th>
 					<td class="noheight">
-						<table border="0" cellpadding="0" cellspacing="0">
-							<tr  valign="top">
-								<td>
-									<form id="chooseDateForm" action="#">									
-										<select id="d" class="styledselect-day">
-											<option value="">dd</option>
+						<div id="dvFile">
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tr valign="middle">
+									<td>
+									<? $kamar = 0; if(set_value('kamar')!='') $kamar = set_value('kamar');
+										//echo form_dropdown('kamar', $room_options, $kamar,'id="kamar" class="styledselect_form_1"'); ?>
+										<select name="kamar[]" id="kamar" class="styledselect-kamar">
+											<?php foreach ($room_options as $key=>$value){ ?>
+												<option value="<?=$value?>"><?=$value?></option>
+											<? } ?>
+										</select>
+										<div id="dvFile2"></div>
+									</td>
+									<td>
+										&nbsp; Jumlah :
+										<select name="jml_kamar[]" id="jml_kamar" class="styledselect-day">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-											<option value="21">21</option>
-											<option value="22">22</option>
-											<option value="23">23</option>
-											<option value="24">24</option>
-											<option value="25">25</option>
-											<option value="26">26</option>
-											<option value="27">27</option>
-											<option value="28">28</option>
-											<option value="29">29</option>
-											<option value="30">30</option>
-											<option value="31">31</option>
-										</select>
-								</td>
-								<td>&nbsp;</td>
-								<td>
-									Jumlah :
-									<select id="m" class="styledselect-day">
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>&nbsp;
-								</td>
-								<td><a href=""  id="date-pick"><img src="<?php echo base_url();?>images/forms/icon_plus.gif"   alt="" /></a></td>
-							</tr>
-						</table>									
+										</select>&nbsp;										
+										<a href="javascript:_add_more();" id="add-more"><img src="<?php echo base_url();?>images/forms/icon_plus.gif" alt="" /></a>										
+										<div id="dvFile3"></div>
+									</td>
+								</tr>
+							</table>
+						</div>
 					</td>
-					<td></td>
-				</tr>				
+					<td>
+						<? if(form_error('kamar') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('kamar'); ?></div>
+						<? }?>
+					</td>
+				</tr>
 				<tr>
 					<th>&nbsp;</th>
 					<td valign="top">
-						<input type="button" value="" class="form-submit" />
+						<input type="submit" value="" class="form-submit" />
 					</td>
 					<td></td>
 				</tr>
@@ -203,4 +210,53 @@
 </table>
 		 
 <div class="clear"></div>
-		 
+<? echo form_close(); ?>		 
+
+<script>
+	function _add_more() {
+		var index = document.getElementsByName('kamar[]');
+		var txt = "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr valign=\"middle\"><td><select name=\"kamar[]\" id=\"kamar"+index.length+
+					"\" class=\"styledselect-kamar\"><option value=\"0\">-- Pilih Jenis Kamar --</option></select></td>"+
+					"<td>&nbsp; Jumlah :&nbsp;<select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+
+					"<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option></select></td></tr></table>";
+		
+		var txt2 = "<select name=\"kamar[]\" id=\"kamar"+index.length+
+					"\" class=\"styledselect-kamar\"><option value=\"0\">-- Pilih Jenis Kamar --</option></select><br/>";
+					
+		var txt3 = "&nbsp; Jumlah :<select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+
+					"<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option></select><br/>";
+		document.getElementById("dvFile").innerHTML += txt;
+		//document.getElementById("dvFile2").innerHTML += txt2;
+		//document.getElementById("dvFile3").innerHTML += txt3;
+		
+		loadkamar();
+	}
+	
+	function loadkamar() {
+		var count = document.getElementsByName('kamar[]');
+	    $.ajax({
+	           url: "<?=base_url();?>index.php/check_availability/getKamar/",
+	           global: false,
+	           type: "POST",
+	           async: false,
+	           //dataType: "html",
+	           //data: "produsen="+produsen +"&no_serti="+noserti +"&varietas="+varietas +"&kls_benih="+kls_benih, //the name of the $_POST variable and its value
+	           success: function (response) //'response' is the output provided by the controller method prova()
+	                    {
+							//counts the number of dynamically generated options
+							var dynamic_options = $("*").index( $('.dynamic4')[0] );
+							//removes previously dynamically generated options if they exists (not equal to 0)
+							if ( dynamic_options != (-1)) $(".dynamic4").remove();
+								
+							for (i = 0; i < count.length; i++){
+								$("select#kamar"+i).append(response);
+							}
+							
+		                    $(".selected").attr({selected: ' selected'});
+	                   }
+	                   
+	          });
+	    
+	          return false;
+	}
+</script>
