@@ -33,6 +33,12 @@ class Accounts_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+	
+	function update_password($data,$email) 
+	{                
+		$this->db->where('EMAIL', $email);
+		$this->db->update('accounts' , $data);
+	}
 }
 
 ?>
