@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -394,19 +394,16 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Layanan Lupa Password</h4>
-                                                                <strong>Assalamualaikum, </strong> Sesuai dgn permintaan Saudara perihal layanan Lupa Password. kami mengirimkan rincian sebagai berikut :  
+                                                                <h4 class="h4">Layanan Reset Password</h4>
+<strong>Assalamualaikum, </strong>Kami telah menerima permintaan untuk mereset password anda. apabila anda tidak merasa melakukan ini tolong abaikan Email ini. klik link dibawah ini untuk mereset password anda.<br />
                                                                 <br />
+                                                               	 <center>
+                                                                   <strong>
+                                                               		 <h4>
+                                                                       <a href="<?=site_url()?>/forgot/reset/<?=$key_tgl?>_<?=$key_email?>">RESET PASSWORD</a></h4></strong></center>
                                                                 <br />
-                                                                <strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</strong> <?=$nama_user?><br />
-                                                                <strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</strong> <?=$email_user?><br />
-                                                                <strong>Password :</strong> <?=$password_user?> 
-                                                                <br />
-                                                                <br />
-                                                                
-                                                                Gunakan data diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="http://localhost/umrahkamilah/index.php/login">Login</a> 
- 
-                                                                .</div>
+                                                                Setelah anda mengklik link reset diatas, beberapa saat lagi kami akan mengirimkan password baru untuk anda. terima kasih<br />
+                                                            <strong>Wassalamualaikum Wr. Wb</strong></div>
 														</td>
                                                     </tr>
                                                 </table>
