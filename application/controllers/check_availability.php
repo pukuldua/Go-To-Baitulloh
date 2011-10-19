@@ -16,9 +16,11 @@ class Check_availability extends CI_Controller {
 	function front(){
 		$this->load->model('group_departure_model');
 		$this->load->model('program_class_model');
+		$this->load->model('room_type_model');
 		
 		$group = $this->group_departure_model->get_all_group();
 		$program = $this->program_class_model->get_all_program();
+		$room = $this->room_type_model->get_all_roomType();
 
 		$group_options['0'] = '-- Pilih Group --';
 		foreach($group->result() as $row){
@@ -29,9 +31,15 @@ class Check_availability extends CI_Controller {
 		foreach($program->result() as $row){
 				$program_options[$row->ID_PROGRAM] = $row->NAMA_PROGRAM;
 		}
+		
+		$room_options['0'] = '-- Pilih Jenis Kamar --';
+		foreach($room->result() as $row){
+				$room_options[$row->ID_ROOM_TYPE] = $row->JENIS_KAMAR;
+		}
 			
 		$data['group_options'] = $group_options;
 		$data['program_options'] = $program_options;
+		$data['room_options'] = $room_options;
 		$data['content'] = $this->load->view('form_check_availability',$data,true);
 		$this->load->view('front',$data);
 	}
@@ -89,6 +97,17 @@ class Check_availability extends CI_Controller {
 		}else
 				return TRUE;
     }
+	
+	function getKamar(){
+		$this->load->model('room_type_model');
+                
+		$options = '';
+		$room = $this->room_type_model->get_all_roomType();
+		foreach ($room->result() as $angkutan){
+			$options.= '<option value="'.$angkutan->ID_ROOM_TYPE.'" class="dynamic4">'.$angkutan->JENIS_KAMAR.'</option>';
+		}
+		echo $options;
+	}
 }
 
 /* End of file Check_availability.php */
