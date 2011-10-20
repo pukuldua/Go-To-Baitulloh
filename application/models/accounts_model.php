@@ -57,6 +57,12 @@ class Accounts_model extends CI_Model {
 		$this->db->where('EMAIL', $email);
 		$this->db->update('accounts' , $data);
 	}
+	
+	function update_account($data, $kode_reg) 
+	{                
+		$this->db->where('KODE_REGISTRASI', $kode_reg);
+		$this->db->update('accounts' , $data);
+	}
 }
 
 ?>

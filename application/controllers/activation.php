@@ -9,19 +9,43 @@ class Activation extends CI_Controller {
 	
 	function activate($keycode){
 		$this->load->model('accounts_model');
+		$this->load->model('log_model');
+		
 		$kode_reg = $this->decode($keycode);
 		$account = $this->accounts_model->get_account_byKode($kode_reg);
 		
 		if ($account->num_rows() < 1)
 			show_404();
 		else{			
-				echo 'sip';
+			if ($account->row()->STATUS == 0){
+				// update account status
+				$this->accounts_model->update_account(array('STATUS'=>1), $kode_reg);
+				
+				// redirect to login
+				$newdata = array(
+					'id_account'		=> $account->row()->ID_ACCOUNT,
+					'email' 			=> $account->row()->EMAIL,
+					'nama'				=> $account->row()->NAMA_USER,
+					'kode_registrasi' 	=> $account->row()->KODE_REGISTRASI
+				);	
+				
+				$this->session->set_userdata($newdata);
+				
+				$log = "LOGIN kedalam sistem";
+				$id_user = $this->session->userdata("id_account");
+				$kode_reg = $this->session->userdata("kode_registrasi");
+				
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
+				redirect('beranda');
+			}
+			else 
+				show_404();
 		}
 	}
 
 	function index($kode_reg)
 	{
-		
+		show_404();
 	}
 	
 	function decode($keycode){

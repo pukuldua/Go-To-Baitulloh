@@ -14,6 +14,7 @@ class Registration extends CI_Controller {
 	}
 	
 	function front(){
+		$waiting = $this->input->post('waiting');
 		$this->load->model('province_model');
 		$province = $this->province_model->get_all_province();
 
@@ -21,7 +22,8 @@ class Registration extends CI_Controller {
 		foreach($province->result() as $row){
 				$province_options[$row->ID_PROPINSI] = $row->NAMA_PROPINSI;
 		}
-			
+		
+		$data['waiting'] = $waiting;
 		$data['province_options'] = $province_options;
 		$data['content'] = $this->load->view('form_registration',$data,true);
 		$this->load->view('front',$data);
@@ -30,16 +32,14 @@ class Registration extends CI_Controller {
 	//insert data inputan ke database
     function do_register() {		
 		if ($this->check_validasi() == FALSE){
-				// //$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
-				$this->front();
-				//echo 'error ikki';
+			// //$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
+			$this->front();
 		}
 		else{
 			$this->load_data_form();
 			
 			if (empty($this->data_field))
-				//$this->front();
-				echo 'kosong neng kne lho';
+				$this->front();
 			else{
 				$this->load->model('accounts_model');
 				$this->load->model('log_model');
@@ -47,12 +47,21 @@ class Registration extends CI_Controller {
 				$this->accounts_model->insert_new_account($this->data_field);						
 				$this->log_model->log(null, $this->data_field['KODE_REGISTRASI'], null, 'REGISTER new account, EMAIL = '.$this->data_field['EMAIL'].', KODE_REGISTRASI = '.$this->data_field['KODE_REGISTRASI']);
 				
+				// if waiting list
+				if ($this->input->post('waiting') == 1){
+					$this->load->model('waiting_model');
+					
+					$id_acc = $this->accounts_model->get_account_byKode(data_field['KODE_REGISTRASI'])->row()->ID_ACCOUNT;
+					$data_waiting = array('KODE_REGISTRASI'=>$this->data_field['KODE_REGISTRASI'], 'ID_ACCOUNT'=>$id_acc);
+					
+					$this->waiting_model->insert_waiting_list($data_waiting);
+				}
+				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);
 				$this->send_email($keycode);
-				//$this->show_notification();
 				//set session notifikasi
 				//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
-				//redirect('notification/'.$this->data_field['KODE_REGISTRASI']);
+				redirect('notification/show'.$this->data_field['KODE_REGISTRASI']);
 			}
 		}
     }
@@ -89,7 +98,7 @@ class Registration extends CI_Controller {
 
 		$this->data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
 								'EMAIL' => $email, 'PASSWORD' =>$pwd, 'NO_ID_CARD' => $id_card, 'TELP' => $telp, 
-								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-m-d"), 'STATUS' => 0);
+								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-m-d h:i:s"), 'STATUS' => 0);
 		
 		//return $data_field;
     }

@@ -395,8 +395,8 @@
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h4 class="h4">Aktivasi Akun</h4>
-                                                              <p><strong>Assalamualaikum, </strong></p>
-                                                              <p>Berikut ini kami informasikan bahwa Anda telah berhasil melakukan registrasi pada Sistem Registrasi Online Umrah Kamilah dengan,<br />
+                                                              <p><strong>Assalamualaikum, </strong><strong><?php echo $NAMA_USER;?></strong></p>
+                                                              <p>Selamat datang pada Sistem Registrasi Online Umrah Kamilah. Berikut ini kami informasikan bahwa Anda telah berhasil melakukan registrasi pada  dengan,<br />
                                                                 <strong>Nama User: <?php echo $NAMA_USER;?><br />
                                                                 Kode Registrasi: <?php echo $PASSWORD;?><br />
                                                               Password: <?php echo $KODE_REGISTRASI;?></strong></p>
@@ -405,7 +405,7 @@
                                                               <center>
                                                                   <strong>
                                                		         <h4>
-                                                                       <a href="<? echo site_url();?>/activation/activate/<? echo $key; ?>">Activated Account</a></h4></strong></center>
+                                                                       <a href="<? echo site_url();?>/activation/activate/<? echo $key; ?>">Activate My Account</a></h4></strong></center>
                                                               <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
                                                                 <ul>
                                                                   <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
