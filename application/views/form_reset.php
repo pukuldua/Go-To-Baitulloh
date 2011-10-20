@@ -1,48 +1,10 @@
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
-			<?=form_open('/forgot/send');?>
-			<!-- start id-form -->
-			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-				<tr>
-                	<th valign="top"></th>
-					<td>
-                    	
-                    </td>
-					<td></td>
-				</tr>
-				<tr>
-					<th valign="top">E-mail</th>
-					<td><input type="text" name="email" id="email" class="inp-form<?=$cek_error?>" value="<? echo set_value('email') ?>" /></td>
-					<td>
-						<? echo form_error('email', '<div class="error-left"></div><div class="error-inner">', '</div>'); ?>
-                        
-                        <? if(isset($cek_form))
-							{								
-								echo '<div class="error-left"></div><div class="error-inner">
-										<strong>Email</strong> tidak ditemukan di Database
-									  </div>';
-							}
-						?>
-					</td>
-				</tr>
-				<tr>
-					<th>&nbsp;</th>
-					<td valign="top">
-						<input type="submit" value="Send" class="form-submit" />
-						<input type="reset" value="" class="form-reset"  />
-					</td>
-					<td></td>
-				</tr>
-				<tr>
-					<th>&nbsp;</th>
-					<td valign="top"><br /><ul class="greyarrow"><li><a href="<?=site_url() ?>/login" title="Form Login">Login</a></li></ul></td>
-					<td></td>
-				</tr>
-			</table>
-			<!-- end id-form  -->
-            <?=form_close()?>
-		</td>
+        
+        <?=$msg?>
+        
+        </td>
 		
 		<td>
 			<!--  start related-activities -->
