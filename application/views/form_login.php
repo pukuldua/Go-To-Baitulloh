@@ -18,14 +18,14 @@
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">E-mail :</th>
+					<th valign="top">E-mail</th>
 					<td><input type="text" name="email" id="email" class="inp-form<?=$cek_error?>" /></td>
 					<td>
 						<? echo form_error('email', '<div class="error-left"></div><div class="error-inner">', '</div>'); ?>
 					</td>
 				</tr>
 				<tr>
-					<th valign="top">Password :</th>
+					<th valign="top">Password </th>
 					<td><input type="password" name="password" id="password" class="inp-form<?=$cek_error?>" /></td>
 					<td>
 						<? echo form_error('password', '<div class="error-left"></div><div class="error-inner">', '</div>'); ?>

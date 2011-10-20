@@ -24,7 +24,7 @@
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<? form_error('nama') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Nama (*):</th>
+					<th valign="top">Nama (*)</th>
 					<td><input type="text" name="nama" value="<?php echo set_value('nama');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nama') != '') {?>
@@ -35,7 +35,7 @@
 				</tr>
 				<tr>
 					<? form_error('email') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">E-mail (*):</th>
+					<th valign="top">E-mail (*)</th>
 					<td><input type="text" name="email" class="<? echo $class;?>" value="<?php echo set_value('email'); ?>" /></td>
 					<td>
 						<? if(form_error('email') != '') {?>
@@ -46,7 +46,7 @@
 				</tr>
 				<tr>
 					<? form_error('telp') == '' || form_error('mobile') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Telp / Mobile (*):</th>
+					<th valign="top">Telp / Mobile (*)</th>
 					<td><input type="text" name="telp" value="<?php echo set_value('telp');?>" class="<? echo $class;?>" /> &nbsp; / &nbsp;<input type="text" name="mobile" value="<?php echo set_value('mobile');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('telp') != '' || form_error('mobile') != '') {?>
@@ -56,7 +56,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th valign="top">Propinsi (*):</th>
+					<th valign="top">Propinsi (*)</th>
 					<td>	
 						<? $province = 0; if(set_value('province')!='') $province = set_value('province');
 							echo form_dropdown('province', $province_options, $province,'id="province" class="styledselect_form_1"'); ?>
@@ -70,7 +70,7 @@
 				</tr>
 				<tr>
 					<? form_error('kota') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Kota (*):</th>
+					<th valign="top">Kota (*)</th>
 					<td><input type="text" name="kota" value="<?php echo set_value('kota');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('kota') != '') {?>
@@ -81,7 +81,7 @@
 				</tr>
 				<tr>
 					<? form_error('alamat') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Alamat (*):</th>
+					<th valign="top">Alamat (*)</th>
 					<td><input type="text" name="alamat" value="<?php echo set_value('alamat');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('alamat') != '') {?>
@@ -92,7 +92,7 @@
 				</tr>
 				<tr>
 					<? form_error('id_card') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">No ID Card (i.e. KTP *):</th>
+					<th valign="top">No ID Card (i.e. KTP *)</th>
 					<td><input type="text" name="id_card" value="<?php echo set_value('id_card');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('id_card') != '') {?>
@@ -102,13 +102,13 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Masukkan Kode (*):</th>
+					<th>Masukkan Kode (*)</th>
 					<td>
 						<script type="text/javascript"
-						   src="http://www.google.com/recaptcha/api/challenge?k=6LcdLMkSAAAAAAfa3Zx-jQ0sgWdyfVj2Bo_3njQ1">
+						   src="http://www.google.com/recaptcha/api/challenge?k=6LcqPskSAAAAAMj9vcsmOtZDhk0JrkPLCNjJ-FVw">
 						</script>
 						<noscript>
-						   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcdLMkSAAAAAAfa3Zx-jQ0sgWdyfVj2Bo_3njQ1"
+						   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcqPskSAAAAAMj9vcsmOtZDhk0JrkPLCNjJ-FVw"
 							   height="300" width="500" frameborder="0"></iframe><br>
 						   <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
 						   <input type="hidden" name="recaptcha_response_field" value="manual_challenge">

@@ -394,16 +394,43 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Layanan Reset Password</h4>
-<strong>Assalamualaikum, </strong>Kami telah menerima permintaan untuk mereset password anda. apabila anda tidak merasa melakukan ini tolong abaikan Email ini. klik link dibawah ini untuk mereset password anda.<br />
-                                                                <br />
-                                                               	 <center>
-                                                                   <strong>
-                                                               		 <h4>
-                                                                       <a href="<?=site_url()?>/forgot/reset/<?=$key_tgl?>_<?=$key_email?>">RESET PASSWORD</a></h4></strong></center>
-                                                                <br />
-                                                                Setelah anda mengklik link reset diatas, beberapa saat lagi kami akan mengirimkan password baru untuk anda. terima kasih<br />
-                                                            <strong>Wassalamualaikum Wr. Wb</strong></div>
+                                                                <h4 class="h4">Aktivasi Akun</h4>
+                                                              <p><strong>Assalamualaikum, </strong></p>
+                                                              <p>Berikut ini kami informasikan bahwa Anda telah berhasil melakukan registrasi pada Sistem Registrasi Online Umrah Kamilah dengan,<br />
+                                                                <strong>Nama User: <?php echo $NAMA_USER;?><br />
+                                                                Kode Registrasi: <?php echo $PASSWORD;?><br />
+                                                              Password: <?php echo $KODE_REGISTRASI;?></strong></p>
+                                                              <p>Untuk bisa menggunakan sistem kami, terlebih dulu aktifkan akun Anda dengan cara klik link di bawah ini.<br />
+                                                              </p>
+                                                              <center>
+                                                                  <strong>
+                                               		         <h4>
+                                                                       <a href="<? echo site_url();?>/activation/activate/<? echo $key; ?>">Activated Account</a></h4></strong></center>
+                                                              <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
+                                                                <ul>
+                                                                  <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
+                                                                    <strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
+                                                                    PT KAMILAH WISATA MUSLIM<br />
+                                                                    USDollar : 101-000-644-5454<br />
+                                                                    IDRupiah : 101-000-644-5421</strong></li>
+                                                                  <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju link berikut ini: http://umrahkamilah.com/1234/payment yang ada pada halaman dashboard akun anda.</li>
+                                                                  <li>Isi Form untuk konfirmasi pembayaran Uang Muka maupun Pelunasan.</li>
+                                                                </ul>
+                                                              <p><strong>Pembatalan :</strong></p>
+                                                              <ul>
+                                                                <li> Untuk melakukan pembatalan, bisa melalui web dengan menuju link berikut ini: http://umrahkamilah.com/pembatalan yang ada pada halaman dashboard akun anda.</li>
+                                                              </ul>
+                                                              <p><strong>Catatan: </strong></p>
+                                                                <ul>
+                                                                  <li> Sebelum Memenuhi Kesepakatan Pendaftaran, komitmen booking seat keberangkatan belum terjadi.</li>
+                                                                  <li>Silakan disegerakan untuk Memenuhi Kesepakatan Pendaftaran dan melakukan konfirmasi pembayaran, sehingga Data anda bisa segera di proses. Dan Status Pendaftaran akan kami Booked.</li>
+                                                                  <li>Peserta belum terdaftar jika dana belum efektif masuk ke dalam rekening kamilah.</li>
+                                                                </ul>
+                                                                <p><br />
+                                                                  <strong>Wassalamualaikum Wr. Wb<br />
+                                                                  Umrahkamilah.com
+                                                                  </strong>                                                            </p>
+                                                            </div>
 														</td>
                                                     </tr>
                                                 </table>

@@ -15,6 +15,24 @@ class Accounts_model extends CI_Model {
 		return $this->db->get();
 	}
 	
+	function get_account_byKode($kode){
+		$this->db->select("*");
+		$this->db->from("accounts");
+		$this->db->where("KODE_REGISTRASI", $kode);
+		
+		return $this->db->get();
+	}
+	
+	function get_notification_info($kode){
+		$this->db->select("*");
+		$this->db->from("accounts");
+		$this->db->join("province","province.ID_PROPINSI=accounts.ID_PROPINSI");
+		$this->db->where("KODE_REGISTRASI", $kode);
+		$this->db->where("STATUS", 0);
+		
+		return $this->db->get();
+	}
+	
 	function insert_new_account($data){
 		$this->db->trans_begin();
 		$this->db->insert('accounts', $data);
@@ -33,13 +51,18 @@ class Accounts_model extends CI_Model {
 		
 		return $this->db->get();
 	}
-	
+
 	function get_data_account($id_account){
 		$this->db->select('*');
 		$this->db->from('accounts');
 		$this->db->where('id_account',$id_account);
 		
 		return $this->db->get();
+
+	function update_password($data,$email) 
+	{                
+		$this->db->where('EMAIL', $email);
+		$this->db->update('accounts' , $data);
 	}
 }
 

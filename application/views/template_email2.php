@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ /*text-align:left*/;
+				/*@editable*/ text-align:left;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ /*text-align:left*/;
+				/*@editable*/ text-align:left;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -395,14 +395,17 @@
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h4 class="h4">Layanan Reset Password</h4>
-<strong>Assalamualaikum, </strong>Kami telah menerima permintaan untuk mereset password anda. apabila anda tidak merasa melakukan ini tolong abaikan Email ini. klik link dibawah ini untuk mereset password anda.<br />
+                                                                <strong>Assalamualaikum, </strong> Sesuai dgn permintaan Saudara perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
                                                                 <br />
-                                                               	 <center>
-                                                                   <strong>
-                                                               		 <h4>
-                                                                       <a href="<?=site_url()?>/forgot/reset/<?=$key_tgl?>_<?=$key_email?>">RESET PASSWORD</a></h4></strong></center>
                                                                 <br />
-                                                                Setelah anda mengklik link reset diatas, beberapa saat lagi kami akan mengirimkan password baru untuk anda. terima kasih<br />
+                                                              <strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <?=$nama_user?><br />
+                                                                <strong>Password Baru :</strong> <?=$generate_pass?> 
+                                                                <br />
+                                                                <br />
+                                                                
+                                                                Gunakan data diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="http://localhost/umrahkamilah/index.php/login">Login</a> 
+ 
+                                                                .Segera mengganti Password setelah berhasil masuk ke halaman member.<br />
                                                             <strong>Wassalamualaikum Wr. Wb</strong></div>
 														</td>
                                                     </tr>
@@ -444,7 +447,7 @@
                                                       </div></td>
                                                         <td valign="top" width="190" id="monkeyRewards">
                                                             <div mc:edit="monkeyrewards">
-                                                                Banner Disini</div>
+                                                                Banner Disini ~ <?=$this->session->userdata('forgot')?></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
