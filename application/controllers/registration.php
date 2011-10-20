@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Registration extends CI_Controller {
-
+	var $data_field;
 	function __construct()
 	{
 		parent::__construct();
@@ -30,27 +30,47 @@ class Registration extends CI_Controller {
 	//insert data inputan ke database
     function do_register() {		
 		if ($this->check_validasi() == FALSE){
-				//$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
+				// //$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
 				$this->front();
+				//echo 'error ikki';
 		}
 		else{
-			$this->load->model('accounts_model');
-			$this->load->model('log_model');
+			$this->load_data_form();
 			
-			$data = $this->load_data_form();
-			$this->accounts_model->insert_new_account($data);
-						
-			$this->log_model->log(null, $data['KODE_REGISTRASI'], null, 'REGISTER new account, EMAIL = '.$data['EMAIL'].', KODE_REGISTRASI = '.$data['KODE_REGISTRASI']);
-
-			//set session notifikasi
-			//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
-			redirect('notification');
+			if (empty($this->data_field))
+				//$this->front();
+				echo 'kosong neng kne lho';
+			else{
+				$this->load->model('accounts_model');
+				$this->load->model('log_model');
+				
+				$this->accounts_model->insert_new_account($this->data_field);						
+				$this->log_model->log(null, $this->data_field['KODE_REGISTRASI'], null, 'REGISTER new account, EMAIL = '.$this->data_field['EMAIL'].', KODE_REGISTRASI = '.$this->data_field['KODE_REGISTRASI']);
+				
+				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);
+				$this->send_email($keycode);
+				//$this->show_notification();
+				//set session notifikasi
+				//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
+				//redirect('notification/'.$this->data_field['KODE_REGISTRASI']);
+			}
 		}
     }
 	
-	function show_notification(){
-		$data['content'] = $this->load->view('notification',null,true);
-		$this->load->view('front',$data);
+	function secure($data){
+		$textlen = strlen($data);
+		$key = rand(2,9);
+		$split = round($textlen/$key);
+		
+		if ($split > $key) $count = $split-$key; else $count = 1;
+		$newstr = "";
+		
+		for($i = 0; $i < strlen($data); $i ++){
+			$part = substr($data, $i, $split);
+			$newstr .= $part.substr(md5(rand(1*$key, $textlen*$key)), 1, $count);
+			$i += $split-1;
+		}
+		return $newstr.$key.$split;
 	}
 	
 	function load_data_form() {
@@ -67,11 +87,11 @@ class Registration extends CI_Controller {
 		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
 		$pwd = substr(md5('password-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
 
-		$data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
+		$this->data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
 								'EMAIL' => $email, 'PASSWORD' =>$pwd, 'NO_ID_CARD' => $id_card, 'TELP' => $telp, 
 								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-m-d"), 'STATUS' => 0);
 		
-		return $data_field;
+		//return $data_field;
     }
 	
 	function check_validasi() {
@@ -93,7 +113,7 @@ class Registration extends CI_Controller {
 	function check_captcha($response, $challenge){
 		require_once('recaptchalib.php');
 		
-		$privatekey = '6LcdLMkSAAAAAJbg9eAhHTckLbT6f51nCY0nY4bn';
+		$privatekey = '6LcqPskSAAAAAKxPuiPKr6XH4qnIUWQfAG9-R9qq';
 		$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $challenge, $response);
 		
 		if ($resp->is_valid) {
@@ -114,34 +134,32 @@ class Registration extends CI_Controller {
 				return TRUE;
     }
 	
-	function send_email(){
-		$this->load->library('email');
-		$config['smtp_host'] = 'smtp.gmail.com';
-		$config['smtp_port'] = 587;
-		$config['protocol'] = 'smtp';
-		$config['mailtype'] = 'html';
+	function send_email($key){
+		// $this->load->library('email');
+		// $config['smtp_host'] = 'smtp.gmail.com';
+		// $config['smtp_port'] = 587;
+		// $config['protocol'] = 'smtp';
+		// $config['mailtype'] = 'html';
 
-		$this->email->initialize($config);
+		// $this->email->initialize($config);
 		
-		$this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
-		$this->email->to('wanprabu@gmail.com');
+		$data['key'] = $key;
+		$data['subject'] = 'Account Activation';
+		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
+		$data['PASSWORD'] = $this->data_field['PASSWORD'];
+		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
+		$this->load->view('email_activation',$data);
+		//$this->load->view('front',$data);
+		
+		// $this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
+		// $this->email->to('wanprabu@gmail.com');
 
-		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class.');
+		// $this->email->subject('Email Test');
+		// $this->email->message('Testing the email class.');
 
-		$this->email->send();
+		// $this->email->send();
 
-		echo $this->email->print_debugger();
-	}
-	
-	function send(){
-		$subject="Hi There!!";
-		$to="<wanprabu@gmail.com>";
-		$body="This is my demo email sent using PHP on XAMPP Lite version 1.7.3?";
-		if (mail($to,$subject,$body,"From:wahyu.andy@smarti.web.id"))
-		echo "Mail sent successfully!";
-		else
-		echo "Mail not sent!";
+		// echo $this->email->print_debugger();
 	}
 }
 
