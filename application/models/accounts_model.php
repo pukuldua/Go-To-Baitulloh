@@ -58,6 +58,7 @@ class Accounts_model extends CI_Model {
 		$this->db->where('id_account',$id_account);
 		
 		return $this->db->get();
+	}
 
 	function update_password($data,$email) 
 	{                
