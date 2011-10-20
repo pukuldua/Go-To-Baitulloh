@@ -33,6 +33,14 @@ class Accounts_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+	
+	function get_data_account($id_account){
+		$this->db->select('*');
+		$this->db->from('accounts');
+		$this->db->where('id_account',$id_account);
+		
+		return $this->db->get();
+	}
 }
 
 ?>
