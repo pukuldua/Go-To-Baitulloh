@@ -455,6 +455,18 @@ th.line-left	{
 	font-size: 0px;
 	line-height: 0;
 	}
+#related-act-top-front	{
+	font-size: 16px;
+	line-height: 3;
+	height:43px;
+	width:271px;
+	background:url(..//images/forms/header_related_act_blank.gif) center no-repeat;
+	}
+.related-act-top-front {
+	margin-left:25px;
+	font-weight:bold;
+	color:#FFF;
+}
 #related-act-bottom	{
 	background: url(../images/forms/bg_related_act.gif) no-repeat bottom;
 	font-size: 0px;
@@ -686,7 +698,14 @@ a:hover.action-delete	{
 	padding: 3px;
 	width: 160px;
 	}
-	
+
+.styledselect-group	{
+	border: 1px solid #acacac;
+	margin-right: 3px;
+	padding: 3px;
+	width: 200px;
+	}
+
 #step-holder {
 font-family: Tahoma;
 	height:39px;
