@@ -120,19 +120,22 @@ class Beranda extends CI_Controller {
 			$data_group	= $this->group_departure_model->get_group_berdasarkan_id($parent);			
 			foreach ($data_group->result() as $row){
 				
-				$kode_group = $row->KODE_GROUP;
-				$keberangkatan = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN);
-				$jatuh_tempo_paspor = $this->konversi_tanggal($row->JATUH_TEMPO_PASPOR);
-				$jatuh_tempo_pelunasan = $this->konversi_tanggal($row->JATUH_TEMPO_PELUNASAN);
-				$jatuh_tempo_pelunasan_dp = $this->konversi_tanggal($row->JATUH_TEMPO_UANG_MUKA );
+				$kode = $row->KODE_GROUP;
+				$ket = $row->KETERANGAN;
+				$jd = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_JD);
+				$mk = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_MK);
+				$paspor = $this->konversi_tanggal($row->JATUH_TEMPO_PASPOR);
+				$lunas = $this->konversi_tanggal($row->JATUH_TEMPO_PELUNASAN);
+				$dp = $this->konversi_tanggal($row->JATUH_TEMPO_UANG_MUKA);
+				$berkas = $this->konversi_tanggal($row->JATUH_TEMPO_BERKAS );
 				
-				$data = $keberangkatan."#".$jatuh_tempo_paspor."#".$jatuh_tempo_pelunasan."#".$jatuh_tempo_pelunasan_dp."#".$kode_group;
+				$data = $jd."#".$mk."#".$paspor."#".$lunas."#".$dp."#".$berkas."#".$kode."#".$ket;
 			}
 			echo $data;
 		
 		} else {
 			
-			echo " # # # # ";
+			echo " # # # # # # # ";
 		}
 
 	}

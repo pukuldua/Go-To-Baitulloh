@@ -150,31 +150,36 @@
 					<div id="related-act-inner">
 						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
-							<h5>Keterangan Group <a id="kodes_group"></a></h5>
+							<h5>Keterangan Group <a id="info_kode"></a></h5>
+                            <br /><i><div id="info_ket"></div></i>
 								
-                                <br />Jadwal Keberangkatan:
+                                <br />Keberangkatan <strong>Jeddah</strong> :
 							<ul class="greyarrow">
-								<li><a id="tgl_berangkat"></a>&nbsp;</li> 
+								<li><a id="info_jd"></a>&nbsp;</li> 
+							</ul>
+                              <br />  Keberangkatan <strong>Mekkah</strong> :
+							<ul class="greyarrow">
+								<li><a id="info_mk"></a>&nbsp;</li> 
 							</ul>
                             <div class="lines-dotted-short"></div>	
                                Batas Akhir Pembayaran Uang Muka:
 							<ul class="greyarrow">
-								<li><a id="akhir_pembayaran_dp"></a>&nbsp;</li> 
+								<li><a id="info_dp"></a>&nbsp;</li> 
 							</ul>
                             <div class="lines-dotted-short"></div>	
                                Batas Akhir Pelunasan:
 							<ul class="greyarrow">
-								<li><a id="akhir_pembayaran"></a>&nbsp;</li> 
+								<li><a id="info_lunas"></a>&nbsp;</li> 
 							</ul>
                             <div class="lines-dotted-short"></div>	
                                 Batas Akhir Upload Data Passport:
 							<ul class="greyarrow">
-								<li><a id="akhir_upload"></a>&nbsp;</li> 
+								<li><a id="info_paspor"></a>&nbsp;</li> 
 							</ul>
                             <div class="lines-dotted-short"></div>	
                                 Batas Akhir Pengumpulan Berkas Fisik:
 							<ul class="greyarrow">
-								<li><a id="akhir_berkas"></a>&nbsp;</li> 
+								<li><a id="info_berkas"></a>&nbsp;</li> 
 							</ul>
 						</div>
 							
@@ -271,11 +276,14 @@
 							 var bahan = response;
 							 var pecah = bahan.split("#");
 							 
-                             document.getElementById('tgl_berangkat').innerHTML = pecah[0];
-							 document.getElementById('akhir_upload').innerHTML = pecah[1];
-							 document.getElementById('akhir_pembayaran').innerHTML = pecah[2];
-							 document.getElementById('akhir_pembayaran_dp').innerHTML = pecah[3];
-							 document.getElementById('kodes_group').innerHTML = pecah[4];
+                             document.getElementById('info_jd').innerHTML = pecah[0];
+							 document.getElementById('info_mk').innerHTML = pecah[1];
+							 document.getElementById('info_paspor').innerHTML = pecah[2];
+							 document.getElementById('info_lunas').innerHTML = pecah[3];
+							 document.getElementById('info_dp').innerHTML = pecah[4];
+							 document.getElementById('info_berkas').innerHTML = pecah[5];
+							 document.getElementById('info_kode').innerHTML = pecah[6];
+							 document.getElementById('info_ket').innerHTML = pecah[7];
                         }
                 });
               return false;
