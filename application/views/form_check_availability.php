@@ -23,7 +23,7 @@
 			<!-- start id-form -->
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
-					<th valign="top">Group:</th>
+					<th valign="top">Group</th>
 					<td>	
 						<? $group = 0; if(set_value('group')!='') $group = set_value('group');
 							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect_form_1"'); ?>
@@ -36,7 +36,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th valign="top">Kelas Program:</th>
+					<th valign="top">Kelas Program</th>
 					<td>	
 						<? $program = 0; if(set_value('program')!='') $program = set_value('program');
 							echo form_dropdown('program', $program_options, $program,'id="program" class="styledselect_form_1"'); ?>
@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<? form_error('jml_adult') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Jumlah Adult (*):</th>
+					<th valign="top">Jumlah Adult (*)</th>
 					<td><input type="text" name="jml_adult" value="<?php echo set_value('jml_adult');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('jml_adult') != '') {?>
@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<? form_error('with_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child With Bed:</th>
+					<th valign="top">Child With Bed</th>
 					<td><input type="text" name="with_bed" value="<?php echo set_value('with_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('with_bed') != '') {?>
@@ -72,7 +72,7 @@
 				</tr> 
 				<tr>
 					<? form_error('no_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child No Bed:</th>
+					<th valign="top">Child No Bed</th>
 					<td><input type="text" name="no_bed" value="<?php echo set_value('no_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('no_bed') != '') {?>
@@ -83,7 +83,7 @@
 				</tr>
 				<tr>
 					<? form_error('infant') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Infant:</th>
+					<th valign="top">Infant</th>
 					<td><input type="text" name="infant" value="<?php echo set_value('infant');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('infant') != '') {?>
@@ -93,7 +93,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th valign="top">Kamar:</th>
+					<th valign="top">Kamar</th>
 					<td class="noheight">
 						<div id="dvFile">
 							<table border="0" cellpadding="0" cellspacing="0">
@@ -109,7 +109,7 @@
 										<div id="dvFile2"></div>
 									</td>
 									<td>
-										&nbsp; Jumlah :
+										&nbsp; Jumlah 
 										<select name="jml_kamar[]" id="jml_kamar" class="styledselect-day">
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -217,18 +217,10 @@
 		var index = document.getElementsByName('kamar[]');
 		var txt = "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr valign=\"middle\"><td><select name=\"kamar[]\" id=\"kamar"+index.length+
 					"\" class=\"styledselect-kamar\"><option value=\"0\">-- Pilih Jenis Kamar --</option></select></td>"+
-					"<td>&nbsp; Jumlah :&nbsp;<select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+
+					"<td>&nbsp; Jumlah <select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+
 					"<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option></select></td></tr></table>";
-		
-		var txt2 = "<select name=\"kamar[]\" id=\"kamar"+index.length+
-					"\" class=\"styledselect-kamar\"><option value=\"0\">-- Pilih Jenis Kamar --</option></select><br/>";
 					
-		var txt3 = "&nbsp; Jumlah :<select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+
-					"<option value=\"1\">1</option><option value=\"2\">2</option><option value=\"3\">3</option></select><br/>";
-		document.getElementById("dvFile").innerHTML += txt;
-		//document.getElementById("dvFile2").innerHTML += txt2;
-		//document.getElementById("dvFile3").innerHTML += txt3;
-		
+		document.getElementById("dvFile").innerHTML += txt;		
 		loadkamar();
 	}
 	
@@ -239,8 +231,6 @@
 	           global: false,
 	           type: "POST",
 	           async: false,
-	           //dataType: "html",
-	           //data: "produsen="+produsen +"&no_serti="+noserti +"&varietas="+varietas +"&kls_benih="+kls_benih, //the name of the $_POST variable and its value
 	           success: function (response) //'response' is the output provided by the controller method prova()
 	                    {
 							//counts the number of dynamically generated options

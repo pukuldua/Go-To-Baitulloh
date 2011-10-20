@@ -4,10 +4,18 @@
 		<td>
 			<!--  start step-holder -->
 			<div id="step-holder">
-				<div class="step-no">.:</div>
-				<div class="step-dark-left">Data Registrasi</div>
-				<div class="step-dark-right">&nbsp;</div>
-				<div class="step-no">:.</div>
+				<div class="step-no-off">1</div>
+				<div class="step-light-left">Check Order</a></div>
+				<div class="step-light-right">&nbsp;</div>
+				<div class="step-no-off">2</div>
+				<div class="step-light-left">Result Page</div>
+				<div class="step-light-right">&nbsp;</div>
+				<div class="step-no-off">3</div>
+				<div class="step-light-left">Registration Form</div>
+				<div class="step-light-right">&nbsp;</div>
+				<div class="step-no">4</div>
+				<div class="step-dark-left">Notification Page</div>
+				<div class="step-dark-round">&nbsp;</div>
 				<div class="clear"></div>
 			</div>
 			<!--  end step-holder -->
@@ -15,38 +23,38 @@
 			<!-- start id-form -->
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">Nama</th>
+					<td><?php echo $account['NAMA_USER']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">E-mail</th>
+					<td><?php echo $account['EMAIL']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">Telp / Mobile</th>
+					<td><?php $account['TELP']!='' ? $separator='/ ' :$separator=''; echo $account['TELP'].' '.$separator.$account['MOBILE']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">Propinsi</th>
+					<td><?php echo $account['NAMA_PROPINSI']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">Kota</th>
+					<td><?php echo $account['KOTA']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">Alamat</th>
+					<td><?php echo $account['ALAMAT']; ?></td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">Group</th>
-					<td>adasd</td>
+					<th valign="top">No ID Card (i.e. KTP)</th>
+					<td><?php echo $account['NO_ID_CARD']; ?></td>
 					<td></td>
 				</tr>
 			</table>
