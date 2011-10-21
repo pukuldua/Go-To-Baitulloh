@@ -102,8 +102,9 @@
 									<? $kamar = 0; if(set_value('kamar')!='') $kamar = set_value('kamar');
 										//echo form_dropdown('kamar', $room_options, $kamar,'id="kamar" class="styledselect_form_1"'); ?>
 										<select name="kamar[]" id="kamar" class="styledselect-kamar">
+											<option value="0">-- Pilih Jenis Kamar</option>
 											<?php foreach ($room_options as $key=>$value){ ?>
-												<option value="<?=$value?>"><?=$value?></option>
+												<option value="<?=$key?>"><?=$value?></option>
 											<? } ?>
 										</select>
 										<div id="dvFile2"></div>
@@ -123,9 +124,9 @@
 						</div>
 					</td>
 					<td>
-						<? if(form_error('kamar') != '') {?>
+						<? if(form_error('kamar[]') != '') {?>
 						<div class="error-left"></div>
-						<div class="error-inner"><?php echo form_error('kamar'); ?></div>
+						<div class="error-inner"><?php echo form_error('kamar[]'); ?></div>
 						<? }?>
 					</td>
 				</tr>

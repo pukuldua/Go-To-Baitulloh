@@ -7,7 +7,9 @@ class Notification extends CI_Controller {
 		parent::__construct();
 	}
 	
-	function index(){}
+	function index(){
+		show_404();
+	}
 
 	function show($kode_reg)
 	{
