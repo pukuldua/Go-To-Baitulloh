@@ -34,14 +34,16 @@ class Room_model extends CI_Model {
 		return $this->db->get();
 	}
 	
-	function count_available_room($group, $program, $room_type){
-		$this->db->select("room.*, room_type.JENIS_KAMAR, count(*) as JML");
+	function count_available_room($group, $program){
+		$this->db->select("room.*, g.KODE_GROUP, p.NAMA_PROGRAM, room_type.JENIS_KAMAR, count(*) as JML");
 		$this->db->from("room"); 	 	
-		$this->db->where("ID_GROUP", $group);
-		$this->db->where("ID_PROGRAM", $program);
-		$this->db->where("ID_ROOM_TYPE", $room_type);
+		$this->db->where("room.ID_GROUP", $group);
+		//$this->db->where("room.ID_PROGRAM", $program);
 		$this->db->where("AVAILABILITY", 1);
+		$this->db->join("group_departure g", "g.ID_GROUP=room.ID_GROUP");
+		$this->db->join("program_class p", "p.ID_PROGRAM=room.ID_PROGRAM");
 		$this->db->join("room_type", "room_type.ID_ROOM_TYPE=room.ID_ROOM_TYPE");
+		$this->db->group_by("room.ID_PROGRAM, ID_ROOM_TYPE"); 
 		
 		return $this->db->get();
 	}

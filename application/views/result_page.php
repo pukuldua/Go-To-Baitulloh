@@ -4,7 +4,7 @@
         	<!--  start step-holder -->
 			<div id="step-holder">
 				<div class="step-no-off">1</div>
-				<div class="step-light-left"><a href="">Check Order</a></div>
+				<div class="step-light-left">Check Order</a></div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no">2</div>
 				<div class="step-dark-left">Result Page</div>
@@ -21,26 +21,56 @@
             <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
                 	<td>
-                    	<h3>Anda bisa melakukan registrasi online terlebih dahulu, untuk mencatatkan data ke dalam sistem kami.
+                    	<h3>
+						<? if (isset($message)) echo $message; ?>
+						<br /><br />Anda bisa melakukan registrasi online terlebih dahulu, untuk mencatatkan data ke dalam sistem kami.
                         <br />Silahkan login jika anda sudah memiliki akun.
-                        <br />Anda dapat mencentang poin di bawah ini, Jika bersedia dimasukkan ke dalam daftar waiting list.
-                        <br />Jika status waiting list anda berubah, akan kami informasikan via email.
+						
                         </h3>
                     </td>
                 </tr>
                 <tr>
                 	<td>
+						<h3>
+						<? if ($plane_flag) echo "Keberangkatan Jakarta - Jedddah: $depart_jd. <br> Keberangkatan Jakarta - Makkah: $depart_mk."?>
+						</h3>
+						<br />
+						<? if (isset($available_room)) {?>
+						<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
+							<tr>
+								<th>Group</th>
+								<th>Program</th>
+								<th>Jenis Kamar</th>
+								<th>Jumlah Tersedia</th>
+							</tr>
+							<? foreach($available_room->result() as $row) {?>
+							<tr>
+								<td><? echo $row->KODE_GROUP; ?></td>
+								<td><? echo $row->NAMA_PROGRAM; ?></td>
+								<td><? echo $row->JENIS_KAMAR; ?></td>
+								<td><? echo $row->JML; ?> Bed</td>
+							</tr>
+							<? }?>
+						</table>
+						<? }?>
+						
+						<? if ($waiting) {?>
+                        <h3><br />Anda dapat mencentang poin di bawah ini, Jika bersedia dimasukkan ke dalam daftar waiting list.
+                        <br />Jika status waiting list anda berubah, akan kami informasikan via email.
+						</h3>						
                     	<?php echo form_open('registration',array('name' => 'form_registrasi')); ?>
                         	<input name="waiting" id="waiting" type="checkbox" value="1" onchange="enableSubmit(this);" />&nbsp;
                             <label for="waiting">Menginginkan masuk Daftar Waiting List</label>
                             <br />
                             <input type="submit" value="" name="submit_button" class="form-submit" disabled="disabled" />
-                        <?php echo form_close();?>
+                        <?php echo form_close(); }?>
                     </td>
                 </tr>
                 <tr>
                 	<td>
-                    	<a href="<?php echo site_url('registration')?>">Registrasi</a>
+                    	<a href="<?php echo site_url('registration')?>">
+							<img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" />&nbsp;<strong>Registrasi</strong>
+						</a>
                     </td>
                 </tr>
             </table>

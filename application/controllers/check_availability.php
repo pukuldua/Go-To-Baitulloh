@@ -62,7 +62,7 @@ class Check_availability extends CI_Controller {
 			$total_candidate = $jml_adult + $with_bed + $no_bed + $infant;
 			$total_room = 0;
 			
-			$group_info = $this->group_departure_model->get_group($id_group);
+			$group_info = $this->group_departure_model->get_group($group);
 			$pagu_sv = $group_info->row()->PAGU_SV;
 			$pagu_ga = $group_info->row()->PAGU_GA;
 			$depart_jd = $group_info->row()->TANGGAL_KEBERANGKATAN_JD;
@@ -71,48 +71,62 @@ class Check_availability extends CI_Controller {
 			// check pagu pesawat
 			$flag = FALSE; $plane_flag = FALSE;
 			if ($pagu_sv > $total_candidate){
-				$message = "Paket pilihan anda tersedia. Keberangkatan menggunakan pesawat Saudi Airlines";
+				$message = "Seat Pesawat tersedia. Keberangkatan menggunakan pesawat Saudi Airlines";
 				$flag = TRUE; $plane_flag = TRUE;
 			} 
 			if ($pagu_ga > $total_candidate){
-				if ($flag) $message .= " atau Garuda Indonesia Airlines";
-				else $message = "Paket pilihan anda tersedia. Keberangkatan menggunakan pesawat Garuda Indonesia Airlines.";
+				if ($flag) $message .= " atau Garuda Indonesia Airlines. ";
+				else $message = "Seat Pesawat tersedia. Keberangkatan menggunakan pesawat Garuda Indonesia Airlines.";
 				$plane_flag = TRUE;
 			}
 			else if (($pagu_sv+$pagu_ga) > $total_candidate){
 				$kursi_sisa = $total_candidate-$pagu_sv;
-				$message = "Paket pilihan anda tersedia. Keberangkatan menggunakan pesawat Saudi Airlines sejumlah $pagu_sv kursi dan Garuda Indonesia Airlines sejumlah $kursi_sisa kursi";
+				$message = "Seat Pesawat tersedia. Keberangkatan menggunakan pesawat Saudi Airlines sejumlah $pagu_sv kursi dan Garuda Indonesia Airlines sejumlah $kursi_sisa kursi";
 				$plane_flag = TRUE;
 			}else
-				$message = "Maaf Paket pilihan anda tidak tersedia.";
+				$message = "Maaf, Paket yang anda inginkan saat ini sedang tak tersedia.";
 			
 			// check room avilability
 			$this->load->model('room_model');
 		
 			$kamar = $this->input->post('kamar');
 			$jml_kamar = $this->input->post('jml_kamar');
+			$total_candidate -= ($no_bed + $infant);
+			
 			
 			for($i=0; $i<count($kamar); $i++){
 				if($kamar[$i]!='0'  && $kamar[$i] != ''){
-					$count = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i])->num_rows();
-					$total_room += $count;
+					$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i])->num_rows();
+					$total_room += $counter;
 				}
+			}			
+			
+			$data['waiting'] = FALSE;
+			if ($total_room < $total_candidate && $total_room != 0){
+				$message .= "<br>Maaf, Jumlah kamar yang tersedia tidak mencukupi pilihan paket anda !!!";
+				$data['available_room'] = $this->room_model->count_available_room($group, $kelas_program);				
+			}
+			else if ($total_room == 0){
+				$data['waiting'] = TRUE;
 			}
 			
-			if ($total_room < $total_candidate)
-				$message = "Maaf, Jumlah kamar yang tersedia tidak mencukupi pilihan paket anda.";
-				
-			else{
-				
+			if ($plane_flag && !$data['waiting']){
+				$data['depart_jd'] = date_format(date_create($depart_jd), "d M Y");
+				$data['depart_mk'] = date_format(date_create($depart_mk), "d M Y");
 			}
 			
-			echo $total_candidate;
+			$data['plane_flag'] = $plane_flag;
+			$data['message'] = $message;
+			
+			$data['content'] = $this->load->view('result_page',$data,true);
+			$this->load->view('front',$data);
 		}
 	}
 	
 	function result(){
-		$data['content'] = $this->load->view('result_page',null,true);
-		$this->load->view('front',$data);
+		$tgl = "2012-01-07";
+		$date = date_create($tgl);
+		echo date_format($date, 'd M Y H:i:s');
 	}
 	
 	function cek_validasi() {
