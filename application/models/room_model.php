@@ -23,19 +23,22 @@ class Room_model extends CI_Model {
 		return $this->db->get();
 	}
 	
-	function check_available_room($group, $program, $room_type){
+	function check_available_room($group, $program, $room_type, $beds){
 		$this->db->select("*");
 		$this->db->from("room"); 	 	
 		$this->db->where("ID_GROUP", $group);
 		$this->db->where("ID_PROGRAM", $program);
 		$this->db->where("ID_ROOM_TYPE", $room_type);
 		$this->db->where("AVAILABILITY", 1);
+		$this->db->where("BEDS", $beds);
+		if ($beds == 0)
+		$this->db->where("BEDS >", $beds);
 		
 		return $this->db->get();
 	}
 	
-	function count_available_room($group, $program){
-		$this->db->select("room.*, g.KODE_GROUP, p.NAMA_PROGRAM, room_type.JENIS_KAMAR, count(*) as JML");
+	function count_available_room($group){
+		$this->db->select("room.*, g.KODE_GROUP, p.NAMA_PROGRAM, room_type.JENIS_KAMAR, count(*) as JML, sum(BEDS) as JML_BEDS");
 		$this->db->from("room"); 	 	
 		$this->db->where("room.ID_GROUP", $group);
 		//$this->db->where("room.ID_PROGRAM", $program);

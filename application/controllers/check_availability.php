@@ -50,7 +50,8 @@ class Check_availability extends CI_Controller {
 			$this->front();
 		}
 		else{
-			$this->load->model('group_departure_model');			
+			$this->load->model('group_departure_model');
+			$this->load->model('program_class_model');
 			
 			$group = $this->input->post('group');
             $kelas_program = $this->input->post('program');
@@ -58,15 +59,18 @@ class Check_availability extends CI_Controller {
             $with_bed = $this->input->post('with_bed')=='' ? 0:$this->input->post('with_bed');
             $no_bed = $this->input->post('no_bed')=='' ? 0:$this->input->post('no_bed');
 			$infant = $this->input->post('infant')=='' ? 0:$this->input->post('infant');			
-			
-			$total_candidate = $jml_adult + $with_bed + $no_bed + $infant;
-			$total_room = 0;
-			
+									
 			$group_info = $this->group_departure_model->get_group($group);
+			$kode_group = $group_info->row()->KODE_GROUP;
 			$pagu_sv = $group_info->row()->PAGU_SV;
 			$pagu_ga = $group_info->row()->PAGU_GA;
 			$depart_jd = $group_info->row()->TANGGAL_KEBERANGKATAN_JD;
 			$depart_mk = $group_info->row()->TANGGAL_KEBERANGKATAN_MK;
+			
+			$program_info = $this->program_class_model->get_program($kelas_program);
+			$nama_program = $program_info->row()->NAMA_PROGRAM;
+			
+			$total_candidate = $jml_adult + $with_bed + $no_bed + $infant;	
 			
 			// check pagu pesawat
 			$flag = FALSE; $plane_flag = FALSE;
@@ -84,27 +88,51 @@ class Check_availability extends CI_Controller {
 				$message = "Seat Pesawat tersedia. Keberangkatan menggunakan pesawat Saudi Airlines sejumlah $pagu_sv kursi dan Garuda Indonesia Airlines sejumlah $kursi_sisa kursi";
 				$plane_flag = TRUE;
 			}else
-				$message = "Maaf, Paket yang anda inginkan saat ini sedang tak tersedia.";
+				$message = "Paket yang anda inginkan saat ini sedang tak tersedia.";
 			
 			// check room avilability
 			$this->load->model('room_model');
+			$this->load->model('room_type_model');
 		
 			$kamar = $this->input->post('kamar');
 			$jml_kamar = $this->input->post('jml_kamar');
 			$total_candidate -= ($no_bed + $infant);
+			$total_room = 0;			
+			$room_capacity = 0;
 			
-			
-			for($i=0; $i<count($kamar); $i++){
+			for($i=0; $i<count($kamar); $i++){				
 				if($kamar[$i]!='0'  && $kamar[$i] != ''){
-					$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i])->num_rows();
-					$total_room += $counter;
+					$room_type = $this->room_type_model->get_roomType($kamar[$i]);
+					$room_choice[$i] = "<pre>".$room_type->row()->JENIS_KAMAR." jumlah ".$jml_kamar[$i]." Kamar</pre>";
+					$room_capacity += $room_type->row()->CAPACITY * $jml_kamar[$i];
 				}
-			}			
+			}
+			
+			if ($room_capacity >= $total_candidate){
+				for($i=0; $i<count($kamar); $i++){
+					if($kamar[$i]!='0'  && $kamar[$i] != ''){		
+						$room_type = $this->room_type_model->get_roomType($kamar[$i]);
+						if ($room_capacity % $total_candidate > 0){
+							$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], 0)->num_rows();
+						} else if ($room_capacity % $total_candidate == 0){
+							$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], $room_type->row()->CAPACITY)->num_rows();							
+						}
+						
+						if ($counter >= $jml_kamar[$i]){
+						} else{
+							
+						}
+					}
+				}	
+				
+			} else {
+				$message .= "<br>Maaf, Jumlah pilihan kamar tidak mencukupi pilihan paket anda !!! Silahkan memilih konfigurasi yang lain.";
+			}
 			
 			$data['waiting'] = FALSE;
 			if ($total_room < $total_candidate && $total_room != 0){
 				$message .= "<br>Maaf, Jumlah kamar yang tersedia tidak mencukupi pilihan paket anda !!!";
-				$data['available_room'] = $this->room_model->count_available_room($group, $kelas_program);				
+				$data['available_room'] = $this->room_model->count_available_room($group);				
 			}
 			else if ($total_room == 0){
 				$data['waiting'] = TRUE;
@@ -115,6 +143,13 @@ class Check_availability extends CI_Controller {
 				$data['depart_mk'] = date_format(date_create($depart_mk), "d M Y");
 			}
 			
+			$data['jml_adult'] = $jml_adult;
+			$data['with_bed'] = $with_bed;
+			$data['no_bed'] = $no_bed;
+			$data['infant'] = $infant;
+			$data['kode_group'] = $kode_group;
+			$data['nama_program'] = $nama_program;
+			$data['room_choice'] = $room_choice;
 			$data['plane_flag'] = $plane_flag;
 			$data['message'] = $message;
 			
@@ -123,21 +158,21 @@ class Check_availability extends CI_Controller {
 		}
 	}
 	
-	function result(){
-		$tgl = "2012-01-07";
-		$date = date_create($tgl);
-		echo date_format($date, 'd M Y H:i:s');
-	}
-	
 	function cek_validasi() {
+		$adult = $this->input->post('jml_adult');
+		$with_bed = $this->input->post('with_bed')=='' ? 0:$this->input->post('with_bed');
+		$no_bed = $this->input->post('no_bed')=='' ? 0:$this->input->post('no_bed');
+		$infant = $this->input->post('infant')=='' ? 0:$this->input->post('infant');
+		$total = $adult + $with_bed + $no_bed + $infant;
+			
 		//setting rules
 		$config = array(
 				array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown|callback_check_departure'),
 				array('field'=>'program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>'required|integer'),
-				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>'integer'),
-				array('field'=>'no_bed','label'=>'Child No Bed', 'rules'=>'integer'),
-				array('field'=>'infant','label'=>'Infant', 'rules'=>'integer'),
+				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>"required|integer|callback_check_jml[$total]"),
+				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>"integer"),
+				array('field'=>'no_bed','label'=>'Child No Bed', 'rules'=>"integer"),
+				array('field'=>'infant','label'=>'Infant', 'rules'=>"integer|callback_check_jml[$adult]"),
 				array('field'=>'kamar[]','label'=>'Kamar', 'rules'=>'callback_cek_dropdown'),
 				//array('field'=>'jml_kamar','label'=>'Jumlah', 'rules'=>'callback_cek_dropdown'),
 		);
@@ -173,6 +208,20 @@ class Check_availability extends CI_Controller {
 			}
 		}
 	}
+	
+	//cek jumlah
+    function check_jml($value, $max){
+		if ($max > 20) {
+			$this->form_validation->set_message('check_jml', "Maximum number of canddidate are 20 for each unit");
+			return FALSE;
+		}else{
+			if($value > $max){
+				$this->form_validation->set_message('check_jml', "The maximum number of %s are $max !");
+				return FALSE;
+			}else
+				return TRUE;
+		}
+    }
 	
 	function getKamar(){
 		$this->load->model('room_type_model');

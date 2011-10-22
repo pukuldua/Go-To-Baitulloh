@@ -20,42 +20,64 @@
 			<!--  end step-holder -->
             <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
-                	<td>
-                    	<h3>
-						<? if (isset($message)) echo $message; ?>
-						<br /><br />Anda bisa melakukan registrasi online terlebih dahulu, untuk mencatatkan data ke dalam sistem kami.
-                        <br />Silahkan login jika anda sudah memiliki akun.
-						
-                        </h3>
+                	<td colspan="2">
+                    	<h3>Berdasarkan paket pilihan anda</h3>
+						<strong><pre>Group Keberangkatan : <?php echo $kode_group;?></pre></strong>
+						<br /><strong><pre>Kelas Program &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo $nama_program;?></pre></strong>
+						<br />
                     </td>
                 </tr>
-                <tr>
-                	<td>
-						<h3>
-						<? if ($plane_flag) echo "Keberangkatan Jakarta - Jedddah: $depart_jd. <br> Keberangkatan Jakarta - Makkah: $depart_mk."?>
-						</h3>
+				<tr>
+					<td width="290">
+						<h3>Calon Jamaah:</h3>
+						<strong><pre>Jumlah Adult &nbsp;&nbsp;&nbsp;<?php echo $jml_adult;?></pre></strong>
+						<br /><strong><pre>Child With Bed &nbsp;<?php echo $with_bed;?></pre></strong>
+						<br /><strong><pre>Child No Bed &nbsp;&nbsp;&nbsp;<?php echo $no_bed;?></pre></strong>
+						<br /><strong><pre>Infant &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $infant;?></pre></strong>
+						<br /><strong><pre>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($jml_adult+$with_bed+$no_bed+$infant);?></pre></strong>
 						<br />
+					</td>
+					<td width="513" valign="top">
+                    	<h3>Pilihan Kamar:</h3>
+						<? foreach($room_choice as $row) { echo "<strong>$row</strong><br />"; }?>
+                    </td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<h3>
+						<? if (isset($message)) echo $message; ?>
+						<br /><br />Anda bisa melakukan registrasi online terlebih dahulu, untuk mencatatkan data ke dalam sistem kami.
+                        <br />Silahkan login jika anda sudah memiliki akun.						
+                        </h3>
+					</td>
+				</tr>
+                <tr>
+                	<td colspan="2">
 						<? if (isset($available_room)) {?>
+						Ketersediaan kamar untuk group keberangkatan : <strong><?php echo $kode_group;?></strong>
 						<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 							<tr>
-								<th>Group</th>
 								<th>Program</th>
 								<th>Jenis Kamar</th>
-								<th>Jumlah Tersedia</th>
+								<th>Jumlah Kamar</th>
+								<th>Jumlah Beds</th>
 							</tr>
 							<? foreach($available_room->result() as $row) {?>
 							<tr>
-								<td><? echo $row->KODE_GROUP; ?></td>
 								<td><? echo $row->NAMA_PROGRAM; ?></td>
 								<td><? echo $row->JENIS_KAMAR; ?></td>
-								<td><? echo $row->JML; ?> Bed</td>
+								<td><? echo $row->JML; ?> </td>
+								<td><? echo $row->JML_BEDS; ?> Bed(s)</td>
 							</tr>
 							<? }?>
 						</table>
 						<? }?>
-						
+                    </td>
+                </tr>
+				<tr>
+					<td colspan="2">
 						<? if ($waiting) {?>
-                        <h3><br />Anda dapat mencentang poin di bawah ini, Jika bersedia dimasukkan ke dalam daftar waiting list.
+                        <h3>Anda dapat mencentang poin di bawah ini, Jika bersedia dimasukkan ke dalam daftar waiting list.
                         <br />Jika status waiting list anda berubah, akan kami informasikan via email.
 						</h3>						
                     	<?php echo form_open('registration',array('name' => 'form_registrasi')); ?>
@@ -64,15 +86,8 @@
                             <br />
                             <input type="submit" value="" name="submit_button" class="form-submit" disabled="disabled" />
                         <?php echo form_close(); }?>
-                    </td>
-                </tr>
-                <tr>
-                	<td>
-                    	<a href="<?php echo site_url('registration')?>">
-							<img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" />&nbsp;<strong>Registrasi</strong>
-						</a>
-                    </td>
-                </tr>
+					</td>
+				</tr>
             </table>
 		</td>
 		
@@ -90,43 +105,24 @@
 				<div id="related-act-bottom">
 					<!--  start related-act-inner -->
 					<div id="related-act-inner">
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
-							<h5>Add another product</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
+							<? if ($plane_flag) {?>
+							<h5>Info Keberangkatan</h5>								
 							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
+								<li> Jakarta - Jedddah: <? echo "$depart_jd"; ?></li> 
+								<li> Jakarta - Makkah: <? echo "$depart_mk" ?></li>
 							</ul>
+							<? }?>
 						</div>
 							
 						<div class="clear"></div>
 						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_minus.gif" width="21" height="21" alt="" /></a></div>
+						
+						<div class="left"><a href="<?php echo site_url('registration')?>"><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
-							<h5>Delete products</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Edit categories</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
+							<h5><a href="<?php echo site_url('registration')?>">Registration</a></h5>
+								Form Registrasi Calon Jamaah Umroh
 						</div>
 							<div class="clear"></div>						
 					</div>
