@@ -19,6 +19,8 @@ class Group_departure_model extends CI_Model {
 		$this->db->select("*");
 		$this->db->from("group_departure");
 		$this->db->where("ID_GROUP", $id_group);
+		
+		return $this->db->get();
 	}
 	
 	function get_group_berdasarkan_id($id_group)

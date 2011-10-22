@@ -5,7 +5,7 @@
 			<!--  start step-holder -->
 			<div id="step-holder">
 				<div class="step-no">1</div>
-				<div class="step-dark-left"><a href="">Check Order</a></div>
+				<div class="step-dark-left">Check Order</a></div>
 				<div class="step-dark-right">&nbsp;</div>
 				<div class="step-no-off">2</div>
 				<div class="step-light-left">Result Page</div>
