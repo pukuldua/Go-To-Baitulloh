@@ -650,7 +650,16 @@ a:hover.action-delete	{
 	padding: 6px 6px 0 6px;
 	width: 186px;
 	}
-	
+
+.inp-form-text	{
+	color: #393939;
+	height: 25px;
+ 
+	padding: 6px 6px 0 6px;
+	width: 186px;
+	border:#B0B0B0 1px solid;
+	}
+
 .inp-form-error	{
 	background: url(../images/forms/form_inp_error.gif) no-repeat;
 	border: none; 
@@ -1088,6 +1097,10 @@ Copyright (c) 2005-2007 Stu Nicholls. All rights reserved. This stylesheet and t
 	background: url(../images/shared/nav/menus/back_1.gif);
 	color: #bb953a;
 	visibility: visible;
+	}
+	
+.sub_current a {
+	color: #bb953a !important;
 	}
  
 	

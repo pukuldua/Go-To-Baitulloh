@@ -5,7 +5,6 @@ class Beranda extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('form_validation');
 	}
 
 	function index()
@@ -17,6 +16,7 @@ class Beranda extends CI_Controller {
 		$this->load->model('group_departure_model');
 		$this->load->model('program_class_model');
 		$this->load->model('room_type_model');
+		$this->load->library('form_validation');
 		
 		$group = $this->group_departure_model->get_all_group();
 		$program = $this->program_class_model->get_all_program();
@@ -45,6 +45,9 @@ class Beranda extends CI_Controller {
 	}
 	
 	function do_check(){
+		
+		$this->load->library('form_validation');
+		
 		if ($this->cek_validasi() == FALSE){
 			//$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
 			$this->front();
@@ -54,6 +57,9 @@ class Beranda extends CI_Controller {
 	}
 
     function load_data_form($id_kajiUlang) {
+		
+			$this->load->library('form_validation');
+			
             $group = ($this->input->post('kadar_air1')=='' ? NULL : $this->input->post('kadar_air1'));
             $kelas_program = ($this->input->post('kadar_air2')=='' ? NULL : $this->input->post('kadar_air2'));
             $jml_adult = $this->input->post('thn_selesai');
@@ -71,6 +77,7 @@ class Beranda extends CI_Controller {
     }
 	
 	function cek_validasi() {
+		$this->load->library('form_validation');
 		//setting rules
 		$config = array(
 				array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown'),
@@ -92,6 +99,7 @@ class Beranda extends CI_Controller {
 
     //cek pilihan sdh bener ap blm
     function cek_dropdown($value){
+		$this->load->library('form_validation');
 		if($value==0){
 				$this->form_validation->set_message('cek_dropdown', 'Please choose one %s from the list !');
 				return FALSE;
