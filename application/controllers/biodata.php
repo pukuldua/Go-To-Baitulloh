@@ -19,10 +19,145 @@ class Biodata extends CI_Controller {
 		$this->load->view('front', $data);
 	}
 	
-	function list_jamaah()
-	{
-		$data['content'] = $this->load->view('biodata_list', '', true);
-		$this->load->view('front', $data);
+	function list_jamaah(){
+		
+		//call library or helper
+		$this->load->library('flexigrid');	
+		$this->load->helper('flexigrid');
+		$this->load->library('form_validation');		
+		
+		//call model here	
+		$this->load->model('jamaah_candidate_model');
+		
+		$total_data 	= $this->jamaah_candidate_model->get_total_data();
+		$total_data		= ''.$total_data ;
+		$this->lihat_data_calon_jamaah($total_data);
+	}
+	
+	function lihat_data_calon_jamaah($total_data){
+		
+		//call library or helper
+		$this->load->library('flexigrid');	
+		$this->load->helper('flexigrid');
+		$this->load->library('form_validation');		
+		
+		//call model here	
+		$this->load->model('jamaah_candidate_model');
+		
+		$colModel['no'] = array('No',30,TRUE,'center',0);
+		$colModel['edit'] = array('Edit',40,FALSE,'center',0);
+		$colModel['KODE_REGISTRASI'] = array('Kode Reg.',80,TRUE,'center',0);
+		$colModel['NAMA_LENGKAP'] = array('Nama Lengkap',150,TRUE,'center',1);
+		$colModel['NAMA_PANGGILAN'] = array('Nama Panggilan',150,TRUE,'center',1);
+		$colModel['AYAH_KANDUNG'] = array('Ayah Kandung',150,TRUE,'center',1);
+		$colModel['ID_SIZE'] = array('Ukuran Baju',70,FALSE,'center',0);
+		$colModel['GENDER'] = array('Jenis Kelamin',70,FALSE,'center',0);
+		$colModel['MAHRAM'] = array('Hubungan Mahram',150,TRUE,'center',0);
+		$colModel['MOBILE'] = array('Mobile Phone',100,TRUE,'center',1);
+		
+		$gridParams = array(
+		'width' => 'auto',
+		'height' => 300,
+		'rp' => 10,
+		'rpOptions' => '[5,10,15,20,25,30,'.$total_data.']',
+		'pagestat' => 'Menampilkan: {from} sampai {to} dari {total} hasil.',
+		'blockOpacity' => 0.5,
+		'title' => 'Biodata Calon Jamaah',
+		'showTableToggleBtn' => false
+		);
+		
+		$buttons[] = array('separator');
+		$buttons[] = array('Tambah','add','spt_js');
+		$buttons[] = array('Hapus','delete','spt_js');
+		$buttons[] = array('separator');
+		
+		$grid_js = build_grid_js('flex1',site_url("/biodata/grid_calon_jamaah/"),$colModel,'no','asc',$gridParams,$buttons);
+		$data['js_grid'] = $grid_js;
+		
+		$data['added_js'] = 
+		"<script type='text/javascript'>
+		function spt_js(com,grid){
+			if (com=='Tambah'){
+				location.href='".site_url()."/biodata/input'; 
+			}
+			if (com=='Hapus'){
+			   if($('.trSelected',grid).length>0){
+				   if(confirm('Anda yakin ingin menghapus ' + $('.trSelected',grid).length + ' buah data?')){
+						var items = $('.trSelected',grid);
+						var itemlist ='';
+						for(i=0;i<items.length;i++){
+							itemlist+= items[i].id.substr(3)+',';
+						}
+						$.ajax({
+						   type: 'POST',
+						   url: '".site_url('/biodata/hapus_data_calon_jamaah')."',
+						   data: 'items='+itemlist,
+						   success: function(data){
+							$('#flex1').flexReload();
+							alert(data);
+						   }
+						});
+					}
+				} else {
+					return false;
+				} 
+			}
+		} 
+		</script>
+		";
+
+                
+		$data['content'] = $this->load->view('biodata_list',$data,true);
+		$this->load->view('front',$data);		
+	}
+	
+	
+	function grid_calon_jamaah() {
+		
+		//call library or helper
+		$this->load->library('flexigrid');	
+		$this->load->helper('flexigrid');
+		$this->load->library('form_validation');		
+		
+		//call model here	
+		$this->load->model('jamaah_candidate_model');
+		
+		$valid_fields = array('ID_SIZE','KODE_REGISTRASI','NAMA_LENGKAP','NAMA_PANGGILAN','GENDER','AYAH_KANDUNG','MOBILE','MAHRAM');
+		$this->flexigrid->validate_post('NAMA_LENGKAP','asc',$valid_fields);
+		
+		$records = $this->jamaah_candidate_model->get_grid_all_jamaah($this->session->userdata('kode_registrasi'), $this->session->userdata('id_account'));
+		$this->output->set_header($this->config->item('json_header'));
+		
+		$no = 0;
+                
+		foreach ($records['records']->result() as $row)
+		{
+			if($row->GENDER == 1) $gender = "Laki-Laki";
+			elseif($row->GENDER == 2) $gender = "Perempuan";
+			
+			if($row->MAHRAM == 0) $mahram = "Ada";
+			elseif($row->MAHRAM == 1) $mahram = "Tidak Ada";
+			
+			$record_items[] = array(
+			
+				$row->ID_CANDIDATE,
+				$no = $no+1,
+				'<a href=\''.site_url().'/biodata/edit/'.$row->ID_CANDIDATE.'/'.$row->ID_ACCOUNT.'/\'><img border=\'0\' src=\''.base_url().'images/flexigrid/book.png\'></a> ',
+				$row->KODE_REGISTRASI,	
+				$row->NAMA_LENGKAP,
+				$row->NAMA_PANGGILAN,
+				$row->AYAH_KANDUNG,
+				$row->ID_SIZE,
+				$gender,
+				$mahram,
+				$row->MOBILE
+			);
+		}
+		
+		if(isset($record_items))
+			$this->output->set_output($this->flexigrid->json_build($records['record_count'],$record_items));
+		else
+			$this->output->set_output('{"page":"1","total":"0","rows":[]}');			
 	}
 	
 	
@@ -151,7 +286,7 @@ class Biodata extends CI_Controller {
 			
 			$insert = $this->jamaah_candidate_model->insert_jamaah($data);
 			
-			redirect('/biodata/list/');
+			redirect('/biodata/list_jamaah/');
 		}
 	}
 	
@@ -181,9 +316,9 @@ class Biodata extends CI_Controller {
 		
 		
 		$this->form_validation->set_rules($config);
-		$this->form_validation->set_message('required', '<strong>%s</strong> tidak boleh kosong !');
-		$this->form_validation->set_message('valid_email', 'Penulisan <strong>%s</strong> tidak benar!');
-		$this->form_validation->set_message('numeric', 'Gunakan Angka !');
+		$this->form_validation->set_message('required', 'Kolom <strong>%s</strong> harus diisi !');
+		$this->form_validation->set_message('valid_email', 'Penulisan kolom <strong>%s</strong> tidak benar!');
+		$this->form_validation->set_message('numeric', '<strong>Kolom %s</strong> harus berupa angka !');
 		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
 
 		return $this->form_validation->run();
