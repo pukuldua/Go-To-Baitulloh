@@ -8,6 +8,7 @@
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>images/favicon.ico" />
 		
 		<link rel="stylesheet" href="<?php echo base_url();?>css/screen.css" type="text/css" media="screen" title="default" />
+        <link rel="stylesheet" href="<?php echo base_url();?>css/flexigrid.css" type="text/css" />
 		<!--[if IE]>
 		<link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
 		<![endif]-->
@@ -171,6 +172,8 @@
 			$(document).pngFix( );
 			});
 		</script>
+		<!--<script type="text/javascript" src="<?php echo base_url();?>js/jquery.pack.js"></script>-->
+        <script type="text/javascript" src="<?php echo base_url();?>js/flexigrid.pack.js"></script>
 	</head>
 	
 	<body> 

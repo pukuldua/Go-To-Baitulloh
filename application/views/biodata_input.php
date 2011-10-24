@@ -32,8 +32,8 @@
 					<td><? $gender = 0; if(set_value('gender')!='') $gender = set_value('gender');
 							$gender_options = array(
 							  '0'  => '-- Jenis Kelamin --',
-							  '1'  => 'Pria',
-							  '2'  => 'Wanita',
+							  '1'  => 'Laki-Laki',
+							  '2'  => 'Perempuan',
 							);
 							
 							echo form_dropdown('gender', $gender_options, $gender,'id="gender" class="styledselect_form_1"'); ?>
