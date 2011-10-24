@@ -163,10 +163,10 @@ class Registration extends CI_Controller {
 		$content = $this->load->view('email_activation',$data);
 		$htmlMessage =  $this->parser->parse('email_activation', $data, true);
 		
-		$this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
+		$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
 		$this->email->to('wanprabu@gmail.com');
 
-		$this->email->subject('Email Test');
+		$this->email->subject('Aktivasi Akun');
 		$this->email->message($htmlMessage);
 
 		$this->email->send();
