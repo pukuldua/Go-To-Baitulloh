@@ -14,6 +14,14 @@ class Program_class_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+	
+	function get_program($id){
+		$this->db->select("*");
+		$this->db->from("program_class");
+		$this->db->where("ID_PROGRAM", $id);
+		
+		return $this->db->get();
+	}
 }
 
 ?>

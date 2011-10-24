@@ -5,7 +5,7 @@
 					<div class="nav-divider">&nbsp;</div>
 					<div class="showhide-account"><img src="<?php echo base_url();?>images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 					<div class="nav-divider">&nbsp;</div>
-					<a href="logout" id="logout"><img src="<?php echo base_url();?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+					<a href="<? echo site_url() ?>/logout" id="logout"><img src="<?php echo base_url();?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
 					<div class="clear">&nbsp;</div>
 				
 					<!--  start account-content -->	
@@ -25,22 +25,38 @@
 				<!--  start nav -->
 				<div class="nav">
 					<div class="table">
+                    
                     	<? if($this->session->userdata('email') == NULL) { ?>
-						<ul class="current"><li><a href="<?php echo site_url('check_availability')?>"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='check_availability')?'current':'select'?>">
+                          <li>
+                          	<a href="<?php echo site_url('check_availability')?>"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                           </li>
+                          </ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="select"><li><a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul><? } ?>
+						<ul class="<?=($this->uri->segment(1)==='login')?'current':'select'?>">
+                          <li>
+                            <a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                          </li>
+                        </ul>
+						<? } ?>
+                        
 						<div class="nav-divider">&nbsp;</div>
+                        
 						<? if($this->session->userdata('email') != NULL){ ?>
-						<ul class="select"><li><a href="<? echo site_url().'/beranda' ?>"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='beranda')?'current':'select'?>">
+                          <li>
+                        	<a href="<? echo site_url().'/beranda' ?>"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                          </li>
+                        </ul>
 						<div class="nav-divider">&nbsp;</div>		
 						
-						<ul class="select">
-							<li><a href="#nogo"><b>Biodata</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<ul class="<?=($this->uri->segment(1)==='biodata')?'current':'select'?>">
+							<li><a href="<? echo site_url() ?>/biodata"><b>Biodata</b><!--[if IE 7]><!--></a><!--<![endif]-->
 								<!--[if lte IE 6]><table><tr><td><![endif]-->
 								<div class="select_sub show">
 									<ul class="sub">
-										<li><a href="#nogo">Daftar Calon Jamaah</a></li>
-										<li><a href="#nogo">Form Tambah Calon Jamaah</a></li>
+										<li class="<?=($this->uri->segment(2)==='list_jamaah')?'sub_current':''?>"><a href="<? echo site_url() ?>/biodata/list_jamaah">Daftar Calon Jamaah</a></li>
+										<li class="<?=($this->uri->segment(2)==='input')?'sub_current':''?>"><a href="<? echo site_url() ?>/biodata/input">Form Tambah Calon Jamaah</a></li>
 									</ul>
 								</div>
 								<!--[if lte IE 6]></td></tr></table></a><![endif]-->

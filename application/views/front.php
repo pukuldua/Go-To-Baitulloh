@@ -64,10 +64,10 @@
 		<script type="text/javascript" charset="utf-8">
 		$(function() {
 			$("input.file_1").filestyle({ 
-			image: "images/forms/upload_file.gif",
+			image: "<?php echo base_url() ?>images/forms/upload_file.gif",
 			imageheight : 29,
 			imagewidth : 78,
-			width : 300
+			width : 110
 			});
 		});
 		</script>
