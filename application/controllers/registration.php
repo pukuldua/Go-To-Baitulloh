@@ -146,28 +146,28 @@ class Registration extends CI_Controller {
     }
 	
 	function send_email($key){
-		// $this->load->library('email');
-		// $config['smtp_host'] = 'smtp.gmail.com';
-		// $config['smtp_port'] = 587;
-		// $config['protocol'] = 'smtp';
-		// $config['mailtype'] = 'html';
+		$this->load->library('email');
+		$config['smtp_host'] = 'smtp.gmail.com';
+		$config['smtp_port'] = 587;
+		$config['protocol'] = 'smtp';
+		$config['mailtype'] = 'html';
 
-		// $this->email->initialize($config);
+		$this->email->initialize($config);
 		
 		$data['key'] = $key;
 		$data['subject'] = 'Account Activation';
 		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
 		$data['PASSWORD'] = $this->data_field['PASSWORD'];
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
-		$this->load->view('email_activation',$data);
+		$content = $this->load->view('email_activation',$data);
 		
-		// $this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
-		// $this->email->to('wanprabu@gmail.com');
+		$this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
+		$this->email->to('wanprabu@gmail.com');
 
-		// $this->email->subject('Email Test');
-		// $this->email->message('Testing the email class.');
+		$this->email->subject('Email Test');
+		$this->email->message($content);
 
-		// $this->email->send();
+		$this->email->send();
 
 		// echo $this->email->print_debugger();
 	}
