@@ -18,8 +18,9 @@ class jamaah_candidate_model extends CI_Model {
 	
 	function get_grid_all_jamaah($kode_reg, $id_account)
 	{
-		$this->db->select('*');
-		$this->db->from('jamaah_candidate');
+		$this->db->select('j.*, c.SIZE AS UKURAN_BAJU');
+		$this->db->from('jamaah_candidate j');
+		$this->db->join('clothes_size c','j.ID_SIZE = c.ID_SIZE');	
 		$this->db->where('KODE_REGISTRASI', $kode_reg );
 		$this->db->where('ID_ACCOUNT', $id_account);
 		
@@ -38,6 +39,16 @@ class jamaah_candidate_model extends CI_Model {
 	function get_total_data(){
 		$query = $this->db->count_all('jamaah_candidate');
 		return $query;			
+	}
+	
+	function get_jamaah_berdasarkan_id_accaount_candidate($id_candidate, $id_account)
+	{
+		$this->db->select('*');
+		$this->db->from('jamaah_candidate');
+		$this->db->where('ID_CANDIDATE', $id_candidate);
+		$this->db->where('ID_ACCOUNT', $id_account);
+		
+		return $this->db->get();
 	}
 	
 	function insert_jamaah($data){

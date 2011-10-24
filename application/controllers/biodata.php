@@ -6,6 +6,9 @@ class Biodata extends CI_Controller {
 	{
 		parent::__construct();
 		
+		if($this->session->userdata('email') == NULL)
+			redirect(site_url()."/login");
+		
 	}
 	function index()
 	{
@@ -18,6 +21,9 @@ class Biodata extends CI_Controller {
 		$data['content'] = $this->load->view('biodata', '', true);
 		$this->load->view('front', $data);
 	}
+	
+	
+	// HALAMAN LIST CALON JAMAAH
 	
 	function list_jamaah(){
 		
@@ -44,15 +50,15 @@ class Biodata extends CI_Controller {
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$colModel['no'] = array('No',30,TRUE,'center',0);
+		$colModel['no'] = array('No',40,TRUE,'center',0);
 		$colModel['edit'] = array('Edit',40,FALSE,'center',0);
 		$colModel['KODE_REGISTRASI'] = array('Kode Reg.',80,TRUE,'center',0);
-		$colModel['NAMA_LENGKAP'] = array('Nama Lengkap',150,TRUE,'center',1);
+		$colModel['NAMA_LENGKAP'] = array('Nama Lengkap',200,TRUE,'center',1);
 		$colModel['NAMA_PANGGILAN'] = array('Nama Panggilan',150,TRUE,'center',1);
 		$colModel['AYAH_KANDUNG'] = array('Ayah Kandung',150,TRUE,'center',1);
-		$colModel['ID_SIZE'] = array('Ukuran Baju',70,FALSE,'center',0);
-		$colModel['GENDER'] = array('Jenis Kelamin',70,FALSE,'center',0);
-		$colModel['MAHRAM'] = array('Hubungan Mahram',150,TRUE,'center',0);
+		$colModel['UKURAN_BAJU'] = array('Ukuran Baju',80,FALSE,'center',0);
+		$colModel['GENDER'] = array('Jenis Kelamin',80,FALSE,'center',0);
+		$colModel['MAHRAM'] = array('Hubungan Mahram',100,TRUE,'center',0);
 		$colModel['MOBILE'] = array('Mobile Phone',100,TRUE,'center',1);
 		
 		$gridParams = array(
@@ -122,7 +128,7 @@ class Biodata extends CI_Controller {
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$valid_fields = array('ID_SIZE','KODE_REGISTRASI','NAMA_LENGKAP','NAMA_PANGGILAN','GENDER','AYAH_KANDUNG','MOBILE','MAHRAM');
+		$valid_fields = array('UKURAN_BAJU','KODE_REGISTRASI','NAMA_LENGKAP','NAMA_PANGGILAN','GENDER','AYAH_KANDUNG','MOBILE','MAHRAM');
 		$this->flexigrid->validate_post('NAMA_LENGKAP','asc',$valid_fields);
 		
 		$records = $this->jamaah_candidate_model->get_grid_all_jamaah($this->session->userdata('kode_registrasi'), $this->session->userdata('id_account'));
@@ -147,7 +153,7 @@ class Biodata extends CI_Controller {
 				$row->NAMA_LENGKAP,
 				$row->NAMA_PANGGILAN,
 				$row->AYAH_KANDUNG,
-				$row->ID_SIZE,
+				$row->UKURAN_BAJU,
 				$gender,
 				$mahram,
 				$row->MOBILE
@@ -160,6 +166,9 @@ class Biodata extends CI_Controller {
 			$this->output->set_output('{"page":"1","total":"0","rows":[]}');			
 	}
 	
+	
+	
+	// HALAMAN TAMBAH CALON JAMAAH
 	
 	function input()
 	{
@@ -234,7 +243,7 @@ class Biodata extends CI_Controller {
 			
 			// Upload Foto
 			$config['upload_path'] = './images/upload/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
 			$config['max_size']	= '5000';
 			
 			$this->load->library('upload', $config);
@@ -333,5 +342,105 @@ class Biodata extends CI_Controller {
 		}else
 				return TRUE;
     }
+	
+	
+	
+	// HALAMAN EDIT CALON JAMAAH
+	
+	function edit($id_candidate = NULL, $id_account = NULL)
+	{
+		
+		$this->load->library('form_validation');
+		$this->load->model('jamaah_candidate_model');
+		
+		$data_jamaah = $this->jamaah_candidate_model->get_jamaah_berdasarkan_id_accaount_candidate($id_candidate, $id_account);
+			
+		if($data_jamaah->result() != NULL)
+		{
+			foreach($data_jamaah->result() as $row)
+			{
+				$data['e_nama_lengkap'] = $row->NAMA_LENGKAP;
+				$data['e_nama_panggilan'] = $row->NAMA_PANGGILAN;
+				$data['e_gender'] = $row->GENDER;
+				$data['e_ayah_kandung'] = $row->AYAH_KANDUNG;
+				$data['e_warga_negara'] = $row->WARGA_NEGARA;
+				$data['e_tempat_lahir'] = $row->TEMPAT_LAHIR;
+				$data['e_tgl_lahir'] = $row->TANGGAL_LAHIR;
+				$data['e_id_propinsi'] = $row->ID_PROPINSI;
+				$data['e_kota'] = $row->KOTA;
+				$data['e_alamat'] = $row->ALAMAT;
+				$data['e_mahram'] = $row->MAHRAM;
+				$data['e_telp'] = $row->TELP;
+				$data['e_hp'] = $row->MOBILE;
+				$data['e_id_relation'] = $row->ID_RELATION;
+				$data['e_id_size'] = $row->ID_SIZE;
+				$data['e_layanan_khusus'] = $row->LAYANAN_KHUSUS;
+				$data['e_perihal_pribadi'] = $row->PERIHAL_PRIBADI;
+				$data['e_pas_foto'] = $row->FOTO;
+				$data['e_jasa_tambahan'] = $row->JASA_TAMBAHAN;
+				$data['e_request_nama'] = $row->REQUESTED_NAMA;
+				
+				// PECAH TANGGAL LAHIR
+				$pecah_tgl = explode("-", $data['e_tgl_lahir']);
+				$data['e_thn_lahir'] = $pecah_tgl[0];
+				$data['e_bln_lahir'] = $pecah_tgl[1];
+				$data['e_tgl_lahir'] = $pecah_tgl[2];
+				
+				// PECAH PELAYANAN KHUSUS
+				$pecah_khusus = explode(";", $data['e_layanan_khusus']);
+				$data['e_khusus_kursi'] = $pecah_khusus[0];
+				$data['e_khusus_asisten'] = $pecah_khusus[1];
+				
+				// PECAH PERIHAL PRIBADI
+				$pecah_pribadi = explode(";", $data['e_perihal_pribadi']);
+				$data['e_perihal_darah'] = $pecah_pribadi[0];
+				$data['e_perihal_tinggi'] = $pecah_pribadi[1];
+				$data['e_perihal_smooking'] = $pecah_pribadi[2];
+				$data['e_perihal_jantung'] = $pecah_pribadi[3];
+				$data['e_perihal_asma'] = $pecah_pribadi[4];
+				$data['e_perihal_mendengkur'] = $pecah_pribadi[5];
+				
+				
+				// LOAD DATA DROPDOWN
+				$this->load->model('province_model');
+				$this->load->model('clothes_size_model');
+				$this->load->model('relation_model');
+				
+				$province = $this->province_model->get_all_province();
+				$relation = $this->relation_model->get_all_relation();
+				$chlothes = $this->clothes_size_model->get_all_clothes();
+		
+				$province_options['0'] = '-- Pilih Propinsi --';
+				foreach($province->result() as $row){
+						$province_options[$row->ID_PROPINSI] = $row->NAMA_PROPINSI;
+				}
+				
+				$relasi_options['0'] = '-- Pilih Relasi --';
+				foreach($relation->result() as $row){
+						$relasi_options[$row->ID_RELATION] = $row->JENIS_RELASI;
+				}
+				
+				$chlothes_options['0'] = '-- Pilih Ukuran Baju --';
+				foreach($chlothes->result() as $row){
+						$chlothes_options[$row->ID_SIZE] = $row->SIZE;
+				}
+				
+				$data['province_options'] = $province_options;
+				$data['relasi_options'] = $relasi_options;
+				$data['chlothes_options'] = $chlothes_options;
+				
+				
+				$data['content'] = $this->load->view('biodata_edit', $data, true);
+				$this->load->view('front', $data);
+			
+			}
+		
+		} else {
+			
+			redirect(site_url()."/biodata/list_jamaah");
+		}
+		
+	}
+					
 
 }
