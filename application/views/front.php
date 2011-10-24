@@ -197,7 +197,30 @@
 		<!--  start nav-outer-repeat.................................................. START -->
 		<div class="nav-outer-repeat"> 
 			<!--  start nav-outer -->
-			
+<<<<<<< HEAD
+			<div class="nav-outer"> 
+				<? if($this->session->userdata('email') != NULL){ ?>
+				<!-- start nav-right -->
+				<div id="nav-right">
+					<div class="nav-divider">&nbsp;</div>
+					<div class="showhide-account"><img src="<?php echo base_url();?>images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+					<div class="nav-divider">&nbsp;</div>
+					<a href="logout" id="logout"><img src="<?php echo base_url();?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+					<div class="clear">&nbsp;</div>
+				
+					<!--  start account-content -->	
+					<div class="account-content">
+					<div class="account-drop-inner">
+						<a href="<?php echo site_url('useraccount/changedata');?>" id="acc-settings">Change Profile Data</a>
+						<div class="clear">&nbsp;</div>
+						<div class="acc-line">&nbsp;</div>
+						<a href="<?php echo site_url('useraccount/changepassword');?>" id="acc-settings">Change Password</a>
+					</div>
+					</div>
+					<!--  end account-content -->
+				</div>
+				<!-- end nav-right -->
+				<? }?>
             <? echo $this->load->view('menu_atas'); ?>
 				<!--  start nav -->
 			</div>
@@ -216,7 +239,7 @@
 				?>
 				<div id="page-heading"><h1>:: Registration Process ::</h1></div>
 				<? } else { ?>
-				<div id="page-heading"><h1><i>Assalamualaikum, <strong><? echo ucwords($this->session->userdata('nama')); ?></strong></i></h1></div>
+				<div id="page-heading"><h4>Assalamualaikum, <strong><? echo ucwords($this->session->userdata('nama')); ?></strong></h4></div>
                 <? } ?>
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 					<tr>

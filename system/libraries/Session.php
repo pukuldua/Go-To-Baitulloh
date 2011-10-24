@@ -766,6 +766,8 @@ class CI_Session {
 			log_message('debug', 'Session garbage collection performed.');
 		}
 	}
+	
+	// --------------------------------------------------------------------
 
 
 }

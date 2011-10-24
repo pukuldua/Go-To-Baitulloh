@@ -86,7 +86,7 @@ body	{
 #content-table-inner	{
 	font-size: 12px;
 	line-height: 12px;
-	padding: 10px 0 20px 0;
+	padding: 10px 0 0 0;
 	}
 #tbl-border-top	{
 	background: url(../images/shared/border_bit.jpg) top repeat-x;
@@ -1605,3 +1605,10 @@ a:hover.back-login	{
 	background: url(../images/login/submit_login.gif) no-repeat 0 -29px;
 	}
  
+.titleform{
+	border-bottom:solid 1px #f0f0f0;
+	margin:0 0 20px 0;
+	color: #818181;
+	line-height: 11px;
+	padding:0 0 10px 0;
+}
