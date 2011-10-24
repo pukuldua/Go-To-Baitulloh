@@ -111,7 +111,7 @@ class Check_availability extends CI_Controller {
 					$room_capacity += $tmp_capacity;
 					
 					$tmp_candidate -= $tmp_capacity;
-					if ($tmp_candidate > 0){
+					if ($tmp_candidate >= 0){
 						$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], $room_type->row()->CAPACITY)->num_rows();
 					}else {
 						$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], 0)->num_rows();
