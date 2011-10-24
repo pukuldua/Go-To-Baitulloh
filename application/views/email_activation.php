@@ -452,32 +452,21 @@
                                                 <!-- // Begin Module: Standard Footer \\ -->
                                                 <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="social">
-                                                            <div mc:edit="std_social">
-                                                                &nbsp;<a href="*|TWITTER:PROFILEURL|*">follow on Twitter</a> | <a href="*|FACEBOOK:PROFILEURL|*">friend on Facebook</a> | <a href="*|FORWARD|*">forward to a friend</a>&nbsp;
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <td valign="top" width="350">
                                                             <div mc:edit="std_footer">
 																<p><strong>Head Office :</strong>
 																<br />
 																PT. KAMILAH WISATA MUSLIM<br />
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
-																Cilandak – Jakarta Selatan 12420<br />
-																Telp : +6221 – 7279 4230<br />
-																Fax : +6221 – 7590 3619</p>
+																Cilandak  Jakarta Selatan 12420<br />
+																Telp : +6221  7279 4230<br />
+																Fax : +6221  7590 3619</p>
                                                       </div></td>
-                                                        <td valign="top" width="190" id="monkeyRewards">
-                                                            <div mc:edit="monkeyrewards">
-                                                                Banner Disini</div>
-                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
+                                                        <td valign="middle" id="utility" align="center">
                                                             <div mc:edit="std_utility">
-                                                                &nbsp;Online Registration System - Kamilah Wisata<br />
+                                                                Online Registration System - Kamilah Wisata<br />
                                                               Membangun Karakter Jamaah Menuju Kehidupan yang Lebih Baik,<br />
                                                             </div>
                                                         </td>

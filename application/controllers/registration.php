@@ -147,9 +147,9 @@ class Registration extends CI_Controller {
 	
 	function send_email($key){
 		$this->load->library('email');
-		$config['smtp_host'] = 'smtp.gmail.com';
-		$config['smtp_port'] = 587;
-		$config['protocol'] = 'smtp';
+		$this->load->library('parser');
+		
+		$config['protocol'] = 'mail';
 		$config['mailtype'] = 'html';
 
 		$this->email->initialize($config);
@@ -159,13 +159,15 @@ class Registration extends CI_Controller {
 		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
 		$data['PASSWORD'] = $this->data_field['PASSWORD'];
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
+		
 		$content = $this->load->view('email_activation',$data);
+		$htmlMessage =  $this->parser->parse('email_activation', $data, true);
 		
 		$this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
 		$this->email->to('wanprabu@gmail.com');
 
 		$this->email->subject('Email Test');
-		$this->email->message($content);
+		$this->email->message($htmlMessage);
 
 		$this->email->send();
 
