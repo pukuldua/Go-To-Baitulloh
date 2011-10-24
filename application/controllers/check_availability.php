@@ -97,48 +97,48 @@ class Check_availability extends CI_Controller {
 			$kamar = $this->input->post('kamar');
 			$jml_kamar = $this->input->post('jml_kamar');
 			$total_candidate -= ($no_bed + $infant);
-			$total_room = 0;			
+			$flag_room = TRUE;
 			$room_capacity = 0;
+			$tmp_candidate = $total_candidate;
+			$available_beds = $this->room_model->count_available_beds($group)->row()->JML_BEDS;
+			$data['waiting'] = FALSE;
 			
 			for($i=0; $i<count($kamar); $i++){				
 				if($kamar[$i]!='0'  && $kamar[$i] != ''){
 					$room_type = $this->room_type_model->get_roomType($kamar[$i]);
 					$room_choice[$i] = "<pre>".$room_type->row()->JENIS_KAMAR." jumlah ".$jml_kamar[$i]." Kamar</pre>";
-					$room_capacity += $room_type->row()->CAPACITY * $jml_kamar[$i];
+					$tmp_capacity = $room_type->row()->CAPACITY * $jml_kamar[$i];
+					$room_capacity += $tmp_capacity;
+					
+					$tmp_candidate -= $tmp_capacity;
+					if ($tmp_candidate >= 0){
+						$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], $room_type->row()->CAPACITY)->num_rows();
+					}else {
+						$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], 0)->num_rows();
+					}
+					
+					if ($counter < $jml_kamar[$i]){						
+						$flag_room = FALSE;
+					}
 				}
 			}
 			
-			if ($room_capacity >= $total_candidate){
-				for($i=0; $i<count($kamar); $i++){
-					if($kamar[$i]!='0'  && $kamar[$i] != ''){		
-						$room_type = $this->room_type_model->get_roomType($kamar[$i]);
-						if ($room_capacity % $total_candidate > 0){
-							$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], 0)->num_rows();
-						} else if ($room_capacity % $total_candidate == 0){
-							$counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], $room_type->row()->CAPACITY)->num_rows();							
-						}
-						
-						if ($counter >= $jml_kamar[$i]){
-						} else{
-							
-						}
-					}
-				}	
-				
+			if ($room_capacity >= $total_candidate && $available_beds >= $total_candidate){
+				if ($flag_room){
+					$message .= "<br>Jumlah kamar tersedia untuk paket pilihan anda";
+				}else{
+					$data['waiting'] = TRUE;
+					$message .= "<br>Maaf, Jumlah kamar tidak tersedia untuk pilihan paket anda !!! Silahkan memilih konfigurasi yang lain.";					
+					$data['available_room'] = $this->room_model->count_available_room($group);
+				}
 			} else {
 				$message .= "<br>Maaf, Jumlah pilihan kamar tidak mencukupi pilihan paket anda !!! Silahkan memilih konfigurasi yang lain.";
+				
+				if ($available_beds >= $total_candidate)
+					$data['available_room'] = $this->room_model->count_available_room($group);
 			}
 			
-			$data['waiting'] = FALSE;
-			if ($total_room < $total_candidate && $total_room != 0){
-				$message .= "<br>Maaf, Jumlah kamar yang tersedia tidak mencukupi pilihan paket anda !!!";
-				$data['available_room'] = $this->room_model->count_available_room($group);				
-			}
-			else if ($total_room == 0){
-				$data['waiting'] = TRUE;
-			}
-			
-			if ($plane_flag && !$data['waiting']){
+			if ($plane_flag){
 				$data['depart_jd'] = date_format(date_create($depart_jd), "d M Y");
 				$data['depart_mk'] = date_format(date_create($depart_mk), "d M Y");
 			}

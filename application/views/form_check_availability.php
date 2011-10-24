@@ -216,7 +216,7 @@
 <script>
 	function _add_more() {
 		var index = document.getElementsByName('kamar[]');
-		if (index.length < 4){
+		if (index.length < 5){
 		var txt = "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr valign=\"middle\"><td><select name=\"kamar[]\" id=\"kamar"+index.length+
 					"\" class=\"styledselect-kamar\"><option value=\"0\">-- Pilih Jenis Kamar --</option></select></td>"+
 					"<td>&nbsp; Jumlah <select name=\"jml_kamar[]\" id=\"jml_kamar"+index.length+"\" class=\"styledselect-day\">"+

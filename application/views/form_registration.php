@@ -124,7 +124,9 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td valign="top">
+						<? if (isset($waiting)) {?>
 						<input type="hiddden" name="waiting" value="<? echo $waiting; ?>" />
+						<? }?>
 						<input type="submit" value="" class="form-submit" />
 						<input type="reset" value="" class="form-reset"  />
 					</td>

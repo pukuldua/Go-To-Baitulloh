@@ -30,9 +30,11 @@ class Room_model extends CI_Model {
 		$this->db->where("ID_PROGRAM", $program);
 		$this->db->where("ID_ROOM_TYPE", $room_type);
 		$this->db->where("AVAILABILITY", 1);
-		$this->db->where("BEDS", $beds);
+		
 		if ($beds == 0)
-		$this->db->where("BEDS >", $beds);
+			$this->db->where("BEDS >", $beds);
+		else
+			$this->db->where("BEDS", $beds);
 		
 		return $this->db->get();
 	}
@@ -47,6 +49,15 @@ class Room_model extends CI_Model {
 		$this->db->join("program_class p", "p.ID_PROGRAM=room.ID_PROGRAM");
 		$this->db->join("room_type", "room_type.ID_ROOM_TYPE=room.ID_ROOM_TYPE");
 		$this->db->group_by("room.ID_PROGRAM, ID_ROOM_TYPE"); 
+		
+		return $this->db->get();
+	}
+	
+	function count_available_beds($group){
+		$this->db->select("room.*, sum(BEDS) as JML_BEDS");
+		$this->db->from("room"); 	 	
+		$this->db->where("room.ID_GROUP", $group);
+		$this->db->where("AVAILABILITY", 1);
 		
 		return $this->db->get();
 	}

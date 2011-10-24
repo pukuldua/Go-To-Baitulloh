@@ -15,6 +15,7 @@ class Registration extends CI_Controller {
 	
 	function front(){
 		$waiting = $this->input->post('waiting');
+		
 		$this->load->model('province_model');
 		$province = $this->province_model->get_all_province();
 
@@ -23,14 +24,15 @@ class Registration extends CI_Controller {
 				$province_options[$row->ID_PROPINSI] = $row->NAMA_PROPINSI;
 		}
 		
-		$data['waiting'] = $waiting;
+		if ($waiting != '' & $waiting != NULL)
+			$data['waiting'] = $waiting;
 		$data['province_options'] = $province_options;
 		$data['content'] = $this->load->view('form_registration',$data,true);
 		$this->load->view('front',$data);
 	}
 	
 	//insert data inputan ke database
-    function do_register() {		
+    function do_register() {
 		if ($this->check_validasi() == FALSE){
 			// //$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
 			$this->front();
@@ -51,7 +53,7 @@ class Registration extends CI_Controller {
 				if ($this->input->post('waiting') == 1){
 					$this->load->model('waiting_model');
 					
-					$id_acc = $this->accounts_model->get_account_byKode(data_field['KODE_REGISTRASI'])->row()->ID_ACCOUNT;
+					$id_acc = $this->accounts_model->get_account_byKode($this->data_field['KODE_REGISTRASI'])->row()->ID_ACCOUNT;
 					$data_waiting = array('KODE_REGISTRASI'=>$this->data_field['KODE_REGISTRASI'], 'ID_ACCOUNT'=>$id_acc);
 					
 					$this->waiting_model->insert_waiting_list($data_waiting);
@@ -158,7 +160,6 @@ class Registration extends CI_Controller {
 		$data['PASSWORD'] = $this->data_field['PASSWORD'];
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
 		$this->load->view('email_activation',$data);
-		//$this->load->view('front',$data);
 		
 		// $this->email->from('wahyu.andy@smarti.web.id', 'Your Name');
 		// $this->email->to('wanprabu@gmail.com');
