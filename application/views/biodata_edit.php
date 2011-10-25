@@ -7,7 +7,7 @@
 				<tr>
 					<? form_error('nama_lengkap') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Nama Lengkap (*)</th>
-					<td><input type="text" name="nama_lengkap" value="<?php echo set_value('nama_lengkap');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="nama_lengkap" value="<?php echo $e_nama_lengkap; ?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nama_lengkap') != '') {?>
 						<div class="error-left"></div>
@@ -18,7 +18,7 @@
 				<tr>
 					<? form_error('panggilan') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Panggilan</th>
-					<td><input type="text" name="panggilan" value="<?php echo set_value('panggilan');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="panggilan" value="<?php echo $e_nama_panggilan;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('panggilan') != '') {?>
 						<div class="error-left"></div>
@@ -29,7 +29,7 @@
 				<tr>
 					<? form_error('gender') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
 					<th valign="top">Gender (*)</th>
-					<td><? $gender = 0; if(set_value('gender')!='') $gender = set_value('gender');
+					<td><? $gender = $e_gender; if(set_value('gender')!='') $gender = set_value('gender');
 							$gender_options = array(
 							  '0'  => '-- Jenis Kelamin --',
 							  '1'  => 'Laki-Laki',
@@ -48,7 +48,7 @@
 				<tr>
 					<? form_error('ayah_kandung') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Ayah Kandung (*)</th>
-					<td><input type="text" name="ayah_kandung" value="<?php echo set_value('ayah_kandung');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="ayah_kandung" value="<?php echo $e_ayah_kandung;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('ayah_kandung') != '') {?>
 						<div class="error-left"></div>
@@ -59,7 +59,7 @@
 				<tr>
 					<? form_error('warga_negara') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Warga Negara (*)</th>
-					<td><input type="text" name="warga_negara" value="<?php echo set_value('warga_negara');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="warga_negara" value="<?php echo $e_warga_negara;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('warga_negara') != '') {?>
 						<div class="error-left"></div>
@@ -70,7 +70,7 @@
 				<tr>
 					<? form_error('tempat_lahir') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Tempat Lahir (*)</th>
-					<td><input type="text" name="tempat_lahir" value="<?php echo set_value('tempat_lahir');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="tempat_lahir" value="<?php echo $e_tempat_lahir;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('tempat_lahir') != '') {?>
 						<div class="error-left"></div>
@@ -82,7 +82,7 @@
 					<th valign="top">Tanggal Lahir (*)</th>
 					<td><? 
 							// list tgl
-							$tgl_lahirs = 0; if(set_value('tgl_lahir')!='') $tgl_lahirs = set_value('tgl_lahir');
+							$tgl_lahirs = $e_tgl_lahir; if(set_value('tgl_lahir')!='') $tgl_lahirs = set_value('tgl_lahir');
 							
 							$list_tgl['0'] = "Tgl";
 							for($i=1;$i<=31;$i++)
@@ -92,7 +92,7 @@
 							echo form_dropdown('tgl_lahir', $list_tgl, $tgl_lahirs,'id="tgl_lahir" class="styledselect-day"'); 
 							
 							// list bln
-							$bln_lahirs = 0; if(set_value('bln_lahir')!='') $bln_lahirs = set_value('bln_lahir');
+							$bln_lahirs = $e_bln_lahir; if(set_value('bln_lahir')!='') $bln_lahirs = set_value('bln_lahir');
 							
 							$list_bln['0'] = "Bln";
 							for($i=01;$i<=12;$i++)
@@ -102,7 +102,7 @@
 							echo form_dropdown('bln_lahir', $list_bln, $bln_lahirs,'id="bln_lahir" class="styledselect-day"');
 							
 							//list tahun
-							$thn_lahirs = 0; if(set_value('thn_lahir')!='') $thn_lahirs = set_value('thn_lahir');
+							$thn_lahirs = $e_thn_lahir; if(set_value('thn_lahir')!='') $thn_lahirs = set_value('thn_lahir');
 							
 							$list_thn['0'] = "Thn";
 							for($i=1900;$i<=2010;$i++)
@@ -122,7 +122,7 @@
 				<tr>
 					<th valign="top">Propinsi (*)</th>
 					<td>	
-						<? $province = 0; if(set_value('province')!='') $province = set_value('province');
+						<? $province = $e_id_propinsi; if(set_value('province')!='') $province = set_value('province');
 							echo form_dropdown('province', $province_options, $province,'id="province" class="styledselect_form_1"'); ?>
 					</td>
 					<td>
@@ -135,7 +135,7 @@
 				<tr>
 					<? form_error('kota') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Kota (*)</th>
-					<td><input type="text" name="kota" value="<?php echo set_value('kota');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="kota" value="<?php echo $e_kota;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('kota') != '') {?>
 						<div class="error-left"></div>
@@ -146,7 +146,7 @@
 				<tr>
 					<? form_error('alamat') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Alamat (*)</th>
-					<td><input type="text" name="alamat" value="<?php echo set_value('alamat');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="alamat" value="<?php echo $e_alamat;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('alamat') != '') {?>
 						<div class="error-left"></div>
@@ -168,7 +168,7 @@
 				<tr height="40">
 					<? form_error('mahram') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top"></th>
-					<td><input type="checkbox" name="mahram" value="1" <? echo set_checkbox('mahram', '1')?> /> &nbsp;&nbsp;Tidak Ada Mahram</td>
+					<td><input type="checkbox" name="mahram" value="1" <?=($e_mahram==1)?'checked="checked"':''?> /> &nbsp;&nbsp;Tidak Ada Mahram</td>
 					<td>
 						<? if(form_error('mahram') != '') {?>
 						<div class="error-left"></div>
@@ -190,7 +190,7 @@
 				<tr>
 					<? form_error('telp') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">No Telepon (*)</th>
-					<td><input type="text" name="telp" value="<?php echo set_value('telp');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="telp" value="<?php echo $e_telp;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('telp') != '') {?>
 						<div class="error-left"></div>
@@ -201,7 +201,7 @@
 				<tr>
 					<? form_error('hp') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Handphone</th>
-					<td><input type="text" name="hp" value="<?php echo set_value('hp');?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="hp" value="<?php echo $e_hp;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('hp') != '') {?>
 						<div class="error-left"></div>
@@ -212,7 +212,7 @@
 				<tr>
 					<? form_error('relasi') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
 					<th valign="top">Relation (*)</th>
-					<td><? $relasi = 0; if(set_value('relasi')!='') $relasi = set_value('relasi');
+					<td><? $relasi = $e_id_relation; if(set_value('relasi')!='') $relasi = set_value('relasi');
 							echo form_dropdown('relasi', $relasi_options, $relasi,'id="relasi" class="styledselect_form_1"'); ?>
                         </td>
 					<td>
@@ -225,7 +225,7 @@
 				<tr>
 					<? form_error('baju') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
 					<th valign="top">Ukuran Baju (*)</th>
-					<td><? $baju = 0; if(set_value('baju')!='') $baju = set_value('baju');
+					<td><? $baju = $e_id_size; if(set_value('baju')!='') $baju = set_value('baju');
 							echo form_dropdown('baju', $chlothes_options, $baju,'id="baju" class="styledselect_form_1"'); ?>
                         </td>
 					<td>
@@ -242,8 +242,8 @@
 				</tr>
 				<tr height="40">
 					<td>
-                    <input type="checkbox" name="kursi_roda" value="1" <? echo set_checkbox('kursi_roda', '1')?> /> &nbsp;&nbsp;Kursi Roda</td>
-					<td><input type="checkbox" name="asisten" value="2" <? echo set_checkbox('asisten', '2')?> /> &nbsp;&nbsp;Asistensi Anak yang khusus</td>
+                    <input type="checkbox" name="kursi_roda" value="1" <?=($e_khusus_kursi==1)?'checked="checked"':''?>/> &nbsp;&nbsp;Kursi Roda</td>
+					<td><input type="checkbox" name="asisten" value="2"  <?=($e_khusus_asisten==2)?'checked="checked"':''?> /> &nbsp;&nbsp;Asistensi Anak yang khusus</td>
 					<td></td>
 				</tr>
 				<tr>
@@ -255,13 +255,13 @@
 					<td colspan="3"><table width="100%">
                     	<tr>
                           <td>
-                          <input type="checkbox" name="darah_tinggi" value="1" <? echo set_checkbox('darah_tinggi', '1')?> /> &nbsp;&nbsp;Darah Tinggi
+                          <input type="checkbox" name="darah_tinggi" value="1"  <?=($e_perihal_darah==1)?'checked="checked"':''?> /> &nbsp;&nbsp;Darah Tinggi
                           </td>
                           <td>
-                          <input type="checkbox" name="takut_ketinggian" value="2" <? echo set_checkbox('takut_ketinggian', '2')?> /> &nbsp;&nbsp;Takut Ketinggian
+                          <input type="checkbox" name="takut_ketinggian" value="2"  <?=($e_perihal_tinggi==2)?'checked="checked"':''?> /> &nbsp;&nbsp;Takut Ketinggian
                           </td>
                           <td>
-                          <input type="checkbox" name="smooking_room" value="3" <? echo set_checkbox('smooking_room', '3')?> /> &nbsp;&nbsp;Smooking Room
+                          <input type="checkbox" name="smooking_room" value="3"  <?=($e_perihal_smooking==3)?'checked="checked"':''?> /> &nbsp;&nbsp;Smooking Room
                           </td>
                          </tr>
                        </table>
@@ -271,13 +271,13 @@
 					<td colspan="3"><table width="100%">
                     	<tr>
                           <td width="29%">
-                          <input type="checkbox" name="jantung" value="4" <? echo set_checkbox('jantung', '4')?> /> &nbsp;&nbsp;Jantung
+                          <input type="checkbox" name="jantung" value="4"  <?=($e_perihal_jantung==4)?'checked="checked"':''?> /> &nbsp;&nbsp;Jantung
                           </td>
                           <td width="35%">
-                          <input type="checkbox" name="asma" value="5" <? echo set_checkbox('asma', '5')?> /> &nbsp;&nbsp;Asma
+                          <input type="checkbox" name="asma" value="5" <?=($e_perihal_asma==5)?'checked="checked"':''?> /> &nbsp;&nbsp;Asma
                           </td>
                           <td>
-                          <input type="checkbox" name="mendengkur" value="6" <? echo set_checkbox('mendengkur', '6')?> /> &nbsp;&nbsp;Mendengkur
+                          <input type="checkbox" name="mendengkur" value="6"  <?=($e_perihal_mendengkur==6)?'checked="checked"':''?> /> &nbsp;&nbsp;Mendengkur
                           </td>
                          </tr>
                        </table>
@@ -301,7 +301,11 @@
 				<tr>
 					<? form_error('jasa_paspor') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Jasa Tambahan</th>
-					<td><input type="checkbox" name="jasa_paspor" id="jasa_paspor" value="1" <? echo set_checkbox('jasa_paspor', '1')?>  onchange="jasaPaspor(this)"/> &nbsp;&nbsp;Tambah Nama (3 suku kata) Paspor</td>
+					<td>
+                    <? if($e_request_nama == "") { $e_perihal_mendengkur = 0; }
+					   else { $e_jasa_paspor = 1;}
+					?>
+                    <input type="checkbox" name="jasa_paspor" id="jasa_paspor" value="1" <?=($e_jasa_paspor==1)?'checked="checked"':''?>  onchange="jasaPaspor(this)"/> &nbsp;&nbsp;Tambah Nama (3 suku kata) Paspor</td>
 					<td>
 						<? if(form_error('jasa_paspor') != '') {?>
 						<div class="error-left"></div>
@@ -312,7 +316,7 @@
 				<tr>
 					<? form_error('jasa_paspor_nama') == '' ? $class = 'inp-form-text':$class = 'inp-form-error'; ?>
 					<th valign="top"></th>
-					<td><input type="text" name="jasa_paspor_nama" id="jasa_paspor_nama" value="<?php echo set_value('jasa_paspor_nama');?>" class="<? echo $class;?>" disabled="disabled" /></td>
+					<td><input type="text" name="jasa_paspor_nama" id="jasa_paspor_nama" value="<?php echo $e_request_nama;?>" class="<? echo $class;?>" disabled="disabled" /></td>
 					<td>
 						<? if(form_error('jasa_paspor_nama') != '') {?>
 						<div class="error-left"></div>
@@ -323,7 +327,7 @@
 				<tr height="50">
 					<? form_error('jasa_maningtis') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top"></th>
-					<td valign="top"><input type="checkbox" name="jasa_maningtis" value="1" <? echo set_checkbox('jasa_maningtis', '1')?> /> &nbsp;&nbsp;Jasa Maningtis</td>
+					<td valign="top"><input type="checkbox" name="jasa_maningtis" value="1" <?=($e_jasa_tambahan==1)?'checked="checked"':''?> /> &nbsp;&nbsp;Jasa Maningtis</td>
 					<td>
 						<? if(form_error('jasa_maningtis') != '') {?>
 						<div class="error-left"></div>
@@ -354,10 +358,10 @@ function jasaPaspor(input)
 {
 	if(input.checked)
 	{
-		document.getElementById('jasa_paspor_nama').value='';
+		document.getElementById('jasa_paspor_nama').value='<?php echo $e_request_nama ?>';
 		document.getElementById('jasa_paspor_nama').disabled=false;
 	} else {
-		document.getElementById('jasa_paspor_nama').value='';
+		document.getElementById('jasa_paspor_nama').value='<?php echo $e_request_nama ?>';
 		document.getElementById('jasa_paspor_nama').disabled=true;
 	}
 }
