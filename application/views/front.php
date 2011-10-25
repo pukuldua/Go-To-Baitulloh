@@ -215,9 +215,8 @@
 		<div id="content-outer">
 			<!-- start content -->
 			<div id="content">
-				<? if($this->session->userdata('email') == NULL) {
-				?>
-				<div id="page-heading"><h1>:: Registration Process ::</h1></div>
+				<? if($this->session->userdata('email') == NULL) { ?>
+				<div id="page-heading"><h1></h1></div>
 				<? } else { ?>
 				<div id="page-heading"><h4>Assalamualaikum, <strong><? echo ucwords($this->session->userdata('nama')); ?></strong></h4></div>
                 <? } ?>

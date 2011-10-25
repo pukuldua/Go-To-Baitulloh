@@ -5,16 +5,16 @@
 			<!--  start step-holder -->
 			<div id="step-holder">
 				<div class="step-no-off">1</div>
-				<div class="step-light-left">Check Order</a></div>
+				<div class="step-light-left">Cek Ketersediaan</a></div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no-off">2</div>
-				<div class="step-light-left">Result Page</div>
+				<div class="step-light-left">Hasil Pengecekan</div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no-off">3</div>
-				<div class="step-light-left">Registration Form</div>
+				<div class="step-light-left">Pendaftaran</div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no">4</div>
-				<div class="step-dark-left">Notification Page</div>
+				<div class="step-dark-left">Notifikasi</div>
 				<div class="step-dark-round">&nbsp;</div>
 				<div class="clear"></div>
 			</div>
@@ -78,7 +78,7 @@
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
 							<h5>Assalamualaikum Wr Wb</h5>
-								Terima kasih telah melakukan registrasi keberangkatan Umroh pada Umrah Kamilah.
+								Terima kasih telah melakukan pendaftaran keberangkatan Umroh pada Umrah Kamilah.
 						</div>
 							
 						<div class="clear"></div>
@@ -86,8 +86,8 @@
 							
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
-							<h5>Informasi Registrasi</h5>
-								Data Registrasi anda telah masuk ke dalam sistem kami.
+							<h5>Informasi Pendaftaran</h5>
+								Data Pendaftaran anda telah masuk ke dalam sistem kami.
 						</div>
 							
 						<div class="clear"></div>
