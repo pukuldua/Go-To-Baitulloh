@@ -708,6 +708,13 @@ a:hover.action-delete	{
 	width: 160px;
 	}
 
+        .styledselect-kamar2	{
+	border: 1px solid #acacac;
+	margin-right: 3px;
+	padding: 3px;
+	width: 200px;
+	}
+
 .styledselect-group	{
 	border: 1px solid #acacac;
 	margin-right: 3px;

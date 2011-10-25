@@ -13,9 +13,36 @@
 			});
 		//$('#fourth').multiselect2side({maxSelected: 4});
 	});
+	
+	function enableSubmit(val){
+		if (val.checked)
+			document.form_rooming.submit_button.disabled = false;
+		else
+			document.form_rooming.submit_button.disabled = true;
+	}
+	
+	function getJamaah(room){
+		if (room.value != 0 && room.selectedIndex != 0){
+			var prp = room[room.selectedIndex].text;			
+			document.getElementById("div_room").innerHTML = prp;
+			
+				$.ajax({
+						url: "<?=base_url();?>index.php/rooming/getJamaah/",
+						global: false,
+						type: "POST",
+						async: false,
+						dataType: "html",
+						data: "id_room="+ room.value, //the name of the $_POST variable and its value
+						success: function (response) {
+							 document.getElementById("div_prev").innerHTML = response;
+						}
+				});
+		}
+		// return false;
+	}
 </script>
 	
-<?php echo form_open('rooming/book_room'); ?>
+<?php echo form_open('rooming/book_room', array('name' => 'form_rooming')); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>			
@@ -23,29 +50,32 @@
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<th valign="top">Kamar</th>
-					<td></td>
+					<td>
+						<? $room = 0; if(set_value('room')!='') $room = set_value('room');
+							echo form_dropdown('room', $room_options, $room,'id="room" class="styledselect-kamar2" onchange="getJamaah(this);"'); ?>
+					</td>
 					<td></td>
 				</tr>
 				<tr>
-					<th valign="top">E-mail</th>
-					<td></td>
+					<th valign="top">Pemilihan Jamaah</th>
+					<td>
+						<? $candidate = 0; if(set_value('fourthSelect[]')!='') $candidate = set_value('fourthSelect[]');
+							echo form_dropdown('fourthSelect[]', $list_candidate, $candidate,'id="fourth" multiple="multiple"'); ?>
+					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<th valign="top">Konfirmasi</th>
 					<td>
-						  <select name="fourthSelect[]" id='fourth' multiple='multiple' >
-							<option value="1">First <a href="">Option</a></option>
-							<option value="2">Option 2th</option>
-							<option value="3" SELECTED >Option selected 3</option>
-							<option value="4">Option 4</option>
-							<option value="5">Option 5</option>
-							<option value="6">Option 6</option>
-							<option value="7" SELECTED >Option selected 7</option>
-							<option value="8">Option 8</option>
-						</select>
-						  <br/>
-						  <input type="submit" value="Submit Form"/>
+						<input name="setuju" id="setuju" type="checkbox" value="1" onchange="enableSubmit(this);" />&nbsp;
+						<label for="setuju">Yakin dan Setuju</label>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td valign="top">
+						<input type="submit" value="" class="form-submit" />
 					</td>
 					<td></td>
 				</tr>
@@ -69,27 +99,16 @@
 					<div id="related-act-inner">
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
-							<h5>Assalamualaikum Wr Wb</h5>
-								Terima kasih telah melakukan pendaftaran keberangkatan Umroh pada Umrah Kamilah.
+							<h5>Data Jamaah Kamar : <div id="div_room"></div></h5>							
 						</div>
 							
 						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
-						<div class="right">
-							<h5>Informasi Pendaftaran</h5>
-								Data Pendaftaran anda telah masuk ke dalam sistem kami.
+						<div class="lines-dotted-short"></div>						
+						
+						<div class="right" id="div_prev">
+							<ul class="greyarrow"><li>sadas</li></ul>
 						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></div>
-						<div class="right">
-							<h5>Proses Selanjutnya</h5>
-								Silakan Cek Email anda untuk melakukan Aktivasi akun dan prosedur selanjutnya.
-						</div>
+						
 							<div class="clear"></div>						
 					</div>
 					<!-- end related-act-inner -->
