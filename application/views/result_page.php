@@ -4,16 +4,16 @@
         	<!--  start step-holder -->
 			<div id="step-holder">
 				<div class="step-no-off">1</div>
-				<div class="step-light-left">Check Order</a></div>
+				<div class="step-light-left">Cek Ketersediaan</a></div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no">2</div>
-				<div class="step-dark-left">Result Page</div>
+				<div class="step-dark-left">Hasil Pengecekan</div>
 				<div class="step-dark-right">&nbsp;</div>
 				<div class="step-no-off">3</div>
-				<div class="step-light-left">Registration Form</div>
+				<div class="step-light-left">Pendaftaran</div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no-off">4</div>
-				<div class="step-light-left">Notification Page</div>
+				<div class="step-light-left">Notifikasi</div>
 				<div class="step-light-round">&nbsp;</div>
 				<div class="clear"></div>
 			</div>

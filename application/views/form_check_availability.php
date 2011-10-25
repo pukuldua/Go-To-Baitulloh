@@ -5,16 +5,16 @@
 			<!--  start step-holder -->
 			<div id="step-holder">
 				<div class="step-no">1</div>
-				<div class="step-dark-left">Check Order</a></div>
+				<div class="step-dark-left">Cek Ketersediaan</a></div>
 				<div class="step-dark-right">&nbsp;</div>
 				<div class="step-no-off">2</div>
-				<div class="step-light-left">Result Page</div>
+				<div class="step-light-left">Hasil Pengecekan</div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no-off">3</div>
-				<div class="step-light-left">Registration Form</div>
+				<div class="step-light-left">Pendaftaran</div>
 				<div class="step-light-right">&nbsp;</div>
 				<div class="step-no-off">4</div>
-				<div class="step-light-left">Notification Page</div>
+				<div class="step-light-left">Notifikasi</div>
 				<div class="step-light-round">&nbsp;</div>
 				<div class="clear"></div>
 			</div>
@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<? form_error('jml_adult') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Jumlah Adult (*)</th>
+					<th valign="top">Jumlah Dewasa (*)</th>
 					<td><input type="text" name="jml_adult" value="<?php echo set_value('jml_adult');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('jml_adult') != '') {?>
@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<? form_error('with_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child With Bed</th>
+					<th valign="top">Anak Dengan Ranjang</th>
 					<td><input type="text" name="with_bed" value="<?php echo set_value('with_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('with_bed') != '') {?>
@@ -72,7 +72,7 @@
 				</tr> 
 				<tr>
 					<? form_error('no_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child No Bed</th>
+					<th valign="top">Anak Tanpa Ranjang</th>
 					<td><input type="text" name="no_bed" value="<?php echo set_value('no_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('no_bed') != '') {?>
@@ -83,7 +83,7 @@
 				</tr>
 				<tr>
 					<? form_error('infant') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Infant</th>
+					<th valign="top">Bayi</th>
 					<td><input type="text" name="infant" value="<?php echo set_value('infant');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('infant') != '') {?>
