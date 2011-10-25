@@ -129,7 +129,7 @@ class Biodata extends CI_Controller {
 		$this->load->model('jamaah_candidate_model');
 		
 		$valid_fields = array('UKURAN_BAJU','KODE_REGISTRASI','NAMA_LENGKAP','NAMA_PANGGILAN','GENDER','AYAH_KANDUNG','MOBILE','MAHRAM');
-		$this->flexigrid->validate_post('NAMA_LENGKAP','desc',$valid_fields);
+		$this->flexigrid->validate_post('ID_ACCOUNT','desc',$valid_fields);
 		
 		$records = $this->jamaah_candidate_model->get_grid_all_jamaah($this->session->userdata('kode_registrasi'), $this->session->userdata('id_account'));
 		$this->output->set_header($this->config->item('json_header'));
@@ -583,7 +583,12 @@ class Biodata extends CI_Controller {
 			{
 				$foto = array('FOTO' => $data_file['file_name']);
 				$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
-				unlink($data_file['file_path'].$this->input->post('foto_edit'));
+				
+				$file_gambar = $data_file['file_path'].$this->input->post('foto_edit');
+				if(is_file($file_gambar))
+				{
+					unlink($file_gambar);
+				}
 			}
 			
 			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);

@@ -651,6 +651,16 @@ a:hover.action-delete	{
 	width: 186px;
 	}
 
+.inp-form-disable	{
+	background: url(../images/forms/form_inp_disable.gif) no-repeat;
+	border: none;
+	color: #393939;
+	height: 25px;
+ 
+	padding: 6px 6px 0 6px;
+	width: 186px;
+	}
+
 .inp-form-text	{
 	color: #393939;
 	height: 25px;
@@ -1623,11 +1633,10 @@ a:hover.back-login	{
 
 /* STYLE IMAGE */
 div.thumb {
-	margin: 3px;
+	margin: 10px;
 	border: 1px solid #A0ACC0;
 	height: auto;
 	float: left;
-	text-align: center;
 }
 .thumb img{
 	display: inline;
