@@ -59,7 +59,7 @@ class Biodata extends CI_Controller {
 		$colModel['UKURAN_BAJU'] = array('Ukuran Baju',80,FALSE,'center',0);
 		$colModel['GENDER'] = array('Jenis Kelamin',80,FALSE,'center',0);
 		$colModel['MAHRAM'] = array('Hubungan Mahram',100,TRUE,'center',0);
-		$colModel['MOBILE'] = array('Mobile Phone',100,TRUE,'center',1);
+		$colModel['MOBILE'] = array('Handphone',100,TRUE,'center',1);
 		
 		$gridParams = array(
 		'width' => 'auto',
@@ -129,7 +129,7 @@ class Biodata extends CI_Controller {
 		$this->load->model('jamaah_candidate_model');
 		
 		$valid_fields = array('UKURAN_BAJU','KODE_REGISTRASI','NAMA_LENGKAP','NAMA_PANGGILAN','GENDER','AYAH_KANDUNG','MOBILE','MAHRAM');
-		$this->flexigrid->validate_post('NAMA_LENGKAP','asc',$valid_fields);
+		$this->flexigrid->validate_post('NAMA_LENGKAP','desc',$valid_fields);
 		
 		$records = $this->jamaah_candidate_model->get_grid_all_jamaah($this->session->userdata('kode_registrasi'), $this->session->userdata('id_account'));
 		$this->output->set_header($this->config->item('json_header'));
@@ -164,6 +164,24 @@ class Biodata extends CI_Controller {
 			$this->output->set_output($this->flexigrid->json_build($records['record_count'],$record_items));
 		else
 			$this->output->set_output('{"page":"1","total":"0","rows":[]}');			
+	}
+	
+	
+	function hapus_data_calon_jamaah()
+	{
+		$this->load->model('jamaah_candidate_model');
+		
+		$pecah_id = split(',' , $this->input->post('items'));
+		
+		foreach($pecah_id as $index => $id_candidate)
+			if (is_numeric($id_candidate) && $id_candidate > 1) 
+				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
+						
+			
+		$error = "Data Calon Jamaah ( ID : ".$this->input->post('items').") berhasil dihapus";
+
+		$this->output->set_header($this->config->item('ajax_header'));
+		$this->output->set_output($error);
 	}
 	
 	
@@ -245,6 +263,7 @@ class Biodata extends CI_Controller {
 			$config['upload_path'] = './images/upload/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
 			$config['max_size']	= '5000';
+			$config['encrypt_name']	= TRUE;
 			
 			$this->load->library('upload', $config);
 			
@@ -359,6 +378,8 @@ class Biodata extends CI_Controller {
 		{
 			foreach($data_jamaah->result() as $row)
 			{
+				$data['e_id_candidate'] = $row->ID_CANDIDATE;
+				$data['e_id_account'] = $row->ID_ACCOUNT;
 				$data['e_nama_lengkap'] = $row->NAMA_LENGKAP;
 				$data['e_nama_panggilan'] = $row->NAMA_PANGGILAN;
 				$data['e_gender'] = $row->GENDER;
@@ -440,6 +461,135 @@ class Biodata extends CI_Controller {
 			redirect(site_url()."/biodata/list_jamaah");
 		}
 		
+	}
+	
+	function do_edit(){
+		
+		$this->load->library('form_validation');
+		$this->load->model('jamaah_candidate_model');
+		
+		if ($this->cek_validasi() == FALSE){
+			$this->input();
+		}
+		else{
+			
+			// ID CANDIDATE 
+			$id_candidate = $this->input->post('id_candidate');
+			$id_account = $this->input->post('id_account');
+			
+			// tanggal lahir
+			$tgl = $this->input->post('tgl_lahir');
+			$bln = $this->input->post('bln_lahir');
+			$thn = $this->input->post('thn_lahir');
+			$dates = $thn."-".$bln."-".$tgl;
+			
+			// pelayanan khusus
+			$kursi = $this->input->post('kursi_roda');
+			$asisten = $this->input->post('asisten');
+			if(empty($kursi)) $kursi = 0;
+			if(empty($asisten)) $asisten = 0;
+			$pelayanan_khusus = $kursi.";".$asisten;
+			
+			// perihal pribadi
+			$darah_tinggi = $this->input->post('darah_tinggi');
+			$takut_ketinggian = $this->input->post('takut_ketinggian');
+			$smooking_room = $this->input->post('smooking_room');
+			$jantung = $this->input->post('jantung');
+			$asma = $this->input->post('asma');
+			$mendengkur = $this->input->post('mendengkur');
+			if(empty($darah_tinggi)) $darah_tinggi = 0;
+			if(empty($takut_ketinggian)) $takut_ketinggian = 0;
+			if(empty($smooking_room)) $smooking_room = 0;
+			if(empty($jantung)) $jantung = 0;
+			if(empty($asma)) $asma = 0;
+			if(empty($mendengkur)) $mendengkur = 0;
+			$perihal_pribadi = $darah_tinggi.";".$takut_ketinggian.";".$smooking_room.";".$jantung.";".$asma.";".$mendengkur;
+			
+			
+			// cek requuest jasa nama paspor
+			if($this->input->post('jasa_paspor_nama_edit') != NULL)
+			{
+				if($this->input->post('jasa_paspor_nama') != NULL)
+				{
+					$request_nama = $this->input->post('jasa_paspor_nama');
+				
+				} else {
+					
+					$request_nama = $this->input->post('jasa_paspor_nama_edit');
+				}
+			
+			} else {
+				
+				$request_nama = $this->input->post('jasa_paspor_nama_edit');
+			}
+			
+			
+			// cek foto
+			$cek_foto = $_FILES['foto']['name'];
+			if($cek_foto != "")
+			{
+				// Upload Foto
+				$config['upload_path'] = './images/upload/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
+				$config['max_size']	= '5000';
+				$config['encrypt_name']	= TRUE;
+				
+				$this->load->library('upload', $config);
+				
+				if(!$this->upload->do_upload('foto'))
+				{
+					$error = $this->upload->display_errors();
+					echo "<script>alert('".$this->input->post('foto')."');window.location='javascript:history.back()';</script>";
+					exit;
+				
+				}else{
+					
+					$data_file = $this->upload->data();
+				}
+				
+				$valid = TRUE;
+			
+			} else {
+				
+				$valid = FALSE;
+			}
+			
+			
+			// update table
+			$data = array(
+				'ID_RELATION' => $this->input->post('relasi'),
+				'ID_SIZE' => $this->input->post('baju'),
+				'ID_PROPINSI' => $this->input->post('province'),
+				'NAMA_LENGKAP' => $this->input->post('nama_lengkap'),
+				'NAMA_PANGGILAN' => $this->input->post('panggilan'),
+				'GENDER' => $this->input->post('gender'),
+				'WARGA_NEGARA' => $this->input->post('warga_negara'),
+				'TEMPAT_LAHIR' => $this->input->post('tempat_lahir'),
+				'TANGGAL_LAHIR' => $dates,
+				'AYAH_KANDUNG' => $this->input->post('ayah_kandung'),
+				'KOTA' => $this->input->post('kota'),
+				'ALAMAT' => $this->input->post('alamat'),
+				'TELP' => $this->input->post('telp'),
+				'MOBILE' => $this->input->post('hp'),
+				'LAYANAN_KHUSUS' => $pelayanan_khusus,
+				'PERIHAL_PRIBADI' => $perihal_pribadi,
+				'JASA_TAMBAHAN' => $this->input->post('jasa_maningtis'),
+				'REQUESTED_NAMA' => $request_nama,
+				'MAHRAM' => $this->input->post('mahram'),
+				'TANGGAL_UPDATE' => date("Y-m-d H:i:s")
+				);
+			
+			if($valid)
+			{
+				$foto = array('FOTO' => $data_file['file_name']);
+				$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
+				unlink($data_file['file_path'].$this->input->post('foto_edit'));
+			}
+			
+			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
+			
+			redirect('/biodata/edit/'.$id_candidate.'/'.$id_account);
+		}
 	}
 					
 
