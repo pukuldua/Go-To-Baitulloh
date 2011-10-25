@@ -27,7 +27,7 @@
 					<div class="table">
                     
                     	<? if($this->session->userdata('email') == NULL) { ?>
-						<ul class="<?=($this->uri->segment(1)==='check_availability')?'current':'select'?>">
+						<ul class="<?=($this->uri->segment(1)==='check_availability' || $this->uri->segment(1)=='')?'current':'select'?>">
                           <li>
                           	<a href="<?php echo site_url('check_availability')?>"><b>Check Order Availability</b><!--[if IE 7]><!--></a><!--<![endif]-->
                            </li>

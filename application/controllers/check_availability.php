@@ -169,15 +169,17 @@ class Check_availability extends CI_Controller {
 		$config = array(
 				array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown|callback_check_departure'),
 				array('field'=>'program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>"required|integer|callback_check_jml[$total]"),
-				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>"integer"),
-				array('field'=>'no_bed','label'=>'Child No Bed', 'rules'=>"integer"),
-				array('field'=>'infant','label'=>'Infant', 'rules'=>"integer|callback_check_jml[$adult]"),
+				array('field'=>'jml_adult','label'=>'Jumlah Dewasa', 'rules'=>"required|integer|callback_check_jml[$total]"),
+				array('field'=>'with_bed','label'=>'Anak Dengan Ranjang', 'rules'=>"integer"),
+				array('field'=>'no_bed','label'=>'Anak Tanpa Ranjang', 'rules'=>"integer"),
+				array('field'=>'infant','label'=>'Bayi', 'rules'=>"integer|callback_check_jml[$adult]"),
 				array('field'=>'kamar[]','label'=>'Kamar', 'rules'=>'callback_cek_dropdown'),
 				//array('field'=>'jml_kamar','label'=>'Jumlah', 'rules'=>'callback_cek_dropdown'),
 		);
 
 		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', '%s wajib diisi !');
+		$this->form_validation->set_message('integer', '%s harus berisi bilangan bulat !');
 		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
 
 		return $this->form_validation->run();
@@ -186,7 +188,7 @@ class Check_availability extends CI_Controller {
     //cek pilihan sdh bener ap blm
     function cek_dropdown($value){
 		if($value==0){
-				$this->form_validation->set_message('cek_dropdown', 'Please choose one %s from the list !');
+				$this->form_validation->set_message('cek_dropdown', 'Harap memilih salah satu %s !');
 				return FALSE;
 		}else
 				return TRUE;
@@ -203,7 +205,7 @@ class Check_availability extends CI_Controller {
 			if ($exp_date >= $today)
 				return TRUE;
 			else{
-				$this->form_validation->set_message('check_departure', 'Sorry registration for this group has closed');
+				$this->form_validation->set_message('check_departure', 'Maaf, pendaftaran untuk grup ini sudah ditutup');
 				return FALSE;
 			}
 		}
@@ -212,11 +214,11 @@ class Check_availability extends CI_Controller {
 	//cek jumlah
     function check_jml($value, $max){
 		if ($max > 20) {
-			$this->form_validation->set_message('check_jml', "Maximum number of canddidate are 20 for each unit");
+			$this->form_validation->set_message('check_jml', "Jumlah maksimum calon jamaah 20 orang tiap unit");
 			return FALSE;
 		}else{
 			if($value > $max){
-				$this->form_validation->set_message('check_jml', "The maximum number of %s are $max !");
+				$this->form_validation->set_message('check_jml', "Jumlah maksimum untuk %s adalah $max !");
 				return FALSE;
 			}else
 				return TRUE;

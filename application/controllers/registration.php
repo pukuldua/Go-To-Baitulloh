@@ -2,6 +2,8 @@
 
 class Registration extends CI_Controller {
 	var $data_field;
+	var $tmp_pass;
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -60,10 +62,10 @@ class Registration extends CI_Controller {
 				}
 				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);
-				$this->send_email($keycode);
+				//$this->send_email($keycode);
 				//set session notifikasi
 				//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
-				redirect('notification/show'.$this->data_field['KODE_REGISTRASI']);
+				redirect('notification/show/'.$this->data_field['KODE_REGISTRASI']);
 			}
 		}
     }
@@ -97,9 +99,10 @@ class Registration extends CI_Controller {
 		
 		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
 		$pwd = substr(md5('password-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
+		$this->tmp_pass = $pwd;
 
 		$this->data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
-								'EMAIL' => $email, 'PASSWORD' =>$pwd, 'NO_ID_CARD' => $id_card, 'TELP' => $telp, 
+								'EMAIL' => $email, 'PASSWORD' =>md5($pwd), 'NO_ID_CARD' => $id_card, 'TELP' => $telp, 
 								'MOBILE' => $mobile, 'KOTA' => $kota, 'ALAMAT' => $alamat, 'TANGGAL_REGISTRASI' =>date("Y-m-d h:i:s"), 'STATUS' => 0);
 		
 		//return $data_field;
@@ -114,10 +117,14 @@ class Registration extends CI_Controller {
 		$this->form_validation->set_rules('province', 'Propinsi', 'callback_check_dropdown');
 		$this->form_validation->set_rules('kota', 'Kota', '');
 		$this->form_validation->set_rules('alamat', 'Alamat', '');
-		$this->form_validation->set_rules('id_card', 'No ID Card', 'required');
+		$this->form_validation->set_rules('id_card', 'No ID Card', 'required|min_length[10]');
 		$this->form_validation->set_rules('recaptcha_response_field', 'Captcha Code', 'callback_check_captcha['.$this->input->post('recaptcha_challenge_field').']');
 		
 		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
+		$this->form_validation->set_message('required', '%s wajib diisi !');
+		$this->form_validation->set_message('valid_email', '%s wajib berisi alamat email yang benar !');
+		$this->form_validation->set_message('min_length', '%s minimum berisi 10 karakter !');
+		
 		return $this->form_validation->run();
     }
 	
@@ -131,7 +138,7 @@ class Registration extends CI_Controller {
                 return TRUE;
         } else {
                 # set the error code so that we can display it
-				$this->form_validation->set_message('check_captcha', $resp->error);
+				$this->form_validation->set_message('check_captcha', "Kode salah, silahkan coba lagi");
 				return FALSE;
         }
 	}
@@ -139,7 +146,7 @@ class Registration extends CI_Controller {
     //cek pilihan sdh bener ap blm
     function check_dropdown($value){
 		if($value==0){
-			$this->form_validation->set_message('check_dropdown', 'Please choose one %s from the list !');
+			$this->form_validation->set_message('check_dropdown', 'Harap memilih salah satu %s !');
 				return FALSE;
 		}else
 				return TRUE;
@@ -157,7 +164,7 @@ class Registration extends CI_Controller {
 		$data['key'] = $key;
 		$data['subject'] = 'Account Activation';
 		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
-		$data['PASSWORD'] = $this->data_field['PASSWORD'];
+		$data['PASSWORD'] = $this->tmp_pass;
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
 		
 		$content = $this->load->view('email_activation',$data);
