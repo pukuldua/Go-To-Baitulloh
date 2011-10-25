@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<? form_error('gender') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
-					<th valign="top">Gender (*)</th>
+					<th valign="top">Jenis Kelamin (*)</th>
 					<td><? $gender = 0; if(set_value('gender')!='') $gender = set_value('gender');
 							$gender_options = array(
 							  '0'  => '-- Jenis Kelamin --',
@@ -211,7 +211,7 @@
 				</tr>
 				<tr>
 					<? form_error('relasi') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
-					<th valign="top">Relation (*)</th>
+					<th valign="top">Hubungan (*)</th>
 					<td><? $relasi = 0; if(set_value('relasi')!='') $relasi = set_value('relasi');
 							echo form_dropdown('relasi', $relasi_options, $relasi,'id="relasi" class="styledselect_form_1"'); ?>
                         </td>
@@ -254,14 +254,14 @@
 				<tr>
 					<td colspan="3"><table width="100%">
                     	<tr>
-                          <td>
+                          <td width="130">
                           <input type="checkbox" name="darah_tinggi" value="1" <? echo set_checkbox('darah_tinggi', '1')?> /> &nbsp;&nbsp;Darah Tinggi
                           </td>
-                          <td>
+                          <td width="150">
                           <input type="checkbox" name="takut_ketinggian" value="2" <? echo set_checkbox('takut_ketinggian', '2')?> /> &nbsp;&nbsp;Takut Ketinggian
                           </td>
                           <td>
-                          <input type="checkbox" name="smooking_room" value="3" <? echo set_checkbox('smooking_room', '3')?> /> &nbsp;&nbsp;Smooking Room
+                          <input type="checkbox" name="smooking_room" value="3" <? echo set_checkbox('smooking_room', '3')?> /> &nbsp;&nbsp;Perokok
                           </td>
                          </tr>
                        </table>
@@ -270,10 +270,10 @@
 				<tr>
 					<td colspan="3"><table width="100%">
                     	<tr>
-                          <td width="29%">
+                          <td width="130">
                           <input type="checkbox" name="jantung" value="4" <? echo set_checkbox('jantung', '4')?> /> &nbsp;&nbsp;Jantung
                           </td>
-                          <td width="35%">
+                          <td width="150">
                           <input type="checkbox" name="asma" value="5" <? echo set_checkbox('asma', '5')?> /> &nbsp;&nbsp;Asma
                           </td>
                           <td>

@@ -1,4 +1,4 @@
-<? echo form_open_multipart('/biodata/do_daftar'); ?>
+<? echo form_open_multipart('/biodata/do_edit'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<? form_error('gender') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
-					<th valign="top">Gender (*)</th>
+					<th valign="top">Jenis Kelamin (*)</th>
 					<td><? $gender = $e_gender; if(set_value('gender')!='') $gender = set_value('gender');
 							$gender_options = array(
 							  '0'  => '-- Jenis Kelamin --',
@@ -176,18 +176,7 @@
 						<? }?>
 					</td>
 				</tr>
-                
-	<tr>
-		<td colspan="3"><img src="<?=base_url()?>images/shared/blank.gif" width="480" height="1" alt="blank" /></td>
-	</tr>
-			</table>
-			<!-- end id-form  -->
-		</td>
-		
-		<td>
-			<!-- start id-form -->
-			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-				<tr>
+                <tr>
 					<? form_error('telp') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">No Telepon (*)</th>
 					<td><input type="text" name="telp" value="<?php echo $e_telp;?>" class="<? echo $class;?>" /></td>
@@ -235,6 +224,42 @@
 						<? }?>
 					</td>
 				</tr>
+                <tr>
+                    <td colspan="3"><img src="<?=base_url()?>images/shared/blank.gif" width="480" height="1" alt="blank" /></td>
+                </tr>
+			</table>
+			<!-- end id-form  -->
+		</td>
+		
+		<td>
+			<!-- start id-form -->
+			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
+				<tr>
+					<td></td>
+                    <td colspan="2">
+                    	<div class="thumb">
+                        <a href="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" title="Klik untuk memperbesar gambar">
+                          <img src="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" height="140" width="115" border="2" />
+                        </a>
+                        </div>
+                    	
+                        <input type="hidden" name="foto_edit" value="<? echo $e_pas_foto; ?>" />
+				</tr>
+				<tr height="70">
+                	<? form_error('foto') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th>Ganti Foto</th>
+					<td><input type="file" class="file_1" name="foto" value="<? echo set_value('foto') ?>" /></td>
+					<td>
+						<? if(form_error('foto') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('foto'); ?></div>
+						<? } else { ?>
+                        <div class="bubble-left"></div>
+						<div class="bubble-inner">JPEG, GIF 5MB max per image</div>
+						<div class="bubble-right"></div>
+                        <? } ?>
+					</td>
+				</tr>
 				<tr>
 					<th valign="top" colspan="2">Permintaan Pelayanan Khusus</th>
 					<td>
@@ -254,14 +279,14 @@
 				<tr>
 					<td colspan="3"><table width="100%">
                     	<tr>
-                          <td>
+                          <td width="130">
                           <input type="checkbox" name="darah_tinggi" value="1"  <?=($e_perihal_darah==1)?'checked="checked"':''?> /> &nbsp;&nbsp;Darah Tinggi
                           </td>
-                          <td>
+                          <td width="150">
                           <input type="checkbox" name="takut_ketinggian" value="2"  <?=($e_perihal_tinggi==2)?'checked="checked"':''?> /> &nbsp;&nbsp;Takut Ketinggian
                           </td>
                           <td>
-                          <input type="checkbox" name="smooking_room" value="3"  <?=($e_perihal_smooking==3)?'checked="checked"':''?> /> &nbsp;&nbsp;Smooking Room
+                          <input type="checkbox" name="smooking_room" value="3"  <?=($e_perihal_smooking==3)?'checked="checked"':''?> /> &nbsp;&nbsp;Perokok
                           </td>
                          </tr>
                        </table>
@@ -270,10 +295,10 @@
 				<tr>
 					<td colspan="3"><table width="100%">
                     	<tr>
-                          <td width="29%">
+                          <td width="130">
                           <input type="checkbox" name="jantung" value="4"  <?=($e_perihal_jantung==4)?'checked="checked"':''?> /> &nbsp;&nbsp;Jantung
                           </td>
-                          <td width="35%">
+                          <td width="150">
                           <input type="checkbox" name="asma" value="5" <?=($e_perihal_asma==5)?'checked="checked"':''?> /> &nbsp;&nbsp;Asma
                           </td>
                           <td>
@@ -284,25 +309,10 @@
                      </td>
 				</tr>
 				<tr>
-                	<? form_error('foto') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th>Foto (*)</th>
-					<td><input type="file" class="file_1" name="foto" value="<? echo set_value('foto') ?>" /></td>
-					<td>
-						<? if(form_error('foto') != '') {?>
-						<div class="error-left"></div>
-						<div class="error-inner"><?php echo form_error('foto'); ?></div>
-						<? } else { ?>
-                        <div class="bubble-left"></div>
-						<div class="bubble-inner">JPEG, GIF 5MB max per image</div>
-						<div class="bubble-right"></div>
-                        <? } ?>
-					</td>
-				</tr>
-				<tr>
 					<? form_error('jasa_paspor') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Jasa Tambahan</th>
 					<td>
-                    <? if($e_request_nama == "") { $e_perihal_mendengkur = 0; }
+                    <? if($e_request_nama == "") { $e_jasa_paspor = 0; }
 					   else { $e_jasa_paspor = 1;}
 					?>
                     <input type="checkbox" name="jasa_paspor" id="jasa_paspor" value="1" <?=($e_jasa_paspor==1)?'checked="checked"':''?>  onchange="jasaPaspor(this)"/> &nbsp;&nbsp;Tambah Nama (3 suku kata) Paspor</td>
@@ -316,7 +326,9 @@
 				<tr>
 					<? form_error('jasa_paspor_nama') == '' ? $class = 'inp-form-text':$class = 'inp-form-error'; ?>
 					<th valign="top"></th>
-					<td><input type="text" name="jasa_paspor_nama" id="jasa_paspor_nama" value="<?php echo $e_request_nama;?>" class="<? echo $class;?>" disabled="disabled" /></td>
+					<td>
+                    <input type="hidden" name="jasa_paspor_nama_edit" value="<?php echo $e_request_nama;?>" />
+                    <input type="text" name="jasa_paspor_nama" id="jasa_paspor_nama" value="<?php echo $e_request_nama;?>" class="<? echo $class;?>" disabled="disabled" /></td>
 					<td>
 						<? if(form_error('jasa_paspor_nama') != '') {?>
 						<div class="error-left"></div>
@@ -338,6 +350,8 @@
 				<tr>
 					<th></th>
 					<td valign="top">
+                    	<input type="hidden" value="<? echo $e_id_candidate ?>" name="id_candidate" />
+                    	<input type="hidden" value="<? echo $e_id_account ?>" name="id_account" />
 						<input type="submit" value="" class="form-submit" />
 						<input type="reset" value="" class="form-reset"  />
 					</td>

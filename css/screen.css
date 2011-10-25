@@ -1612,3 +1612,20 @@ a:hover.back-login	{
 	line-height: 11px;
 	padding:0 0 10px 0;
 }
+
+
+/* STYLE IMAGE */
+div.thumb {
+	margin: 3px;
+	border: 1px solid #A0ACC0;
+	height: auto;
+	float: left;
+	text-align: center;
+}
+.thumb img{
+	display: inline;
+	margin: 4px;
+	border: 1px solid #A0ACC0;
+}
+.thumb a:hover img {border: 1px solid #5E708C;}
+.thumb:hover { border: 1px solid #5E708C; }

@@ -51,9 +51,27 @@ class jamaah_candidate_model extends CI_Model {
 		return $this->db->get();
 	}
 	
+	function hapus_data_calon_jamaah($id_candidate)
+	{
+		$this->db->delete('jamaah_candidate', array('ID_CANDIDATE' => $id_candidate));
+		
+		return TRUE;
+	}
+	
 	function insert_jamaah($data){
 		$this->db->trans_begin();
 		$this->db->insert('jamaah_candidate', $data);
+		
+		if ($this->db->trans_status() === FALSE)
+			$this->db->trans_rollback();
+		else
+			$this->db->trans_commit();
+	}
+	
+	function update_jamaah($data, $id_candidate){
+		$this->db->trans_begin();
+		$this->db->where('ID_CANDIDATE', $id_candidate);
+		$this->db->update('jamaah_candidate', $data);
 		
 		if ($this->db->trans_status() === FALSE)
 			$this->db->trans_rollback();
