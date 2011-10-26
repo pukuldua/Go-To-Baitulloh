@@ -5,8 +5,6 @@ class Login extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('accounts_model');
-		$this->load->model('log_model');
 		$this->cek_session();
 	}
 
@@ -17,6 +15,10 @@ class Login extends CI_Controller {
 	
 	function cek_login()
 	{
+		
+		$this->load->model('accounts_model');
+		$this->load->model('log_model');
+		
 		$this->session->sess_destroy(); // menghapus semua session yang ada dalam aplikasi		
 		$valid 		= false; // kondisi awal parameter login
 		$data_user	= $this->accounts_model->get_all_login(); // menampilkan semua data di table accounts
@@ -85,6 +87,10 @@ class Login extends CI_Controller {
 	
 	function form($cek_form = NULL)
 	{
+		
+		$this->load->model('accounts_model');
+		$this->load->model('log_model');
+		
 		if($cek_form == NULL) 
 		{
 			$data['cek_error'] = NULL;

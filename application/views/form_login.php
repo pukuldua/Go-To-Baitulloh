@@ -42,7 +42,7 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td valign="top"><br />
-                    <ul class="greyarrow"><li><a href="<?=site_url() ?>/forgot" title="Forgot Password?">Forgot Password?</a></li></ul></td>
+                    <ul class="greyarrow"><li><a href="<?=site_url() ?>/forgot" title="Forgot Password?">Lupa Password?</a></li></ul></td>
 					<td></td>
 				</tr>
 			</table>

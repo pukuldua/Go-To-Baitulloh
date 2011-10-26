@@ -237,9 +237,20 @@
 				<tr>
 					<td></td>
                     <td colspan="2">
+					   <?
+                       $file_gambar = './images/upload/'.$e_pas_foto;
+                       if(is_file($file_gambar))
+                       { 
+					   		$url_gambar = base_url().'images/upload/'.$e_pas_foto;
+							$url_gambar2 = $url_gambar;
+					   }else{
+							$url_gambar = base_url().'images/shared/user_x.png'; 
+							$url_gambar2 = "#";
+					   }
+					   ?>
                     	<div class="thumb">
-                        <a href="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" title="Klik untuk memperbesar gambar">
-                          <img src="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" height="140" width="115" border="2" />
+                        <a href="<? echo $url_gambar2; ?>" title="Klik untuk memperbesar gambar">
+                          <img src="<? echo $url_gambar; ?>" height="140" width="105" border="2" />
                         </a>
                         </div>
                     	

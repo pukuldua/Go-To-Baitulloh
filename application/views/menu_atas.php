@@ -11,10 +11,10 @@
 					<!--  start account-content -->	
 					<div class="account-content">
 					<div class="account-drop-inner">
-						<a href="" id="acc-settings">Change Profile Data</a>
+						<a href="" id="acc-settings">Profile</a>
 						<div class="clear">&nbsp;</div>
 						<div class="acc-line">&nbsp;</div>
-						<a href="" id="acc-settings">Change Password</a>
+						<a href="" id="acc-settings">Ubah Password</a>
 					</div>
 					</div>
 					<!--  end account-content -->
@@ -45,7 +45,7 @@
 						<? if($this->session->userdata('email') != NULL){ ?>
 						<ul class="<?=($this->uri->segment(1)==='beranda')?'current':'select'?>">
                           <li>
-                        	<a href="<? echo site_url().'/beranda' ?>"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                        	<a href="<? echo site_url().'/beranda' ?>"><b>Beranda</b><!--[if IE 7]><!--></a><!--<![endif]-->
                           </li>
                         </ul>
 						<div class="nav-divider">&nbsp;</div>		
@@ -64,16 +64,16 @@
 						</ul>
 						<div class="nav-divider">&nbsp;</div>
 					
-						<ul class="<?=($this->uri->segment(1)==='paspor')?'current':'select'?>"><li><a href="<? echo site_url() ?>/paspor"><b>Documents</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='paspor')?'current':'select'?>"><li><a href="<? echo site_url() ?>/paspor"><b>Dokumen</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 					
-						<ul class="select"><li><a href="#nogo"><b>Payment</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="select"><li><a href="#nogo"><b>Pembayaran</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 					
-						<ul class="select"><li><a href="#nogo"><b>Cancellation</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='cancel')?'current':'select'?>"><li><a href="<? echo site_url() ?>/cancel"><b>Pembatalan</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 						
-						<ul class="select"><li><a href="#nogo"><b>Rooming</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='rooming')?'current':'select'?>"><li><a href="<? echo site_url() ?>/rooming""><b>Ruang Kamar</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 						<? }?>
 						<div class="clear"></div>

@@ -15,21 +15,40 @@
 				<tr>
 					<td></td>
                     <td colspan="2">
+                       <?
+					   $file_gambar = './images/upload/'.$e_pas_foto;
+					   if(is_file($file_gambar))
+                       { 
+					   		$url_gambar = base_url().'images/upload/'.$e_pas_foto;
+							$url_gambar2 = $url_gambar;
+					   }else{
+							$url_gambar = base_url().'images/shared/user_x.png'; 
+							$url_gambar2 = "#";
+					   }
+					   
+					   ?>
                       <div class="thumb">
-                       <a href="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" title="Klik untuk memperbesar foto">
-                        <img src="<? echo base_url().'images/upload/'.$e_pas_foto; ?>" height="120" width="100" border="2" />
+                       <a href="<? echo $url_gambar2; ?>" title="Klik untuk memperbesar foto">
+                        <img src="<? echo $url_gambar; ?>" height="120" width="100" border="2" />
                        </a>
                        </div>
-                       <?
-					   $file_gambar = './images/upload/paspor/'.$e_scan_paspor;
-					   if(is_file($file_gambar))
-                       { ?>
+                       <?					   
+					   $file_paspor = './images/upload/paspor/'.$e_scan_paspor;
+					   if(is_file($file_paspor))
+                       { 
+					   		$url_paspor = base_url().'images/upload/paspor/'.$e_scan_paspor;
+							$url_paspor2 = $url_paspor;
+					   }else{
+							$url_paspor = base_url().'images/shared/book_x.png'; 
+							$url_paspor2 = "#";
+					   }
+					   
+					   ?>
                        <div class="thumb">
-                       <a href="<? echo base_url().'images/upload/paspor/'.$e_scan_paspor; ?>" title="Klik untuk memperbesar paspor">
-                        <img src="<? echo base_url().'images/upload/paspor/'.$e_scan_paspor; ?>" height="120" width="100" border="2" />
+                       <a href="<? echo $url_paspor2; ?>" title="Klik untuk memperbesar paspor">
+                        <img src="<? echo $url_paspor; ?>" height="120" width="100" border="2" />
                        </a>
                       </div>
-                      <? } ?>
                    <input type="hidden" name="foto_edit" value="<? echo $e_pas_foto; ?>" />
 				</tr>
 				<tr>
