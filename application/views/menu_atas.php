@@ -73,10 +73,11 @@
 						<ul class="select"><li><a href="#nogo"><b>Cancellation</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 						
-						<ul class="select"><li><a href="#nogo"><b>Rooming</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='rooming')?'current':'select'?>"><li><a href="<? echo site_url() ?>/rooming"><b>Rooming</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 						<? }?>
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
 				</div>
+</div>

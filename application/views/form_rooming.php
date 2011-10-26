@@ -11,7 +11,6 @@
 			autoSort: false,
 			autoSortAvailable: false
 			});
-		//$('#fourth').multiselect2side({maxSelected: 4});
 	});
 	
 	function enableSubmit(val){
@@ -37,16 +36,81 @@
 							 document.getElementById("div_prev").innerHTML = response;
 						}
 				});
+							
+				$.ajax({
+						url: "<?=base_url();?>index.php/rooming/getMax_room/",
+						global: false,
+						type: "POST",
+						async: false,
+						dataType: "html",
+						data: "id_room="+ room.value, //the name of the $_POST variable and its value
+						success: function (response) {
+							var sisa = "Kuota Maksimum Kamar "+prp+" =  ";
+							document.getElementById("div_max").innerHTML = sisa+response+" Orang";
+							$('#fourth').multiselect2side('destroy');
+							$('#fourth').multiselect2side({
+								selectedPosition: 'right',
+								moveOptions: false,
+								labelsx: ' Available ',
+								labeldx: ' Selected ',
+								autoSort: false,
+								autoSortAvailable: false,
+								maxSelected: response
+							});
+						}
+				});
+		}else {
+			document.getElementById("div_room").innerHTML = "";
+			document.getElementById("div_max").innerHTML = "";
+			document.getElementById("div_prev").innerHTML = "";
 		}
 		// return false;
 	}
-</script>
 	
+	function showJamaah(){
+		$(document).ready(function() { 
+				$.blockUI({ 
+					message: "asdasdiuasdbuyg", 
+					css: { 
+						top:  ($(window).height() - 400) /2 + 'px', 
+						left: ($(window).width() - 400) /2 + 'px', 
+						width: '400px' 
+					} 
+				}); 
+		 
+				setTimeout($.unblockUI, 2000); 
+			}); 
+	}
+</script>
+
+<div style="display: none;" id="displayBox">
+	asdas
+</div>
+
+<a href="javascript:showJamaah()" id="klik">klik me</a>
 <?php echo form_open('rooming/book_room', array('name' => 'form_rooming')); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>			
 			<!-- start id-form -->
+			<? if ($is_booking) {?>
+			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
+				<tr>
+					<th valign="top">Nama</th>
+					<th valign="top">Jenis Kelamin</th>
+					<th valign="top">Tipe Kamar</th>
+					<th valign="top">Kode Kamar</th>
+				</tr>
+				<? foreach ($candidate_inroom->result() as $row) {?>
+				<tr>
+					<td><? echo $row->NAMA_LENGKAP; ?></td>
+					<td><? echo $row->GENDER==1 ?  "Laki-laki": "Perempuan"; ?></td>
+					<td><? echo $row->JENIS_KAMAR; ?></td>
+					<td><? echo $row->KODE_KAMAR; ?></td>
+				</tr>
+				<? }?>
+			</table>
+			<? } else {?>
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<th valign="top">Kamar</th>
@@ -54,13 +118,20 @@
 						<? $room = 0; if(set_value('room')!='') $room = set_value('room');
 							echo form_dropdown('room', $room_options, $room,'id="room" class="styledselect-kamar2" onchange="getJamaah(this);"'); ?>
 					</td>
-					<td></td>
+					<td>
+						<? if(form_error('room') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('room'); ?></div>
+						<? }?>
+					</td>
 				</tr>
 				<tr>
-					<th valign="top">Pemilihan Jamaah</th>
+					<th valign="top">Pemesanan Kamar</th>
 					<td>
-						<? $candidate = 0; if(set_value('fourthSelect[]')!='') $candidate = set_value('fourthSelect[]');
-							echo form_dropdown('fourthSelect[]', $list_candidate, $candidate,'id="fourth" multiple="multiple"'); ?>
+						<? if (isset($list_candidate)) {$candidate = 0; if(set_value('candidate[]')!='') $candidate = set_value('candidate[]');
+							echo form_dropdown('candidate[]', $list_candidate, $candidate,'id="fourth" multiple="multiple"'); }?>
+						<br /><br />
+						<div id="div_max"></div>
 					</td>
 					<td></td>
 				</tr>
@@ -75,11 +146,12 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td valign="top">
-						<input type="submit" value="" class="form-submit" />
+						<input type="submit" value="" name="submit_button" class="form-submit" disabled="disabled" />
 					</td>
 					<td></td>
 				</tr>
 			</table>
+			<? }?>
 			<!-- end id-form  -->
 		</td>
 		
@@ -105,9 +177,7 @@
 						<div class="clear"></div>
 						<div class="lines-dotted-short"></div>						
 						
-						<div class="right" id="div_prev">
-							<ul class="greyarrow"><li>sadas</li></ul>
-						</div>
+						<div class="right" id="div_prev"></div>
 						
 							<div class="clear"></div>						
 					</div>

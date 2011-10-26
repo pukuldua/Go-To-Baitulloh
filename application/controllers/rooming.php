@@ -5,6 +5,7 @@ class Rooming extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+                $this->cekSession();
 	}
 	
 	function index(){
@@ -13,13 +14,20 @@ class Rooming extends CI_Controller {
 		$this->load->model('packet_model');
 		$this->load->model('room_packet_model');
                 $this->load->model('jamaah_candidate_model');
+                $this->load->model('booked_room_model');
 		
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
 		$room_options['0'] = '-- Pilih Kamar --';
 		
 		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
-                $candidate = $this->jamaah_candidate_model->get_jamaah_notBooked_room($id_user, $kode_reg);
+                $booked_candidate = $this->booked_room_model->get_already_booked($id_user, $kode_reg);
+
+                $data_bc = array('');
+                foreach ($booked_candidate->result() as $row)
+                    $data_bc = array_merge($data_bc, array($row->ID_CANDIDATE));
+
+                $candidate = $this->jamaah_candidate_model->get_jamaah_notBooked_room($id_user, $kode_reg, $data_bc);
 		
 		if ($data_packet->num_rows() > 0){
 			foreach($data_packet->result() as $rows){
@@ -41,28 +49,48 @@ class Rooming extends CI_Controller {
                             $room_capacity += $tmp_capacity;
                             $jml_room = $rs->JUMLAH;
 
-                            $total_candidate -= $tmp_capacity;
-                            if ($total_candidate >= 0){
-                                    $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, $room_type->row()->CAPACITY);
-                                    foreach($room->result() as $row){
-                                        $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
-                                    }
-                            }else {
-                                    $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, 0);
-                                    foreach($room->result() as $row){
-                                        $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
-                                    }
+                            if ($total_candidate > $candidate->num_rows()){
+                                $total_candidate = $candidate->num_rows();
+                                $total_candidate -= $tmp_capacity;
+                                if ($total_candidate >= 0){
+                                        $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, $room_type->row()->CAPACITY);
+                                        foreach($room->result() as $row){
+                                            $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
+                                        }
+                                }else {
+                                        $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, 0);
+                                        foreach($room->result() as $row){
+                                            $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
+                                        }
+                                }
+                            }else{
+                                $total_candidate -= $tmp_capacity;
+                                if ($total_candidate >= 0){
+                                        $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, $room_type->row()->CAPACITY);
+                                        foreach($room->result() as $row){
+                                            $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
+                                        }
+                                }else {
+                                        $room = $this->room_model->check_available_room($group, $program, $rs->ID_ROOM_TYPE, 0);
+                                        foreach($room->result() as $row){
+                                            $room_options[$row->ID_ROOM] = $nama_program." - ".$room_type->row()->JENIS_KAMAR." - [".$row->KODE_KAMAR."]";
+                                        }
+                                }
                             }
                         }
 		}
-		
-		$data['room_options'] = $room_options;
-
+				
                 if($candidate->num_rows() > 0){
                     foreach($candidate->result() as $row){
                         $list_candidate[$row->ID_CANDIDATE] = $row->NAMA_LENGKAP;
                     }
                     $data['list_candidate'] = $list_candidate;
+                    $data['room_options'] = $room_options;
+                    $data['is_booking'] = FALSE;
+                }else{
+                    $candidate_inroom = $this->booked_room_model->get_all_booked_candidate($id_user, $kode_reg);
+                    $data['candidate_inroom'] = $candidate_inroom;
+                    $data['is_booking'] = TRUE;
                 }
 		
 		$data['content'] = $this->load->view('form_rooming',$data,true);
@@ -72,10 +100,55 @@ class Rooming extends CI_Controller {
 
 	function book_room()
 	{
-		$data = $this->input->post('fourthSelect');
-		print_r($data);
+            if ($this->check_validasi() == FALSE){
+			// //$this->session->set_userdata('failed_form','Kegagalan Menyimpan Data, Kesalahan Pengisian Form!');
+			$this->index();
+            }else{
+                $this->load->model('room_model');
+                $this->load->model('booked_room_model');
+                
+		$room = $this->input->post('room');
+                $cadidate = $this->input->post('candidate');
+
+                for ($i=0; $i < count($cadidate); $i++){
+                    $data = array('ID_ROOM' => $room, 'ID_CANDIDATE' => $cadidate[$i], 'TANGGAL_BOOKING' => date("Y-m-d h:i:s"));
+
+                    $this->booked_room_model->insert_booked_room($data);
+
+                    $data_room = $this->room_model->get_room($room);
+                    if ($data_room->num_rows() > 0){
+                        if ($data_room->row()->AVAILABILITY == 1){
+                            $bed = $data_room->row()->BEDS;
+
+                            if ($bed-1 > 0)
+                                $this->room_model->update_room($room, array('BEDS' => $bed-1));
+                            else
+                                $this->room_model->update_room($room, array('BEDS' => $bed-1, 'AVAILABILITY' => 0));
+                        }
+                    }
+                    
+                }
+		redirect('rooming');
+            }
 	}
 
+        function check_validasi() {
+            $this->load->library('form_validation');
+            
+		//setting rules
+		$this->form_validation->set_rules('room', 'Kamar', 'callback_check_dropdown');
+                return $this->form_validation->run();
+        }
+
+        //cek pilihan sdh bener ap blm
+    function check_dropdown($value){
+		if($value==0){
+			$this->form_validation->set_message('check_dropdown', 'Harap memilih salah satu %s !');
+				return FALSE;
+		}else
+				return TRUE;
+    }
+    
         function getJamaah(){
             if ($_POST['id_room']!=''){
 		$this->load->model('booked_room_model');
@@ -88,12 +161,35 @@ class Rooming extends CI_Controller {
 		$room = $this->booked_room_model->get_booked_candidate($id_acc, $kode_reg, $id_room);
 		if ($room->num_rows() > 0){
                     foreach ($room->result() as $rs){
-                            $list.= '<li>'.$rs->NAMA_LENGKAP." - ".$rs->KOTA.'</li>';
+                            $list.= '<li><a href="javascript:showJamaah('.$rs->ID_CANDIDATE.')">'.$rs->NAMA_LENGKAP." - ".$rs->KOTA.'</a></li>';
                     }
                     echo $list.'</ul>';
                 } else echo "";
             } else echo '';
 	}
+
+        function getMax_room(){
+            if ($_POST['id_room']!=''){
+		$this->load->model('room_model');
+
+                $id_room = $_POST['id_room'];
+
+		$list = '';
+		$room = $this->room_model->get_room($id_room);
+		if ($room->num_rows() > 0){
+                    foreach ($room->result() as $rs){
+                            $list = $rs->BEDS;
+                    }
+                    echo $list;
+                } else echo 0;
+            } else echo 0;
+	}
+
+        //cek apakah user sudah login kedalam sistem
+  	function cekSession(){
+		if(!$this->session->userdata('id_account'))
+			redirect('login');
+  	}
 }
 
 /* End of file welcome.php */
