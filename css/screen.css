@@ -629,6 +629,20 @@ a:hover.action-delete	{
 	text-indent: -3000px;
 	width: 80px;
 	}
+	
+.form-submit-front	{
+	background: url(../images/forms/form_submit.gif) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	float: left;
+	height: 30px;
+	margin: 0 4px 0 0;
+	padding: 0;
+	text-indent: -3000px;
+	width: 80px;
+	}
+	
 .form-reset	{
 	background: url(../images/forms/form_reset.gif) no-repeat;
 	border: none;
@@ -688,6 +702,17 @@ a:hover.action-delete	{
 	overflow: auto;
 	padding: 6px 6px 0 6px;
 	width: 378px;
+	}
+.form-textarea-front	{
+	background: url(../images/forms/form_textarea_term.gif) no-repeat;
+	border: none;
+	color: #393939;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 178px;
+	overflow: auto;
+	padding: 6px 6px 0 6px;
+	width: 683px;
 	}
 #id-form td	{
 	padding: 0 0 10px 0;
@@ -1645,3 +1670,16 @@ div.thumb {
 }
 .thumb a:hover img {border: 1px solid #5E708C;}
 .thumb:hover { border: 1px solid #5E708C; }
+
+
+/* STYLE FIELDSET */
+.fieldset {
+	padding:2em;
+	background:#FCF9F5;
+}
+
+.fieldset legend {
+	font-size:14px;
+	color:#333;
+	font-weight:bold;
+}
