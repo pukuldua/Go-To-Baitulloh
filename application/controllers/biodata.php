@@ -174,10 +174,16 @@ class Biodata extends CI_Controller {
 		$pecah_id = split(',' , $this->input->post('items'));
 		
 		foreach($pecah_id as $index => $id_candidate)
-			if (is_numeric($id_candidate) && $id_candidate > 1) 
+		{
+			if (is_numeric($id_candidate) && $id_candidate > 1)
+			{
 				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
-						
+				$this->hapus_gambar($id_candidate, "foto");
+				$this->hapus_gambar($id_candidate, "paspor");
+			}
 			
+			
+		}
 		$error = "Data Calon Jamaah ( ID : ".$this->input->post('items').") berhasil dihapus";
 
 		$this->output->set_header($this->config->item('ajax_header'));
@@ -185,6 +191,36 @@ class Biodata extends CI_Controller {
 	}
 	
 	
+	function hapus_gambar($id_candidate, $tipe_gambar)
+	{
+		$this->load->model('jamaah_candidate_model');
+		
+		$hapus_foto = $this->jamaah_candidate_model->get_data_berdasarkan_id_candidate($id_candidate);
+		
+		if($hapus_foto->result() != NULL)
+		{
+			foreach($hapus_foto->result() as $row)
+			{
+				if($tipe_gambar == "foto")
+				{
+					$file_gambar = './images/upload/'.$row->FOTO;
+				}elseif($tipe_gambar == "paspor")
+				{
+					$file_gambar = './images/upload/paspor/'.$row->SCAN_PASPOR;
+				}else{
+					$file_gambar = NULL;
+				}
+				
+				if(is_file($file_gambar))
+				{
+					unlink($file_gambar);
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+	} // end function
 	
 	// HALAMAN TAMBAH CALON JAMAAH
 	
@@ -310,7 +346,7 @@ class Biodata extends CI_Controller {
 				'MAHRAM' => $this->input->post('mahram'),
 				'TANGGAL_ENTRI' => date("Y-m-d H:i:s"),
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s"),
-				'STATUS_KANDIDAT' => 0);
+				'STATUS_KANDIDAT' => 1);
 			
 			$insert = $this->jamaah_candidate_model->insert_jamaah($data);
 			
