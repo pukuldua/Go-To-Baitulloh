@@ -72,12 +72,7 @@
 					
 						<ul class="<?=($this->uri->segment(1)==='cancel')?'current':'select'?>"><li><a href="<? echo site_url() ?>/cancel"><b>Pembatalan</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
-						
-<<<<<<< HEAD
-						<ul class="<?=($this->uri->segment(1)==='rooming')?'current':'select'?>"><li><a href="<? echo site_url() ?>/rooming"><b>Rooming</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
-=======
 						<ul class="<?=($this->uri->segment(1)==='rooming')?'current':'select'?>"><li><a href="<? echo site_url() ?>/rooming""><b>Ruang Kamar</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
->>>>>>> 31591d9d68a235db41efe2aeda9b1770b6e4f2f3
 						<div class="nav-divider">&nbsp;</div>
 						<? }?>
 						<div class="clear"></div>
