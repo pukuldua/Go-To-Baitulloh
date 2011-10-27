@@ -15,13 +15,17 @@ class Forgot extends CI_Controller {
 	
 	function send()
 	{
-		$this->load->model('accounts_model');
+		// kondisi awal parameter login
+		$valid = false; 
 		
-		$valid 		= false; // kondisi awal parameter login
+		// load model
+		$this->load->model('accounts_model');
 		
 		// load library validasi
 		$this->load->library('form_validation');
 		$this->load->library('encrypt');
+		$this->load->library('email');
+		$this->load->library('parser');
 		
 		//cek validasi input
 		$this->form_validation->set_rules('email', 'Email ', 'required|valid_email');
@@ -33,18 +37,17 @@ class Forgot extends CI_Controller {
 		{
 			$email 	= $this->input->post('email');
 			
-			$data_user	= $this->accounts_model->cek_forgot($email); // menampilkan semua data di table accounts
+			$data_user	= $this->accounts_model->cek_forgot($email); 
 			
 			if ($data_user->result() != NULL)
 			{
-				//kondisi pengecekan apakah username dan password yang dimasukkan telah sesuai dengan benar atau tidak
 				foreach ($data_user->result() as $row){	
 					$data['nama_user'] = $row->NAMA_USER;
 					$data['password_user'] = $row->PASSWORD;
 					$data['email_user'] = $row->EMAIL;
 					
 					$valid = true;
-				}//end foreach
+				}
 			
 			} else {
 				
@@ -54,42 +57,18 @@ class Forgot extends CI_Controller {
 			}
 				
 			
-			//apabila login telah sesuai dengan email dan password maka user akan masuk halaman utama
 			if($valid){ 
-				
-			//	$data['content'] = $this->load->view('template_email', $data, TRUE);
-
-
-				// pengaturan Email
-		/*		$config['protocol'] = 'mail';
-				$config['charset'] = 'iso-8859-1';
-				$config['wordwrap'] = TRUE;
-				$config['mailtype'] = 'html';
-				
-				$this->email->initialize($config);
-				
-				$this->email->to($data['email_user']);
-				$this->email->from('nasrul.hadi@live.com');
-				$this->email->subject('Layanan Lupa Password - Umrah Kamilah');
-				$this->email->message($data['content']);
-				$this->email->send();
-				echo $this->email->print_debugger();*/
-				
-				
 		
-				// cek session, jika forgot kosong maka email akan dikirim
 				if($this->session->userdata('forgot') == NULL)
 				{
-					// kirim email disini
-					
+
 					// update password baru			
 					$data_acak = "ABC789";
 					$data['generate_pass'] = str_shuffle($data_acak);
 					$md5_acak = md5($data['generate_pass']);
 					$set_acak = array('PASSWORD' => $md5_acak);
-					$this->accounts_model->update_password($set_acak, $data['email_user']);
+		//			$this->accounts_model->update_password($set_acak, $data['email_user']);
 					
-					// isi session
 					$this->session->set_userdata('forgot', $data['generate_pass']);
   
 				} else {
@@ -97,16 +76,31 @@ class Forgot extends CI_Controller {
 					$data['generate_pass'] = $this->session->userdata('forgot');
 				}
 				
-				// template email 
-		//		$data['subject'] = "Layanan Lupa Password - Umrah Kamilah";
-		//		$this->load->view('template_email2', $data);
 				
-				//form after send forgot
+				$data['subject'] = 'Reset Password';
+				
+				// fungsi kirim email
+				$config['protocol'] = 'mail';
+				$config['mailtype'] = 'html';
+		
+				$this->email->initialize($config);
+				
+				$htmlMessage =  $this->parser->parse('email_reset', $data, true);
+				
+				$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
+				$this->email->to('nasrul.hadi@live.com');
+				$this->email->subject('Reset Password');
+				$this->email->message($htmlMessage);
+		
+				$this->email->send();
+				
 				$email_ubah = str_replace("@", "_at_", $data['email_user']);
 				redirect("forgot/success/".$email_ubah);
+
+				
+				//$content = $this->load->view('email_reset',$data);
 				
 			}
-			//apabila login tidak sesuai dengan email dan password maka user akan masuk halaman login
 			else{
 				$data['cek_form'] = 1;
 				$data['cek_error'] = "-error";
@@ -117,7 +111,6 @@ class Forgot extends CI_Controller {
 		} 
 		else 
 		{
-		
 			$this->form(1);
 		
 		} // end foreach		
@@ -212,4 +205,6 @@ class Forgot extends CI_Controller {
 		$data['content'] = $this->load->view('form_reset', $data, true);
 		$this->load->view('front', $data);
 	}
+	
+
 }

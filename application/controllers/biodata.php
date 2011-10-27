@@ -177,9 +177,9 @@ class Biodata extends CI_Controller {
 		{
 			if (is_numeric($id_candidate) && $id_candidate > 1)
 			{
-				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
 				$this->hapus_gambar($id_candidate, "foto");
 				$this->hapus_gambar($id_candidate, "paspor");
+				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
 			}
 			
 			
