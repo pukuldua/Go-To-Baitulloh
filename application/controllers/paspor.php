@@ -194,6 +194,18 @@ class Paspor extends CI_Controller {
 						
 				$data['tipe'] = $tipe;
 				
+				$data['notifikasi'] = null;
+				if($this->session->userdata('sukses') == 'true'){
+					$data['notifikasi'] = '<div id="message-green">
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="green-left">Dokumen Paspor Berhasil diubah.</td>
+								<td class="green-right"><a class="close-green"><img src="'.base_url().'images/table/icon_close_green.gif"   alt="" /></a></td>
+							</tr>
+						</table><br>
+					</div>';
+					$this->session->unset_userdata('sukses');
+				}				
 				
 				$data['content'] = $this->load->view('paspor_edit', $data, true);
 				$this->load->view('front', $data);
@@ -245,6 +257,12 @@ class Paspor extends CI_Controller {
 		
 		$this->load->library('form_validation');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('log_model');
+
+		$log = "Mengubah dokumen paspor Calon Jamaah";
+		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
 		
 		// ID CANDIDATE DAN ID ACCOUNT
 		$id_candidate = $this->input->post('id_candidate');
@@ -319,7 +337,14 @@ class Paspor extends CI_Controller {
 					unlink($file_gambar);
 				}
 			}
+			
 			$tipe = 1;
+			
+			//buat session sukses
+			$this->session->set_userdata('sukses','true');
+			
+			$this->log_model->log($id_user, $kode_reg, NULL, $log);
+			
 			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
 			
 			redirect('/paspor/edit/'.$id_candidate.'/'.$id_account.'/'.$tipe.'/');

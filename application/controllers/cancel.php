@@ -34,15 +34,25 @@ class Cancel extends CI_Controller {
 			if($candidate_jamaah->result() != NULL)
 			{
 				$data['cek_valid'] = TRUE;
-			
 			}else{
-			
 				$data['cek_valid'] = FALSE;
 			}
-			
 		}else{
 			$data['cek_valid'] = TRUE;
-		}			
+		}
+		
+		$data['notifikasi'] = null;
+		if($this->session->userdata('sukses') == 'true'){
+			$data['notifikasi'] = '<div id="message-green">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="green-left">Pembatalan Keberangkatan Calon Jamaah berhasil. Informasi detail telah dikirim ke Email <i><strong>'.$this->session->userdata('email').'</strong></i>.</td>
+						<td class="green-right"><a class="close-green"><img src="'.base_url().'images/table/icon_close_green.gif"   alt="" /></a></td>
+					</tr>
+				</table><br>
+			</div>';
+			$this->session->unset_userdata('sukses');
+		}
 		
 		$data['content'] = $this->load->view('cancel_page', $data, TRUE);
 		$this->load->view('front', $data);
@@ -56,6 +66,9 @@ class Cancel extends CI_Controller {
 		$this->load->library('parser');
 		$this->load->model('canceled_candidate_model');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('log_model');
+
+		$log = "Melakukan PEMBATALAN Calon Jamaah";
 		
 		// LOAD SESSION
 		$id_account = $this->session->userdata('id_account');
@@ -128,6 +141,13 @@ class Cancel extends CI_Controller {
 			$this->email->message($htmlMessage);
 	
 			$this->email->send();
+			
+			
+			//buat session sukses
+			$this->session->set_userdata('sukses','true');
+			
+			// catat log
+			$this->log_model->log($id_account, $kode_reg, NULL, $log);
 			
 			redirect(site_url()."/cancel");
 		

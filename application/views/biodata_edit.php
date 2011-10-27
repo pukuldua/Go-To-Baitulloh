@@ -1,4 +1,7 @@
 <? echo form_open_multipart('/biodata/do_edit'); ?>
+
+<?php echo $notifikasi;?>
+
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
@@ -238,10 +241,10 @@
 					<td></td>
                     <td colspan="2">
 					   <?
-                       $file_gambar = './images/upload/'.$e_pas_foto;
+                       $file_gambar = './images/upload/foto/'.$e_pas_foto;
                        if(is_file($file_gambar))
                        { 
-					   		$url_gambar = base_url().'images/upload/'.$e_pas_foto;
+					   		$url_gambar = base_url().'images/upload/foto/'.$e_pas_foto;
 							$url_gambar2 = $url_gambar;
 					   }else{
 							$url_gambar = base_url().'images/shared/user_x.png'; 
