@@ -67,7 +67,7 @@
 						<ul class="<?=($this->uri->segment(1)==='paspor')?'current':'select'?>"><li><a href="<? echo site_url() ?>/paspor"><b>Dokumen</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 					
-						<ul class="select"><li><a href="#nogo"><b>Pembayaran</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
+						<ul class="<?=($this->uri->segment(1)==='payment')?'current':'select'?>"><li><a href="<? echo site_url() ?>/payment"><b>Pembayaran</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
 						<div class="nav-divider">&nbsp;</div>
 					
 						<ul class="<?=($this->uri->segment(1)==='cancel')?'current':'select'?>"><li><a href="<? echo site_url() ?>/cancel"><b>Pembatalan</b><!--[if IE 7]><!--></a><!--<![endif]--></li></ul>
