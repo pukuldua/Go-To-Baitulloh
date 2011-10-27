@@ -10,6 +10,7 @@ class Libkamilah {
 		if($CI->session->userdata('email') == NULL)
 			redirect();
   	}//end cek_session
+	
 }//end class
 
 ?>
