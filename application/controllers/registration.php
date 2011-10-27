@@ -59,6 +59,7 @@ class Registration extends CI_Controller {
 					$data_waiting = array('KODE_REGISTRASI'=>$this->data_field['KODE_REGISTRASI'], 'ID_ACCOUNT'=>$id_acc);
 					
 					$this->waiting_list_model->insert_waiting_list($data_waiting);
+					$this->log_model->log($id_acc, $this->data_field['KODE_REGISTRASI'], null, 'INSERT data WAITING_LIST dengan KODE_REGISTRASI = '.$this->data_field['KODE_REGISTRASI']);
 				}
 				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);

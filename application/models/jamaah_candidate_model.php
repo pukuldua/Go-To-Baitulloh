@@ -24,6 +24,19 @@ class jamaah_candidate_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+
+        function get_profile($id_candidate, $kode_reg)
+	{
+		$this->db->select("*");
+		$this->db->from("jamaah_candidate j");
+                $this->db->join("province p", "p.ID_PROPINSI = j.ID_PROPINSI");
+		$this->db->where('ID_CANDIDATE', $id_candidate);
+                $this->db->where('KODE_REGISTRASI', $kode_reg);
+                $this->db->where('STATUS_KANDIDAT', 2);
+                $this->db->or_where('STATUS_KANDIDAT', 3);
+
+		return $this->db->get();
+	}
 	
 	function get_grid_all_jamaah($kode_reg, $id_account)
 	{
