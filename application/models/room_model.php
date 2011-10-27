@@ -22,6 +22,17 @@ class Room_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+
+        function update_room($id, $data){
+		$this->db->trans_begin();
+                $this->db->where("ID_ROOM", $id);
+		$this->db->update('room', $data);
+
+		if ($this->db->trans_status() === FALSE)
+			$this->db->trans_rollback();
+		else
+			$this->db->trans_commit();
+	}
 	
 	function check_available_room($group, $program, $room_type, $beds){
 		$this->db->select("*");

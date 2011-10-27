@@ -5,7 +5,7 @@
 			<!-- start id-form -->
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
-					<th valign="top">Group</th>
+					<th valign="top">Grup</th>
 					<td>	
 						<? $group = 0; if(set_value('group')!='') $group = set_value('group');
 							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect-group" onChange="get_group();"'); ?>
@@ -32,7 +32,7 @@
 				</tr>
 				<tr>
 					<? form_error('jml_adult') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Jumlah Adult (*)</th>
+					<th valign="top">Jumlah Dewasa (*)</th>
 					<td><input type="text" name="jml_adult" value="<?php echo set_value('jml_adult');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('jml_adult') != '') {?>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<? form_error('with_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child With Bed</th>
+					<th valign="top">Anak Dengan Ranjang</th>
 					<td><input type="text" name="with_bed" value="<?php echo set_value('with_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('with_bed') != '') {?>
@@ -54,7 +54,7 @@
 				</tr> 
 				<tr>
 					<? form_error('no_bed') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Child No Bed</th>
+					<th valign="top">Anak Tanpa Ranjang</th>
 					<td><input type="text" name="no_bed" value="<?php echo set_value('no_bed');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('no_bed') != '') {?>
@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<? form_error('infant') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Infant</th>
+					<th valign="top">Bayi</th>
 					<td><input type="text" name="infant" value="<?php echo set_value('infant');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('infant') != '') {?>
@@ -140,7 +140,8 @@
 			<div id="related-activities">
 				
 				<!--  start related-act-top -->
-				<div id="related-act-top-front"><span class="related-act-top-front">Information</span>
+				<div id="related-act-top">
+                	<img src="<?php echo base_url();?>images/forms/header_related_act.gif" width="271" height="43" alt="" />
 				</div>
 				<!-- end related-act-top -->
 					

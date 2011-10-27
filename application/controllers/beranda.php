@@ -95,7 +95,9 @@ class Beranda extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules($config);
-		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
+		$this->form_validation->set_message('required', 'Kolom <strong>%s</strong> harus diisi !');
+		$this->form_validation->set_message('valid_email', 'Penulisan kolom <strong>%s</strong> tidak benar!');
+		$this->form_validation->set_message('numeric', '<strong>Kolom %s</strong> harus berupa angka !');
 
 		return $this->form_validation->run();
     }
@@ -104,7 +106,7 @@ class Beranda extends CI_Controller {
     function cek_dropdown($value){
 		$this->load->library('form_validation');
 		if($value==0){
-				$this->form_validation->set_message('cek_dropdown', 'Please choose one %s from the list !');
+				$this->form_validation->set_message('cek_dropdown', 'Pilih salah satu <strong>%s</strong> !');
 				return FALSE;
 		}else
 				return TRUE;
