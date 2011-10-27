@@ -176,15 +176,21 @@ class Paspor extends CI_Controller {
 				$data['tgl_lahir'] = date("d F Y", strtotime($data['e_tgl_lahir']));
 				
 				// PECAH TANGGAL PASPOR
-				$k_pecah_tgl = explode("-", $data['e_tgl_keluar']);
-				$data['e_k_thn'] = $k_pecah_tgl[0];
-				$data['e_k_bln'] = $k_pecah_tgl[1];
-				$data['e_k_tgl'] = $k_pecah_tgl[2];
+				if($data['e_tgl_keluar'] != NULL)
+				{
+					$k_pecah_tgl = explode("-", $data['e_tgl_keluar']);
+					$data['e_k_thn'] = $k_pecah_tgl[0];
+					$data['e_k_bln'] = $k_pecah_tgl[1];
+					$data['e_k_tgl'] = $k_pecah_tgl[2];
+				}
 				
-				$b_pecah_tgl = explode("-", $data['e_tgl_habis']);
-				$data['e_b_thn'] = $b_pecah_tgl[0];
-				$data['e_b_bln'] = $b_pecah_tgl[1];
-				$data['e_b_tgl'] = $b_pecah_tgl[2];
+				if($data['e_tgl_habis'] != NULL)
+				{
+					$b_pecah_tgl = explode("-", $data['e_tgl_habis']);
+					$data['e_b_thn'] = $b_pecah_tgl[0];
+					$data['e_b_bln'] = $b_pecah_tgl[1];
+					$data['e_b_tgl'] = $b_pecah_tgl[2];
+				}
 						
 				$data['tipe'] = $tipe;
 				
@@ -246,7 +252,7 @@ class Paspor extends CI_Controller {
 		$tipe = $this->input->post('id_tipe');
 		
 		if ($this->cek_validasi() == FALSE){
-			$this->edit($id_candidate, $id_account);
+			$this->edit($id_candidate, $id_account, $tipe);
 		}
 		else{
 
@@ -313,7 +319,7 @@ class Paspor extends CI_Controller {
 					unlink($file_gambar);
 				}
 			}
-			
+			$tipe = 1;
 			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
 			
 			redirect('/paspor/edit/'.$id_candidate.'/'.$id_account.'/'.$tipe.'/');

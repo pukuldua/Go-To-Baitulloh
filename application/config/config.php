@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8080/gotobaitulloh/';
+$config['base_url']	= 'http://192.168.1.245/umrahkamilah/';
 
 /*
 |--------------------------------------------------------------------------

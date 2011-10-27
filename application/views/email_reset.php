@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ /*text-align:left*/;
+				/*@editable*/ text-align:left;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ /*text-align:left*/;
+				/*@editable*/ text-align:left;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -395,18 +395,23 @@
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h4 class="h4">Reset Password</h4>
-<p><strong>Assalamualaikum, <?=$nama_user?></strong><br />
-</p>
-<p>Kami telah menerima permintaan untuk mereset password anda. apabila anda tidak merasa melakukan ini tolong abaikan Email ini. klik link dibawah ini untuk mereset password anda.</p>
-                                                               
-                                                               	 <center>
-                                                                   <strong>
-                                                               		 <h4>
-                                                                       <a href="<?=site_url()?>/forgot/reset/<?=$key_tgl?>_<?=$key_email?>">RESET PASSWORD</a></h4></strong></center>
+<p>Assalamualaikum, <?=$nama_user?></p> 
+
+<p>Sesuai dgn permintaan Saudara perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
+</p>                                                                
+<p><strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+  <?=$nama_user?>
+  <br />
+  <strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+  <?=$email_user?>
+  <br />
+<strong>Password Baru :</strong> <?=$generate_pass?> </p>
                                                                 
-                                                                <p>Setelah anda mengklik link reset diatas, beberapa saat lagi kami akan mengirimkan password baru untuk anda. terima kasih</p>
-                                                            <p><strong>Wassalamualaikum Wr. Wb</strong><br />
-                                                            <strong>Umrahkamilah.com </strong></p> </div>
+<p> Gunakan password diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="<? echo site_url().'/login'; ?>">Login</a> .Segera mengganti Password setelah berhasil masuk ke halaman member.</p>
+                                                                
+<p><strong>Wassalamualaikum Wr. Wb</strong><br />
+<strong>Umrahkamilah.com </strong></p>
+														  </div>
 														</td>
                                                     </tr>
                                                 </table>
@@ -434,9 +439,9 @@
 																<br />
 																PT. KAMILAH WISATA MUSLIM<br />
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
-																Cilandak Jakarta Selatan 12420<br />
-																Telp : +6221 7279 4230<br />
-																Fax : +6221  7590 3619</p>
+																Cilandak  Jakarta Selatan 12420<br />
+																Telp : +6221  7279 4230<br />
+																Fax : +6221 7590 3619</p>
                                                       </div></td>
                                                     </tr>
                                                     <tr>

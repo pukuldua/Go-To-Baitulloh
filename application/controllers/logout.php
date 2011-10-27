@@ -5,11 +5,12 @@ class Logout extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('log_model');	
 	}
 	
 	function index(){
 		
+		$this->load->model('log_model');	
+
 		$log = "LOGOUT keluar dari sistem";
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");

@@ -329,6 +329,12 @@
 			#monkeyRewards img{
 				max-width:190px;
 			}
+			
+			.borderDashed {
+				border-top:1px dashed #999 !important;
+				width:100%;
+				margin:10px 0px 10px 0px;
+			}
 		</style>
 	</head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
@@ -373,7 +379,7 @@
                                             <td class="headerContent">
                                             
                                             	<!-- // Begin Module: Standard Header Image \\ -->
-                                            	<img src="http://img191.imageshack.us/img191/2703/headergkl.jpg" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                            	<img src="<?php echo base_url();?>images/shared/header-email.png" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
                                             	<!-- // End Module: Standard Header Image \\ -->
                                             
                                             </td>
@@ -394,19 +400,20 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Layanan Reset Password</h4>
-                                                                <strong>Assalamualaikum, </strong> Sesuai dgn permintaan Saudara perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
-                                                                <br />
-                                                                <br />
-                                                              <strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> <?=$nama_user?><br />
-                                                                <strong>Password Baru :</strong> <?=$generate_pass?> 
-                                                                <br />
-                                                                <br />
+                                                                <h4 class="h4">Pembatalan Calon Jamaah</h4>
+<p><br /><i><strong>Assalamualaikum, <?=$nama_user?></strong></i></p> 
+
+<p>Sesuai dgn permintaan Saudara perihal layanan Pembatalan Calon Jamaah. berikut kami lampirkan data profile dari calon jamaah yg dinonaktifkan  : <br /><br />  
+</p>                                                                
+<p>
+<?=$list_calon?>
+</p>
+                                                               
+<p><br /> Terima kasih telah menggunakan layananan <strong>Online System Umrah Kamilah</strong>. Semoga kita tetap berlimpah rahmat, berkah, dan maghfirahNya. Amin</p>
                                                                 
-                                                                Gunakan data diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="http://localhost/umrahkamilah/index.php/login">Login</a> 
- 
-                                                                .Segera mengganti Password setelah berhasil masuk ke halaman member.<br />
-                                                            <strong>Wassalamualaikum Wr. Wb</strong></div>
+<p><strong>Wassalamualaikum Wr. Wb</strong><br />
+<strong>Umrahkamilah.com </strong></p>
+														  </div>
 														</td>
                                                     </tr>
                                                 </table>
@@ -428,32 +435,21 @@
                                                 <!-- // Begin Module: Standard Footer \\ -->
                                                 <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="social">
-                                                            <div mc:edit="std_social">
-                                                                &nbsp;<a href="*|TWITTER:PROFILEURL|*">follow on Twitter</a> | <a href="*|FACEBOOK:PROFILEURL|*">friend on Facebook</a> | <a href="*|FORWARD|*">forward to a friend</a>&nbsp;
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <td valign="top" width="350">
                                                             <div mc:edit="std_footer">
 																<p><strong>Head Office :</strong>
 																<br />
 																PT. KAMILAH WISATA MUSLIM<br />
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
-																Cilandak – Jakarta Selatan 12420<br />
-																Telp : +6221 – 7279 4230<br />
-																Fax : +6221 – 7590 3619</p>
+																Cilandak  Jakarta Selatan 12420<br />
+																Telp : +6221  7279 4230<br />
+																Fax : +6221 7590 3619</p>
                                                       </div></td>
-                                                        <td valign="top" width="190" id="monkeyRewards">
-                                                            <div mc:edit="monkeyrewards">
-                                                                Banner Disini ~ <?=$this->session->userdata('forgot')?></div>
-                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2" valign="middle" id="utility">
                                                             <div mc:edit="std_utility">
-                                                                &nbsp;Online Registration System - Kamilah Wisata<br />
+                                                                Online Registration System - Kamilah Wisata<br />
                                                               Membangun Karakter Jamaah Menuju Kehidupan yang Lebih Baik,<br />
                                                             </div>
                                                         </td>

@@ -27,11 +27,14 @@ class jamaah_candidate_model extends CI_Model {
 	
 	function get_grid_all_jamaah($kode_reg, $id_account)
 	{
+		$status = array(1,2,3);
+		
 		$this->db->select('j.*, c.SIZE AS UKURAN_BAJU');
 		$this->db->from('jamaah_candidate j');
 		$this->db->join('clothes_size c','j.ID_SIZE = c.ID_SIZE');	
 		$this->db->where('KODE_REGISTRASI', $kode_reg );
 		$this->db->where('ID_ACCOUNT', $id_account);
+		$this->db->where_in('STATUS_KANDIDAT', $status);
 		
 		$this->CI->flexigrid->build_query();
 		
@@ -59,7 +62,20 @@ class jamaah_candidate_model extends CI_Model {
 		
 		return $this->db->get();
 	}
-
+	
+	function get_total_jamaah($id_account, $kode_reg)
+	{
+		$status = array(1,2,3);
+		
+		$this->db->select('*');
+		$this->db->from('jamaah_candidate');
+		$this->db->where('KODE_REGISTRASI', $kode_reg);
+		$this->db->where('ID_ACCOUNT', $id_account);
+        $this->db->where_in('STATUS_KANDIDAT', $status);
+				
+		return $this->db->get();
+	}
+	
         /* mendapatkan data jamaah yang sdh booked (DP) tp belum masuk ke booked_Room */
         function get_jamaah_notBooked_room($id_account, $kode_reg, $data)
 	{
