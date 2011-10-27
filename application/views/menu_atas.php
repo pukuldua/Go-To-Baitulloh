@@ -11,7 +11,7 @@
 					<!--  start account-content -->	
 					<div class="account-content">
 					<div class="account-drop-inner">
-						<a href="" id="acc-settings">Change Profile Data</a>
+						<a href="<?php echo site_url();?>/useraccount" id="acc-settings">Change Profile Data</a>
 						<div class="clear">&nbsp;</div>
 						<div class="acc-line">&nbsp;</div>
 						<a href="" id="acc-settings">Change Password</a>

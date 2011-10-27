@@ -10,13 +10,19 @@ class Useraccount extends CI_Controller {
 
 	function index()
 	{
-		$this->changedata();
+		$this->edit();
 	}
 	
-	function changedata()
+	function edit()
 	{
-		$this->libkamilah->cek_session_login(); //cek login session
-		$id_account = $this->session->userdata['id_account']; //ambil info id account dari session
+		//load validation library
+		$this->load->library('form_validation'); 
+		
+		//cek login session
+		$this->libkamilah->cek_session_login();
+		
+		//ambil info id account dari session
+		$id_account = $this->session->userdata['id_account']; 
 		
 		//ambil data user yang bersangkutan
 		$this->load->model('accounts_model');
@@ -43,17 +49,20 @@ class Useraccount extends CI_Controller {
 		}	
 		$data['province_options'] = $province_options;
 
-
 		//load view akhir
-		$data['content'] = $this->load->view('useraccount/form_changedata',$data,true);
+		$data['content'] = $this->load->view('useraccount/form_editdata',$data,true);
 		$this->load->view('front',$data);
 		
 	}//end changedata
 	
-	function updatedata()
+	function do_edit()
 	{
 		
 	}//end updatedata
+	
+	function cek_validasi(){
+		
+	}//end cek_validasi
 	
 }
 

@@ -1625,9 +1625,10 @@ a:hover.back-login	{
 .titleform{
 	border-bottom:solid 1px #f0f0f0;
 	margin:0 0 20px 0;
-	color: #818181;
+	color: #92B22C;
 	line-height: 11px;
 	padding:0 0 10px 0;
+	font-weight:bold;
 }
 
 
