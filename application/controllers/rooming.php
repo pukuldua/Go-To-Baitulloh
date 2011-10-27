@@ -98,6 +98,12 @@ class Rooming extends CI_Controller {
 		$this->load->view('front',$data);
 	}
 
+        function dialog(){
+            $data['content'] = $this->load->view('dialog',null,true);
+            $this->load->view('front',$data);
+//            $this->load->view('dialog',null,false);
+        }
+
 	function book_room()
 	{
             if ($this->check_validasi() == FALSE){
@@ -106,14 +112,18 @@ class Rooming extends CI_Controller {
             }else{
                 $this->load->model('room_model');
                 $this->load->model('booked_room_model');
+                $this->load->model('log_model');
                 
 		$room = $this->input->post('room');
                 $cadidate = $this->input->post('candidate');
+                $id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
 
                 for ($i=0; $i < count($cadidate); $i++){
                     $data = array('ID_ROOM' => $room, 'ID_CANDIDATE' => $cadidate[$i], 'TANGGAL_BOOKING' => date("Y-m-d h:i:s"));
 
                     $this->booked_room_model->insert_booked_room($data);
+                    $this->log_model->log($id_user, $kode_reg, NULL, $log);
 
                     $data_room = $this->room_model->get_room($room);
                     if ($data_room->num_rows() > 0){

@@ -53,12 +53,12 @@ class Registration extends CI_Controller {
 				
 				// if waiting list
 				if ($this->input->post('waiting') == 1){
-					$this->load->model('waiting_model');
+					$this->load->model('waiting_list_model');
 					
 					$id_acc = $this->accounts_model->get_account_byKode($this->data_field['KODE_REGISTRASI'])->row()->ID_ACCOUNT;
 					$data_waiting = array('KODE_REGISTRASI'=>$this->data_field['KODE_REGISTRASI'], 'ID_ACCOUNT'=>$id_acc);
 					
-					$this->waiting_model->insert_waiting_list($data_waiting);
+					$this->waiting_list_model->insert_waiting_list($data_waiting);
 				}
 				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);

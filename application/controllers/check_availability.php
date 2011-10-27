@@ -122,6 +122,31 @@ class Check_availability extends CI_Controller {
 					}
 				}
 			}
+
+                        //reverse order
+                        if (! $flag_room){
+                            $tmp_candidate = $total_candidate;
+                            $room_capacity = 0;
+                            $flag_room = TRUE;
+                            for($i=count($kamar)-1; $i >= 0; $i--){
+                                    if($kamar[$i]!='0'  && $kamar[$i] != ''){
+                                            $room_type = $this->room_type_model->get_roomType($kamar[$i]);
+                                            $tmp_capacity = $room_type->row()->CAPACITY * $jml_kamar[$i];
+                                            $room_capacity += $tmp_capacity;
+
+                                            $tmp_candidate -= $tmp_capacity;
+                                            if ($tmp_candidate >= 0){
+                                                    $counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], $room_type->row()->CAPACITY)->num_rows();
+                                            }else {
+                                                    $counter = $this->room_model->check_available_room($group, $kelas_program, $kamar[$i], 0)->num_rows();
+                                            }
+
+                                            if ($counter < $jml_kamar[$i]){
+                                                    $flag_room = FALSE;
+                                            }
+                                    }
+                            }
+                        }
 			
 			if ($room_capacity >= $total_candidate && $available_beds >= $total_candidate){
 				if ($flag_room){

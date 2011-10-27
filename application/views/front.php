@@ -20,7 +20,7 @@
 		<script src="<?php echo base_url();?>js/jquery/ui.core.js" type="text/javascript"></script>
 		<script src="<?php echo base_url();?>js/jquery/ui.checkbox.js" type="text/javascript"></script>
 		<script src="<?php echo base_url();?>js/jquery/jquery.bind.js" type="text/javascript"></script>
-		<script src="<?php echo base_url();?>js/jquery.blockUI.js" type="text/javascript"></script>
+		
 		<script type="text/javascript">
 		$(function(){
 			$('input').checkBox();
