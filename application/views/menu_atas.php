@@ -14,7 +14,7 @@
 						<a href="<?php echo site_url();?>/useraccount" id="acc-settings">Ubah Data Profil</a>
 						<div class="clear">&nbsp;</div>
 						<div class="acc-line">&nbsp;</div>
-						<a href="" id="acc-settings">Ubah Password</a>
+						<a href="<?php echo site_url();?>/useraccount/editpassword" id="acc-settings">Ubah Password</a>
 					</div>
 					</div>
 					<!--  end account-content -->

@@ -96,7 +96,57 @@ class Useraccount extends CI_Controller {
 		}//end if else
 	}//end updatedata
 	
-	function cek_validasi(){
+	function editpassword()
+	{
+		//load validation library
+		$this->load->library('form_validation'); 
+		
+		//cek login session
+		$this->libkamilah->cek_session_login();
+		
+		$data['notifikasi'] = null;
+		if($this->session->userdata('sukses') == 'true'){
+			$data['notifikasi'] = '<div id="message-green">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="green-left">Password Berhasil diubah.</td>
+						<td class="green-right"><a class="close-green"><img src="'.base_url().'images/table/icon_close_green.gif"   alt="" /></a></td>
+					</tr>
+				</table>
+			</div>';
+			$this->session->unset_userdata('sukses');
+		}
+		
+		//load view akhir
+		$data['content'] = $this->load->view('useraccount/form_editpassword',$data,true);
+		$this->load->view('front',$data);
+	}
+	
+	function do_editpassword()
+	{
+		//ambil info id account dari session
+		$id_account = $this->session->userdata['id_account']; 
+		
+		if ($this->cek_validasi_password($id_account) == FALSE){
+			$this->editpassword();
+		}else{
+			// update table
+			$data = array(
+				'PASSWORD' => md5($this->input->post('password_baru'))
+			);
+			
+			$this->load->model('accounts_model');
+			$this->accounts_model->update_with_id_account($data,$id_account);
+			
+			//buat session sukses
+			$this->session->set_userdata('sukses','true');
+			
+			redirect('useraccount/editpassword');
+		}//end if else
+	}
+	
+	function cek_validasi()
+	{
 		$this->load->library('form_validation');
 		//setting rules
 		$config = array(
@@ -114,19 +164,65 @@ class Useraccount extends CI_Controller {
 		$this->form_validation->set_message('required', 'Kolom <strong>%s</strong> harus diisi !');
 		$this->form_validation->set_message('valid_email', 'Penulisan kolom <strong>%s</strong> tidak benar!');
 		$this->form_validation->set_message('numeric', '<strong>Kolom %s</strong> harus berupa angka !');
-		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
 
 		return $this->form_validation->run();
 	}//end cek_validasi
+	
+	function cek_validasi_password($id_account)
+	{	
+		$this->load->library('form_validation');
+		//setting rules
+		$config = array(
+			array('field'=>'password_sekarang','label'=>'Password Sekarang', 'rules'=>'required|callback_cek_validitas['.$id_account.']'),
+			array('field'=>'password_baru','label'=>'Password Baru', 'rules'=>'required'),
+			array('field'=>'konfirmasi','label'=>'Konfirmasi', 'rules'=>'required|callback_cek_kesamaan['.$this->input->post('password_baru').']'),
+		);
+		
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', 'Kolom <strong>%s</strong> harus diisi !');
 
-	function cek_dropdown($value){
+		return $this->form_validation->run();
+	}
+	
+	function cek_dropdown($value)
+	{
 		$this->load->library('form_validation');
 		if($value==0){
 				$this->form_validation->set_message('cek_dropdown', 'Pilih salah satu <strong>%s</strong> !');
 				return FALSE;
 		}else
 				return TRUE;
-    }//end cek_dropdown
+    }
+	
+	function cek_validitas($password_sekarang,$id_account)
+	{
+		$this->load->library('form_validation');
+		$this->load->model('accounts_model');
+		
+		$data_account = $this->accounts_model->get_data_account($id_account);
+		$password_db = null;
+		foreach($data_account->result() as $account){
+			$password_db = $account->PASSWORD;
+		}//end foreach
+		
+		if(md5($password_sekarang) != $password_db){
+			$this->form_validation->set_message('cek_validitas', '<strong>%s</strong> anda Tidak Benar !');
+			return FALSE;
+		}else{
+			return TRUE;
+		}		
+	}//end
+	
+	function cek_kesamaan($konfirmasi,$password_baru)
+	{	
+		$this->load->library('form_validation');
+		if($konfirmasi != $password_baru){
+			$this->form_validation->set_message('cek_kesamaan', '<strong>%s</strong> Tidak sama dengan Password Baru !');
+			return FALSE;
+		}else{
+			return TRUE;
+		}
+	}
 	
 }//end class
 

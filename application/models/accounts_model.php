@@ -71,6 +71,12 @@ class Accounts_model extends CI_Model {
 		$this->db->where('KODE_REGISTRASI', $kode_reg);
 		$this->db->update('accounts' , $data);
 	}
+	
+	function update_with_id_account($data,$id_account)
+	{
+		$this->db->where('ID_ACCOUNT', $id_account);
+		$this->db->update('accounts' , $data);
+	}
 }
 
 ?>
