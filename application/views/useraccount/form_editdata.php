@@ -1,5 +1,7 @@
 <div class="titleform">My Account > Change Profile Data</div>
 
+<?php echo $notifikasi;?>
+
 <? echo form_open('useraccount/do_edit'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
@@ -21,7 +23,7 @@
 				<tr>
 					<? form_error('nama') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Nama Lengkap</th>
-					<td><input type="text" name="nama" value="<?php echo $nama;?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="nama" value="<?if(set_value('nama')!='') echo set_value('nama'); else echo $nama;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nama') != '') {?>
 						<div class="error-left"></div>
@@ -33,7 +35,7 @@
 				<tr>
 					<? form_error('email') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Email</th>
-					<td><input type="text" name="email" value="<?php echo $email;?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="email" value="<?if(set_value('email')!='') echo set_value('email'); else echo $email;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('email') != '') {?>
 						<div class="error-left"></div>
@@ -45,7 +47,7 @@
 				<tr>
 					<? form_error('telepon') == '' || form_error('handphone') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Telepon / Mobile</th>
-					<td><input type="text" name="telepon" value="<?php echo $telepon; ?>" class="<? echo $class;?>" /> &nbsp; / &nbsp;<input type="text" name="handphone" value="<?php echo $handphone; ?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="telepon" value="<?if(set_value('telepon')!='') echo set_value('telepon'); else echo $telepon;?>" class="<? echo $class;?>" /> &nbsp; / &nbsp;<input type="text" name="handphone" value="<?if(set_value('handphone')!='') echo set_value('handphone'); else echo $handphone;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('telepon') != '' || form_error('handphone') != '') {?>
 						<div class="error-left"></div>
@@ -54,13 +56,6 @@
 					</td>
 				</tr>
 				
-			</table>
-			<!-- end id-form  -->
-		</td>
-		
-		<td>
-			<!-- start id-form -->
-			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
 					<th valign="top">Propinsi</th>
 					<td>	
@@ -78,7 +73,7 @@
 				<tr>
 					<? form_error('kota') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Kota</th>
-					<td><input type="text" name="kota" value="<?php echo $kota;?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="kota" value="<?if(set_value('kota')!='') echo set_value('kota'); else echo $kota;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('kota') != '') {?>
 						<div class="error-left"></div>
@@ -90,7 +85,7 @@
 				<tr>
 					<? form_error('alamat') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Alamat</th>
-					<td><input type="text" name="alamat" value="<?php echo $alamat;?>" class="<? echo $class;?>" /></td>
+					<td><input type="text" name="alamat" value="<?if(set_value('alamat')!='') echo set_value('alamat'); else echo $alamat;?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('alamat') != '') {?>
 						<div class="error-left"></div>
@@ -98,6 +93,16 @@
 						<? }?>
 					</td>
 				</tr>
+
+				<tr>
+					<th>&nbsp;</th>
+					<td valign="top">
+						<input type="submit" value="" class="form-submit" />
+						<input type="reset" value="" class="form-reset"  />
+					</td>
+					<td></td>
+				</tr>
+				
 			</table>
 			<!-- end id-form  -->
 		</td>

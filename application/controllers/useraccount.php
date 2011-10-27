@@ -48,7 +48,20 @@ class Useraccount extends CI_Controller {
 				$province_options[$row->ID_PROPINSI] = $row->NAMA_PROPINSI;
 		}	
 		$data['province_options'] = $province_options;
-
+		
+		$data['notifikasi'] = null;
+		if($this->session->userdata('sukses') == 'true'){
+			$data['notifikasi'] = '<div id="message-green">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="green-left">Data Profil Berhasil diubah.</td>
+						<td class="green-right"><a class="close-green"><img src="'.base_url().'images/table/icon_close_green.gif"   alt="" /></a></td>
+					</tr>
+				</table>
+			</div>';
+			$this->session->unset_userdata('sukses');
+		}
+		
 		//load view akhir
 		$data['content'] = $this->load->view('useraccount/form_editdata',$data,true);
 		$this->load->view('front',$data);
@@ -56,15 +69,66 @@ class Useraccount extends CI_Controller {
 	}//end changedata
 	
 	function do_edit()
-	{
+	{	
+		if ($this->cek_validasi() == FALSE){
+			$this->edit();
+		}else{
+			$no_registrasi = $this->input->post('no_registrasi');
 		
+			// update table
+			$data = array(
+				'NAMA_USER' 	=> $this->input->post('nama'),
+				'EMAIL' 		=> $this->input->post('email'),
+				'TELP' 			=> $this->input->post('telepon'),
+				'MOBILE' 		=> $this->input->post('handphone'),
+				'ID_PROPINSI' 	=> $this->input->post('province'),
+				'KOTA' 			=> $this->input->post('kota'),
+				'ALAMAT' 		=> $this->input->post('alamat')
+			);
+			
+			$this->load->model('accounts_model');
+			$this->accounts_model->update_account($data,$no_registrasi);
+			
+			//buat session sukses
+			$this->session->set_userdata('sukses','true');
+			
+			redirect('useraccount');
+		}//end if else
 	}//end updatedata
 	
 	function cek_validasi(){
+		$this->load->library('form_validation');
+		//setting rules
+		$config = array(
+				array('field'=>'nama','label'=>'Nama Lengkap', 'rules'=>'required'),
+				array('field'=>'email','label'=>'Email', 'rules'=>'valid_email'),
+				array('field'=>'telepon','label'=>'Telepon', 'rules'=>'required|numeric'),
+				array('field'=>'handphone','label'=>'Mobile', 'rules'=>'numeric'),
+				array('field'=>'province','label'=>'Propinsi', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'kota','label'=>'Kota', 'rules'=>'required'),
+				array('field'=>'alamat','label'=>'Alamat', 'rules'=>'required')
+			);
 		
+		
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', 'Kolom <strong>%s</strong> harus diisi !');
+		$this->form_validation->set_message('valid_email', 'Penulisan kolom <strong>%s</strong> tidak benar!');
+		$this->form_validation->set_message('numeric', '<strong>Kolom %s</strong> harus berupa angka !');
+		//$this->form_validation->set_error_delimiters('<li class="error">', '</li>');
+
+		return $this->form_validation->run();
 	}//end cek_validasi
+
+	function cek_dropdown($value){
+		$this->load->library('form_validation');
+		if($value==0){
+				$this->form_validation->set_message('cek_dropdown', 'Pilih salah satu <strong>%s</strong> !');
+				return FALSE;
+		}else
+				return TRUE;
+    }//end cek_dropdown
 	
-}
+}//end class
 
 /* End of file useraccount.php */
 /* Location: ./application/controllers/useraccount.php */
