@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url();?>css/jquery.multiselect2side.css" type="text/css" media="screen" />
-<link type="text/css" href="<?php echo base_url();?>css/jquery-ui-1.8.16.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="<?php echo base_url();?>js/jquery.multiselect2side.js" ></script>
-<script type="text/javascript" src="<?php echo base_url();?>js/jquery-ui-1.8.16.custom.min.js"></script>
 
 <script type="text/javascript">
 	$().ready(function() {
@@ -68,35 +66,8 @@
 		}
 		// return false;
 	}
-	
-	$(document).ready(function() {
-		$("#create-user").button().click(function() {
-			$("#dialog-form").dialog({			
-				autoOpen: false,
-				height: 400,
-				width: 500,
-				draggable: true,
-				modal: true
-			});
-		});
-	});
 </script>
 
-<div id="dialog-form" title="Create new user">
-	<form>
-	<fieldset>
-		<label for="name">Name</label>
-		<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-		<label for="email">Email</label>
-		<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
-		<label for="password">Password</label>
-		<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
-	</fieldset>
-	</form>
-</div>
-
-
-<button id="create-user">Run</button>
 <?php echo form_open('rooming/book_room', array('name' => 'form_rooming')); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">

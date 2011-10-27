@@ -170,8 +170,13 @@ class Biodata extends CI_Controller {
 	function hapus_data_calon_jamaah()
 	{
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('log_model');
+		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
 		
 		$pecah_id = split(',' , $this->input->post('items'));
+		$log = "menghapus 1 Calon Jamaah";
 		
 		foreach($pecah_id as $index => $id_candidate)
 		{
@@ -180,6 +185,7 @@ class Biodata extends CI_Controller {
 				$this->hapus_gambar($id_candidate, "foto");
 				$this->hapus_gambar($id_candidate, "paspor");
 				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			}
 			
 			
@@ -222,8 +228,8 @@ class Biodata extends CI_Controller {
 		}
 	} // end function
 	
-	// HALAMAN TAMBAH CALON JAMAAH
 	
+	// HALAMAN TAMBAH CALON JAMAAH
 	function input()
 	{
 		$this->load->library('form_validation');
@@ -262,7 +268,13 @@ class Biodata extends CI_Controller {
 		
 		$this->load->library('form_validation');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('log_model');
 		
+		$log = "Mendaftarkan 1 Calon Jamaah";
+		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
+
 		if ($this->cek_validasi() == FALSE){
 			$this->input();
 		}
@@ -296,7 +308,7 @@ class Biodata extends CI_Controller {
 			$perihal_pribadi = $darah_tinggi.";".$takut_ketinggian.";".$smooking_room.";".$jantung.";".$asma.";".$mendengkur;
 			
 			// Upload Foto
-			$config['upload_path'] = './images/upload/';
+			$config['upload_path'] = './images/upload/foto/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
 			$config['max_size']	= '5000';
 			$config['encrypt_name']	= TRUE;
@@ -319,8 +331,8 @@ class Biodata extends CI_Controller {
 			$data = array(
 				'ID_RELATION' => $this->input->post('relasi'),
 				'ID_SIZE' => $this->input->post('baju'),
-				'ID_ACCOUNT' => $this->session->userdata('id_account'),
-				'KODE_REGISTRASI' => $this->session->userdata('kode_registrasi'),
+				'ID_ACCOUNT' => $id_user,
+				'KODE_REGISTRASI' => $kode_reg,
 				'ID_PROPINSI' => $this->input->post('province'),
 				'NAMA_LENGKAP' => $this->input->post('nama_lengkap'),
 				'NAMA_PANGGILAN' => $this->input->post('panggilan'),
@@ -349,6 +361,8 @@ class Biodata extends CI_Controller {
 				'STATUS_KANDIDAT' => 1);
 			
 			$insert = $this->jamaah_candidate_model->insert_jamaah($data);
+			
+			$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			
 			redirect('/biodata/list_jamaah/');
 		}
@@ -401,7 +415,6 @@ class Biodata extends CI_Controller {
 	
 	
 	// HALAMAN EDIT CALON JAMAAH
-	
 	function edit($id_candidate = NULL, $id_account = NULL)
 	{
 		
@@ -486,6 +499,19 @@ class Biodata extends CI_Controller {
 				$data['relasi_options'] = $relasi_options;
 				$data['chlothes_options'] = $chlothes_options;
 				
+				$data['notifikasi'] = null;
+				if($this->session->userdata('sukses') == 'true'){
+					$data['notifikasi'] = '<div id="message-green">
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="green-left">Data Profil Calon Jamaah Berhasil diubah.</td>
+								<td class="green-right"><a class="close-green"><img src="'.base_url().'images/table/icon_close_green.gif"   alt="" /></a></td>
+							</tr>
+						</table><br>
+					</div>';
+					$this->session->unset_userdata('sukses');
+				}
+				
 				
 				$data['content'] = $this->load->view('biodata_edit', $data, true);
 				$this->load->view('front', $data);
@@ -503,6 +529,12 @@ class Biodata extends CI_Controller {
 		
 		$this->load->library('form_validation');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('log_model');
+
+		$log = "Mengubah data profile Calon Jamaah";
+		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
 		
 		if ($this->cek_validasi() == FALSE){
 			$this->input();
@@ -565,7 +597,7 @@ class Biodata extends CI_Controller {
 			if($cek_foto != "")
 			{
 				// Upload Foto
-				$config['upload_path'] = './images/upload/';
+				$config['upload_path'] = './images/upload/foto/';
 				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
 				$config['max_size']	= '5000';
 				$config['encrypt_name']	= TRUE;
@@ -579,14 +611,12 @@ class Biodata extends CI_Controller {
 					exit;
 				
 				}else{
-					
 					$data_file = $this->upload->data();
 				}
 				
 				$valid = TRUE;
 			
 			} else {
-				
 				$valid = FALSE;
 			}
 			
@@ -626,6 +656,11 @@ class Biodata extends CI_Controller {
 					unlink($file_gambar);
 				}
 			}
+			
+			//buat session sukses
+			$this->session->set_userdata('sukses','true');
+			
+			$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			
 			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
 			

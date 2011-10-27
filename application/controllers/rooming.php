@@ -8,7 +8,7 @@ class Rooming extends CI_Controller {
                 $this->cekSession();
 	}
 	
-	function index(){
+	function index(){            
 		$this->load->model('room_model');
                 $this->load->model('room_type_model');
 		$this->load->model('packet_model');
@@ -104,6 +104,33 @@ class Rooming extends CI_Controller {
 //            $this->load->view('dialog',null,false);
         }
 
+        function show_profile($id_candidate){
+            $this->load->model('jamaah_candidate_model');
+
+            $key = $this->decode($id_candidate);
+            $jamaah = $this->jamaah_candidate_model->get_profile($key, $this->session->userdata("kode_registrasi"));
+
+            if($jamaah->num_rows() > 0){
+                $data['jamaah_profile'] = $jamaah;
+                $this->load->view('profile',$data,FALSE);
+            }else
+                show_404();
+        }
+
+        function secure($data){
+            $front = substr(sha1($data * rand(0, 1000)), 0, 10);
+            $rear = substr(sha1(rand(0, 1000) / $data), 0, 25);
+
+            return $front.$data.$rear;
+	}
+
+        function decode($data){
+            $front = substr($data, 10, strlen($data));
+            $resolved = substr($front, 0, strlen($front)-25);
+
+            return $resolved;
+	}
+
 	function book_room()
 	{
             if ($this->check_validasi() == FALSE){
@@ -116,11 +143,13 @@ class Rooming extends CI_Controller {
                 
 		$room = $this->input->post('room');
                 $cadidate = $this->input->post('candidate');
+                
                 $id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
 
                 for ($i=0; $i < count($cadidate); $i++){
                     $data = array('ID_ROOM' => $room, 'ID_CANDIDATE' => $cadidate[$i], 'TANGGAL_BOOKING' => date("Y-m-d h:i:s"));
+                    $log = "INSERT data untuk BOOKED_ROOM dengan ID_ROOM = $room dan ID_CANDIDATE = $cadidate[$i]";
 
                     $this->booked_room_model->insert_booked_room($data);
                     $this->log_model->log($id_user, $kode_reg, NULL, $log);
@@ -130,10 +159,18 @@ class Rooming extends CI_Controller {
                         if ($data_room->row()->AVAILABILITY == 1){
                             $bed = $data_room->row()->BEDS;
 
-                            if ($bed-1 > 0)
+                            if ($bed-1 > 0){
                                 $this->room_model->update_room($room, array('BEDS' => $bed-1));
-                            else
+                                
+                                $log = "UPDATE data ROOM dengan ID_ROOM = $room set BEDS = ".($bed-1);
+                                $this->log_model->log($id_user, $kode_reg, NULL, $log);
+                            }
+                            else{
                                 $this->room_model->update_room($room, array('BEDS' => $bed-1, 'AVAILABILITY' => 0));
+                                
+                                $log = "UPDATE data ROOM dengan ID_ROOM = $room set BEDS = ".($bed-1)." dan AVAILABILITY = 0";
+                                $this->log_model->log($id_user, $kode_reg, NULL, $log);
+                            }
                         }
                     }
                     
@@ -166,12 +203,23 @@ class Rooming extends CI_Controller {
                 $id_room = $_POST['id_room'];
                 $id_acc = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
+
+                $atts = array(
+                      'width'      => '550',
+                      'height'     => '350',
+                      'scrollbars' => 'yes',
+                      'status'     => 'yes',
+                      'resizable'  => 'yes',
+                      'screenx'    => '0',
+                      'screeny'    => '0'
+                    );
                 
 		$list = '<ul class="greyarrow">';
 		$room = $this->booked_room_model->get_booked_candidate($id_acc, $kode_reg, $id_room);
 		if ($room->num_rows() > 0){
                     foreach ($room->result() as $rs){
-                            $list.= '<li><a href="javascript:showJamaah('.$rs->ID_CANDIDATE.')">'.$rs->NAMA_LENGKAP." - ".$rs->KOTA.'</a></li>';
+                            $key = $this->secure($rs->ID_CANDIDATE);
+                            $list.= '<li>'.anchor_popup('rooming/show_profile/'.$key, $rs->NAMA_LENGKAP." - ".$rs->KOTA, $atts).'</li>';
                     }
                     echo $list.'</ul>';
                 } else echo "";

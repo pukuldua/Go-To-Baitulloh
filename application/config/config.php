@@ -14,8 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/umrahkamilah/';
-
+$config['base_url']	= 'http://localhost:8080/gotobaitulloh/';
 
 /*
 |--------------------------------------------------------------------------
@@ -278,7 +277,7 @@ $config['cookie_path']		= '/';
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

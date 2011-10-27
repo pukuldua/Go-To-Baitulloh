@@ -10,6 +10,8 @@ Selamat Datang di Google!
 1.2 Kecuali disepakati lain secara tertulis dengan Google, perjanjian Anda dengan Google selalu minimal mencakup syarat-syarat dan ketentuan yang ditetapkan dalam dokumen ini. Di bawah disebut sebagai “Syarat-Syarat Universal”.
 ";
 
+echo $notifikasi;
+
 echo form_open('cancel/do_send'); ?>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
