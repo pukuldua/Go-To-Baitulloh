@@ -260,6 +260,108 @@ class Check_availability extends CI_Controller {
 		}
 		echo $options;
 	}
+	
+	function getGroup()
+	{
+		$this->load->model('group_departure_model');
+		
+		if ($_POST['id_group']!='' && $_POST['id_group']!= 0) { 
+			$parent = $_POST['id_group'];
+			
+			$data_group	= $this->group_departure_model->get_group_berdasarkan_id($parent);			
+			foreach ($data_group->result() as $row){
+				
+				$kode = $row->KODE_GROUP;
+				$ket = $row->KETERANGAN;
+				$jd = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_JD);
+				$mk = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_MK);
+				$paspor = $this->konversi_tanggal($row->JATUH_TEMPO_PASPOR);
+				$lunas = $this->konversi_tanggal($row->JATUH_TEMPO_PELUNASAN);
+				$dp = $this->konversi_tanggal($row->JATUH_TEMPO_UANG_MUKA);
+				$berkas = $this->konversi_tanggal($row->JATUH_TEMPO_BERKAS );
+				
+				$data = $jd."#".$mk."#".$paspor."#".$lunas."#".$dp."#".$berkas."#".$kode."#".$ket;
+			}
+			echo $data;
+		
+		} else {
+			
+			echo " # # # # # # # ";
+		}
+
+	}
+	
+	function konversi_tanggal($tgl){
+      $tanggal = substr($tgl,8,2);
+      $bln    = substr($tgl,5,2);
+	  $bulan = ""; $strHari = "";
+      $tahun    = substr($tgl,0,4);
+              $hari = date("N", mktime(0, 0, 0, $bln, $tanggal, $tahun));
+
+              switch ($hari){
+                  case 1:
+                      $strHari = "Senin";
+                      break;
+                  case 2:
+                      $strHari = "Selasa";
+                      break;
+                  case 3:
+                      $strHari = "Rabu";
+                      break;
+                  case 4:
+                      $strHari = "Kamis";
+                      break;
+                  case 5:
+                      $strHari = "Jumat";
+                      break;
+                  case 6:
+                      $strHari = "Sabtu";
+                      break;
+                  case 7:
+                      $strHari = "Minggu";
+                      break;
+              }
+
+      switch ($bln){
+        case 1:
+          $bulan =  "Januari";
+          break;
+        case 2:
+          $bulan =  "Februari";
+          break;
+        case 3:
+          $bulan = "Maret";
+          break;
+        case 4:
+          $bulan =  "April";
+          break;
+        case 5:
+          $bulan =  "Mei";
+          break;
+        case 6:
+          $bulan =  "Juni";
+          break;
+        case 7:
+          $bulan =  "Juli";
+          break;
+        case 8:
+          $bulan =  "Agustus";
+          break;
+        case 9:
+          $bulan =  "September";
+          break;
+        case 10:
+          $bulan =  "Oktober";
+          break;
+        case 11:
+          $bulan =  "November";
+          break;
+        case 12:
+          $bulan =  "Desember";
+          break;
+	   } 
+	   return $strHari.", ".$tanggal.' '.$bulan.' '.$tahun;
+    }
 }
 
 /* End of file Check_availability.php */

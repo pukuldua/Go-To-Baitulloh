@@ -26,7 +26,7 @@
 					<th valign="top">Group</th>
 					<td>	
 						<? $group = 0; if(set_value('group')!='') $group = set_value('group');
-							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect_form_1"'); ?>
+							echo form_dropdown('group', $group_options, $group,'id="group" class="styledselect-group" onChange="get_group();"'); ?>
 					</td>
 					<td>
 						<? if(form_error('group') != '') {?>
@@ -155,42 +155,49 @@
 				<div id="related-act-bottom">
 					<!--  start related-act-inner -->
 					<div id="related-act-inner">
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Add another product</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_minus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Delete products</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
 						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
-							<h5>Edit categories</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
+							<h5>Keterangan Group <a id="info_kode"></a></h5>
+                            <br /><i><div id="info_ket"></div></i>
+								
+                                <br />Keberangkatan <strong>Jeddah</strong> :
 							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
+								<li><a id="info_jd"></a>&nbsp;</li> 
+							</ul>
+                              <br />  Keberangkatan <strong>Mekkah</strong> :
+							<ul class="greyarrow">
+								<li><a id="info_mk"></a>&nbsp;</li> 
+							</ul>
+                            <div class="lines-dotted-short"></div>	
+                               Batas Akhir Pembayaran Uang Muka:
+							<ul class="greyarrow">
+								<li><a id="info_dp"></a>&nbsp;</li> 
+							</ul>
+                            <div class="lines-dotted-short"></div>	
+                               Batas Akhir Pelunasan:
+							<ul class="greyarrow">
+								<li><a id="info_lunas"></a>&nbsp;</li> 
+							</ul>
+                            <div class="lines-dotted-short"></div>	
+                                Batas Akhir Upload Data Passport:
+							<ul class="greyarrow">
+								<li><a id="info_paspor"></a>&nbsp;</li> 
+							</ul>
+                            <div class="lines-dotted-short"></div>	
+                                Batas Akhir Pengumpulan Berkas Fisik:
+							<ul class="greyarrow">
+								<li><a id="info_berkas"></a>&nbsp;</li> 
+							</ul>
+						</div>
+							
+						<div class="clear"></div>
+						<div class="lines-dotted-short"></div>
+							
+						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+						<div class="right">
+							<h5>Total Biaya</h5>
+							<ul class="greyarrow">
+								<li>Rp. 30.000.000,-</li>
 							</ul>
 						</div>
 							<div class="clear"></div>						
@@ -251,5 +258,33 @@
 	          });
 	    
 	          return false;
+	}
+	
+	function get_group() {
+		
+		var prp = $("#group").val();
+                $.ajax({
+                        url: "<?=base_url();?>index.php/check_availability/getGroup/",
+                        global: false,
+                        type: "POST",
+                        async: false,
+                        dataType: "html",
+                        data: "id_group="+ prp, //the name of the $_POST variable and its value
+                        success: function (response) {
+							 var bahan = response;
+							 var pecah = bahan.split("#");
+							 
+                             document.getElementById('info_jd').innerHTML = pecah[0];
+							 document.getElementById('info_mk').innerHTML = pecah[1];
+							 document.getElementById('info_paspor').innerHTML = pecah[2];
+							 document.getElementById('info_lunas').innerHTML = pecah[3];
+							 document.getElementById('info_dp').innerHTML = pecah[4];
+							 document.getElementById('info_berkas').innerHTML = pecah[5];
+							 document.getElementById('info_kode').innerHTML = pecah[6];
+							 document.getElementById('info_ket').innerHTML = pecah[7];
+                        }
+                });
+              return false;
+		
 	}
 </script>
