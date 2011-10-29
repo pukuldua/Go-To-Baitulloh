@@ -224,6 +224,7 @@ class Check_availability extends CI_Controller {
 		$val = $this->group_departure_model->get_group($id_group);
 		
 		if ($val->num_rows() > 0){
+                        date_default_timezone_set("Asia/Jakarta");
 			$exp_date = strtotime($val->row()->JATUH_TEMPO_UANG_MUKA);
 			$today = strtotime(date("Y-m-d"));
 			
