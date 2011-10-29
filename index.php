@@ -1,5 +1,5 @@
 <?php
-ini_set('date.timezone', "Asia/Jakarta");
+
 /*
  *---------------------------------------------------------------
  * PHP ERROR REPORTING LEVEL

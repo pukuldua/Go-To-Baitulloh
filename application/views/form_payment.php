@@ -1,7 +1,87 @@
+<div class="garis_pisah"> RINCIAN BIAYA</div>
+<center>
+<table width="100%" class="front_price" align="center">
+	<tr height="30">
+		<td width="300" class="front_price_no_border"></td>
+		<td width="150" align="center"><h3>HARGA</h3></td>
+		<td width="150" align="center"><h3>JUMLAH</h3></td>
+		<td width="150" align="center"><h3>TOTAL</h3></td>
+    </tr>	
+	<? 
+	if(isset($row_price))
+	{
+		echo $row_price;
+	}
+	?>	
+	<tr height="30">
+		<td align="right" class="front_price_no_border"><h4>Biaya Jasa Tambah Nama</h4></td>
+		<td align="center"><h4>20.00 $</h4></td>
+		<td align="center"><? if(isset($hitung_jasa_nama)) { echo $hitung_jasa_nama; } ?></td>
+		<td align="center"><h4><? if(isset($hitung_total)) { echo $hitung_total; } ?> $</h4></td>
+    </tr>	
+	<tr height="30">
+		<td align="right" class="front_price_no_border"><h4>Biaya Jasa Penngurusan Buku Maningtis</h4></td>
+		<td align="center"><h4>20.00 $</h4></td>
+		<td align="center"><? if(isset($hitung_jasa_maningtis)) { echo $hitung_jasa_maningtis; } ?></td>
+		<td align="center"><h4><? if(isset($hitung_total_maningtis)) { echo $hitung_total_maningtis; } ?> $</h4></td>
+    </tr>	
+	<tr height="30" valign="bottom">
+		<td class="front_price_no_border"></td>
+		<td class="bg_kolom"></td>
+		<td class="bg_kolom"><strong>T O T A L &nbsp; B I A Y A</strong></td>
+		<td class="bg_kolom"><h4><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $</h4></td>
+    </tr>
+</table>
+<br /><br /><br /><br />
+
+<div class="garis_pisah"> RINCIAN PEMBAYARAN</div>
+
+<!-- ------- Rincian Pembayaran --------->
+
+<br />
+<table width="100%" class="front_payment" align="center">
+	<tr height="30">
+		<td width="150" class="bg_kolom"></td>
+		<td width="150" class="bg_kolom"><h3>BIAYA</h3></td>
+		<td width="150" class="bg_kolom"><h3>DIBAYARKAN</h3></td>
+		<td width="150" class="bg_kolom"><h3>STATUS</h3></td>
+		<td width="150" class="bg_kolom"><h3>JATUH TEMPO</h3></td>
+    </tr>	
+	<tr height="30">
+		<td class="bg_kolom_right front_payment_top"><h4>Uang Muka</h4></td>
+		<td align="center"><h4>1.100 $</h4></td>
+		<td align="center"><h4>0,00 $</h4></td>
+		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
+		<td align="center"><h4>11 November 2011</h4></td>
+    </tr>	
+	<tr height="30">
+		<td class="bg_kolom_right"><h4>Sisa Pelunasan</h4></td>
+		<td align="center"><h4><? if(isset($total_pelunasan)) { echo $total_pelunasan; } ?> $</h4></td>
+		<td align="center"><h4>0,00 $</h4></td>
+		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
+		<td align="center"><h4>12 Desember 2011</h4></td>
+    </tr>	
+	<tr height="30" valign="bottom">
+		<td class="bg_kolom_right"><h4>T O T A L</h4></td>
+		<td align="center"><h4><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $</h4></td>
+		<td align="center"><h4>0,00 $</h4></td>
+		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
+		<td></td>
+    </tr>
+</table>
+</center>
+<br /><br /><br /><br />
+
+<div class="garis_pisah">FORM KONFIRMASI</div>
+
+<!-- ------- form konfirmasi --------->
+
+
 <? echo form_open_multipart('/payment/do_send'); ?>
 
 <?php echo $notifikasi;?>
 
+<br />
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
@@ -63,8 +143,8 @@
 					<td><? $metode = 0; if(set_value('metode')!='') $metode = set_value('metode');
 							$metode_options = array(
 							  '0'  => '-- Jenis Pembayaran --',
-							  '1'  => 'Transfer',
-							  '2'  => 'Tunai',
+							  '1'  => 'Uang Muka',
+							  '2'  => 'Sisa Pelunasan',
 							);
 							
 							echo form_dropdown('metode', $metode_options, $metode,'id="metode" class="styledselect_form_1"'); ?>
@@ -103,7 +183,7 @@
 					</td>
 				</tr>
 				<tr height="80">
-					<th>&nbsp;</th>
+					<th></th>
 					<td valign="bottom">
 						<input type="submit" value="" class="form-submit" />
 						<input type="reset" value="" class="form-reset"  />

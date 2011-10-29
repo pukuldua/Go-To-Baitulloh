@@ -16,6 +16,11 @@ class jamaah_candidate_model extends CI_Model {
 		return $this->db->get();
 	}
 	
+	function query_jamaah($data)
+	{
+		return $this->db->query($data);
+	}
+	
 	function get_data_berdasarkan_id_candidate($id_candidate)
 	{
 		$this->db->select("*");

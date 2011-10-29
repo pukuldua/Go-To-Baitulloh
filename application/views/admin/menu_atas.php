@@ -16,7 +16,7 @@
 				<div class="nav-divider">&nbsp;</div>
 				<ul class="current">
 					<li>
-						<a href="<?php echo site_url('admin/data_registrasi')?>"><b>Data Jama'ah</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<a href="<?php echo site_url('admin/data_jamaah')?>"><b>Data Jama'ah</b><!--[if IE 7]><!--></a><!--<![endif]-->
 					</li>
                 </ul>
 				<div class="nav-divider">&nbsp;</div>

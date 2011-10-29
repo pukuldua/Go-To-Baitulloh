@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Online Registration - Kamilah Wisata</title>
+		<title>Admin Page | Online Registration - Kamilah Wisata</title>
 		
 		<!-- ICON -->
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url() ?>images/favicon.ico" />
@@ -216,11 +216,7 @@
 		<div id="content-outer">
 			<!-- start content -->
 			<div id="content">
-				<? if($this->session->userdata('id_user') == NULL) { ?>
-				<div id="page-heading"><h1></h1></div>
-				<? } else { ?>
-				<div id="page-heading">Assalamualaikum, pengguna akun: <strong><? echo ucwords($this->session->userdata('username')); ?></strong></div>
-                <? } ?>
+				<div id="page-heading">Assalamualaikum, Pengguna Akun: <strong><? echo ucwords($this->session->userdata('username')); ?></strong></div>
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 					<tr>
 						<th rowspan="3" class="sized"><img src="<?php echo base_url();?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
