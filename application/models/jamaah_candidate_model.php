@@ -129,7 +129,28 @@ class jamaah_candidate_model extends CI_Model {
 		else
 			$this->db->trans_commit();
 	}
-
+	
+	function get_grid_allover_jamaah()
+	{
+		$status = array(1,2,3);
+		
+		$this->db->select('j.*, c.SIZE AS UKURAN_BAJU');
+		$this->db->from('jamaah_candidate j');
+		$this->db->join('clothes_size c','j.ID_SIZE = c.ID_SIZE');	
+		$this->db->where_in('STATUS_KANDIDAT', $status);
+		
+		$this->CI->flexigrid->build_query();
+		
+		$return['records'] = $this->db->get();
+		$this->db->select('count(ID_CANDIDATE) as record_count')->from('jamaah_candidate');
+		$this->CI->flexigrid->build_query(FALSE);
+		$record_count = $this->db->get();
+		$row = $record_count->row();
+		$return['record_count'] = $row->record_count;
+	
+		return $return;
+	}
+	
 }
 
 ?>
