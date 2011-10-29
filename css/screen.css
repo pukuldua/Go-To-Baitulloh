@@ -54,7 +54,7 @@ body	{
 #content	{
 	color: #333;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 18px;
 	margin: 0 auto 0 auto;
 	max-width: 1260px;
@@ -212,13 +212,13 @@ h3	{
 	}
 .red-left	{
 	background: url(../images/table/message_red.gif) top left no-repeat;
-	color: #ce2700;
+	color: #bf3d3d;
 	font-family: Tahoma;
 	font-weight: bold;
 	padding: 0 0 0 20px;
 	}
 .red-left a	{
-	color: #ce2700;
+	color: #bf3d3d;
 	font-family: Tahoma;
 	font-weight: normal;
 	text-decoration: underline;
@@ -252,9 +252,6 @@ h3	{
 .green-right	{
 	width: 55px;
 	}	
-	
-	
-	
 	
 	
 	
@@ -1574,7 +1571,7 @@ label	{
 	background: url(../images/login/inp_login.gif) no-repeat;
 	border: none;
 	color: #fff;
-	font-size: 16px;
+	font-size: 12px;
 	height: 28px;
 	padding: 6px 6px 0 10px;
 	width: 204px;
@@ -1653,10 +1650,24 @@ a:hover.back-login	{
 	height: 29px;
 	text-indent: -3000px;
 	width: 73px;
+	float:left;
 	}
 .submit-login:hover	{
 	background: url(../images/login/submit_login.gif) no-repeat 0 -29px;
 	}
+.reset-login{
+	background: url(../images/login/reset_login.gif) no-repeat;
+	border: none;
+	cursor: pointer;
+	display: block;
+	height: 29px;
+	text-indent: -3000px;
+	width: 73px;
+	float:left;
+}
+.reset-login:hover{
+	background: url(../images/login/reset_login.gif) no-repeat 0 -29px;
+}
  
 .titleform{
 	border-bottom:solid 1px #f0f0f0;
@@ -1695,6 +1706,7 @@ div.thumb {
 	color:#333;
 	font-weight:bold;
 }
+<<<<<<< HEAD
 
 .garis_pisah {
 	background: url(../images/forms/icon_list_arrow.gif) no-repeat top left;
@@ -1781,3 +1793,16 @@ table.front_price td {
 	font-weight:bold;
 	font-size:13px;
 }
+
+.foot-login{
+	bottom: 30px;
+	color: #161616;
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 12px;
+	position: absolute;
+	right: 40px;
+}
+
+
