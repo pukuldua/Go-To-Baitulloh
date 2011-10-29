@@ -6,6 +6,7 @@ class Check_availability extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
+                ini_set('date.timezone', "Asia/Jakarta");
 	}
 
 	function index()
