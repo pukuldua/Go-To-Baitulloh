@@ -67,7 +67,7 @@ class Forgot extends CI_Controller {
 					$data['generate_pass'] = str_shuffle($data_acak);
 					$md5_acak = md5($data['generate_pass']);
 					$set_acak = array('PASSWORD' => $md5_acak);
-		//			$this->accounts_model->update_password($set_acak, $data['email_user']);
+					$this->accounts_model->update_password($set_acak, $data['email_user']);
 					
 					$this->session->set_userdata('forgot', $data['generate_pass']);
   
@@ -98,7 +98,7 @@ class Forgot extends CI_Controller {
 				redirect("forgot/success/".$email_ubah);
 
 				
-				//$content = $this->load->view('email_reset',$data);
+			//	$content = $this->load->view('email_reset',$data);
 				
 			}
 			else{

@@ -124,7 +124,8 @@
 					'dateSelected',
 					function(e, selectedDate, $td, state)
 					{
-						updateSelects(selectedDate);
+						/*updateSelects(selectedDate);*/
+						document.getElementById('date_on').value = +selectedDate.getDate()+'/'+selectedDate.getMonth()+'/'+selectedDate.getFullYear();
 					}
 				).bind(
 					'dpClosed',
@@ -137,9 +138,12 @@
 				var updateSelects = function (selectedDate)
 				{
 					var selectedDate = new Date(selectedDate);
+					
+					/*
 					$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
 					$('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
 					$('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
+					*/
 				}
 				
 				// listen for when the selects are changed and update the picker
