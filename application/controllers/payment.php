@@ -17,8 +17,104 @@ class Payment extends CI_Controller {
 	
 	function front()
 	{
+		// LOAD LIBRARY, SESSION DAN MODEL
 		$this->load->library('form_validation');
+		$this->load->model('packet_model');
+		$this->load->model('room_packet_model');
+		$this->load->model('room_type_model');
+		$this->load->model('room_availability_model');
+		$this->load->model('jamaah_candidate_model');
 		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
+		
+		
+		// PROSES QUERY
+		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+		$data_jamaah = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND REQUESTED_NAMA != '0' AND REQUESTED_NAMA != ''");
+		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0'");
+		
+		
+		// CARI TOTAL PEMAKAI JASA NAMA PASPOR
+		if($data_jamaah->num_rows() > 0)
+		{
+			$data['hitung_jasa_nama'] = $data_jamaah->num_rows();
+		}else {
+			$data['hitung_jasa_nama'] = 0;
+		}
+		
+		$data['hitung_total'] = 20 * $data['hitung_jasa_nama'];
+		
+		
+		// CARI TOTAL PENGGUNA JASA MANINGTIS
+		if($data_jamaah_maningtis->num_rows() > 0)
+		{
+			$data['hitung_jasa_maningtis'] = $data_jamaah_maningtis->num_rows();
+		}else {
+			$data['hitung_jasa_maningtis'] = 0;
+		}
+		
+		$data['hitung_total_maningtis'] = 20 * $data['hitung_jasa_maningtis'];
+		
+		
+		// LOOPING PILIHAN PAKET 
+		$data['row_price'] = '';
+		$data['biaya_harga_kamar'] = 0;
+		
+		if($data_packet->result() != NULL)
+		{
+			foreach($data_packet->result() as $row)
+			{
+				$data['nama_group'] = $row->KODE_GROUP;
+				$data['nama_program'] = $row->NAMA_PROGRAM;
+				$data['cwb'] = $row->CHILD_WITH_BED;
+				$data['cnb'] = $row->CHILD_NO_BED;
+				$data['infant'] = $row->INFANT;
+				$data['id_packet'] = $row->ID_PACKET;
+				$id_program = $row->ID_PROGRAM;
+				$id_group = $row->ID_GROUP;
+				
+				// CARI ID ROOM PACKET
+				$data_room_packet = $this->room_packet_model->get_room_packet_byIDpack($data['id_packet']);
+				foreach($data_room_packet->result() as $rows)
+				{
+					$id_room_type = $rows->ID_ROOM_PACKET;
+					$data['jumlah_kamar'] = $rows->JUMLAH;
+				}
+				
+				// CARI DATA ROOM TYPE
+				$data_room_type = $this->room_type_model->get_roomType($id_room_type);
+				foreach($data_room_type->result() as $rowss)
+				{
+					$data['tipe_kamar'] = $rowss->JENIS_KAMAR;
+				}
+				
+				
+				// CARI HARGA KAMAR
+				$data_kamar_siap = $this->room_availability_model->get_price_room($id_room_type, $id_program, $id_group);
+				foreach($data_kamar_siap->result() as $rowss)
+				{
+					$data['harga_kamar'] = $rowss->HARGA_KAMAR;
+				}
+				
+				$data['total_harga_kamar'] = $data['harga_kamar'] * $data['jumlah_kamar'];
+				$data['biaya_harga_kamar'] += $data['total_harga_kamar'];
+				
+				
+				$data['row_price'] .= '	<tr height="30">
+											<td align="right" class="front_price_no_border">
+											<h4>'.$data['nama_group'].' - '.$data['nama_program'].' - '.$data['tipe_kamar'].'</td>
+											<td align="center"><h4>'.$this->cek_ribuan($data['harga_kamar']).' $</h4></td>
+											<td align="center">'.$data['jumlah_kamar'].'</td>
+											<td align="center"><h4>'.$this->cek_ribuan($data['total_harga_kamar']).' $</h4></td>
+										</tr>';
+			}
+		}
+		
+		$data['total_biaya'] = $data['hitung_total'] + $data['hitung_total_maningtis'] + $data['biaya_harga_kamar'];
+		$data['total_pelunasan'] = $this->cek_ribuan($data['total_biaya'] - 1100);
+		$data['total_biaya2'] = $this->cek_ribuan($data['total_biaya']);
+					
 		$data['notifikasi'] = null;
 		
 		if($this->session->userdata('sukses') == 'true'){
@@ -171,6 +267,14 @@ class Payment extends CI_Controller {
 		}else
 				return TRUE;
     }
+	
+	function cek_ribuan($txt)
+	{
+		$pecah = number_format($txt);
+		$ubah = str_replace(",", ".", $pecah);
+		
+		return $ubah;
+	}
 		
 }
 
