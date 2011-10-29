@@ -73,6 +73,7 @@
 	<tr valign="top">
 		<td>			
 			<!-- start id-form -->
+			<? if ($is_pay){ ?>
 			<? if ($is_booking) {?>
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
@@ -131,6 +132,12 @@
 					<td></td>
 				</tr>
 			</table>
+			<? }} else {?>
+			<h2>
+				Maaf, Anda tercatat belum melakukan pembayaran.
+				<br /> Silahkan melakukan pembayaran pada rekening yang tersedia (disamping).
+				<br /> Dan lakukan konfirmasi melalui menu <strong>Pembayaran</strong>
+			</h2>
 			<? }?>
 			<!-- end id-form  -->
 		</td>
@@ -150,10 +157,19 @@
 					<!--  start related-act-inner -->
 					<div id="related-act-inner">
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
+						<? if ($is_pay) {?>
 						<div class="right">
 							<h5>Data Jamaah Kamar : <div id="div_room"></div></h5>							
 						</div>
-							
+						<? } else {?>
+						<div class="right">
+							<h5>Rekening untuk pembayaran : </h5>
+							<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
+							PT KAMILAH WISATA MUSLIM<br />
+							USDollar : 101-000-644-5454<br />
+							IDRupiah : 101-000-644-5421</strong>
+						</div>
+						<? }?>
 						<div class="clear"></div>
 						<div class="lines-dotted-short"></div>						
 						

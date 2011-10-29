@@ -1,4 +1,4 @@
-<?php echo form_open('beranda/do_check'); ?>
+<?php echo form_open('beranda/choose_packet'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>		
@@ -85,7 +85,7 @@
 										//echo form_dropdown('kamar', $room_options, $kamar,'id="kamar" class="styledselect_form_1"'); ?>
 										<select name="kamar[]" id="kamar" class="styledselect-kamar">
 											<?php foreach ($room_options as $key=>$value){ ?>
-												<option value="<?=$value?>"><?=$value?></option>
+												<option value="<?=$key?>"><?=$value?></option>
 											<? } ?>
 										</select>
 										<div id="dvFile2"></div>
@@ -184,18 +184,7 @@
 							</ul>
 						</div>
 							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Total Biaya</h5>
-							<ul class="greyarrow">
-								<li>Rp. 30.000.000,-</li>
-							</ul>
-						</div>
-						
-                        <div class="clear"></div>						
+						<div class="clear"></div>		
 					</div>
 					<!-- end related-act-inner -->
 						

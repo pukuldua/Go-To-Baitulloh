@@ -45,7 +45,7 @@
 						<? if($this->session->userdata('email') != NULL){ ?>
 						<ul class="<?=($this->uri->segment(1)==='beranda')?'current':'select'?>">
                           <li>
-                        	<a href="<? echo site_url().'/beranda' ?>"><b>Beranda</b><!--[if IE 7]><!--></a><!--<![endif]-->
+                        	<a href="<? echo site_url().'/beranda' ?>"><b>Konfirmasi Paket</b><!--[if IE 7]><!--></a><!--<![endif]-->
                           </li>
                         </ul>
 						<div class="nav-divider">&nbsp;</div>		

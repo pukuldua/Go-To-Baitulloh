@@ -17,7 +17,7 @@ class Login extends CI_Controller {
 	{
 		
 		$this->load->model('accounts_model');
-		$this->load->model('log_model');
+		$this->load->model('log_model');                
 		
 		$this->session->sess_destroy(); // menghapus semua session yang ada dalam aplikasi		
 		$valid 		= false; // kondisi awal parameter login
@@ -49,7 +49,7 @@ class Login extends CI_Controller {
 						'email' 			=> $row->EMAIL,
 						'nama'				=> $row->NAMA_USER,
 						'kode_registrasi' 	=> $row->KODE_REGISTRASI
-					);	
+					);
 					
 					$this->session->set_userdata($newdata);
 					break;

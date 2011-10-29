@@ -190,17 +190,7 @@
 							</ul>
 						</div>
 							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Total Biaya</h5>
-							<ul class="greyarrow">
-								<li>Rp. 30.000.000,-</li>
-							</ul>
-						</div>
-							<div class="clear"></div>						
+						<div class="clear"></div>		
 					</div>
 					<!-- end related-act-inner -->
 						

@@ -11,6 +11,7 @@ class Accounts_model extends CI_Model {
 	{
 		$this->db->select("ID_ACCOUNT, KODE_REGISTRASI, NAMA_USER, EMAIL, PASSWORD");
 		$this->db->from("accounts");
+                $this->db->where("STATUS", 1);
 
 		return $this->db->get();
 	}

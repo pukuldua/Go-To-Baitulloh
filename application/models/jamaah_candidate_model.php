@@ -92,15 +92,28 @@ class jamaah_candidate_model extends CI_Model {
         /* mendapatkan data jamaah yang sdh booked (DP) tp belum masuk ke booked_Room */
         function get_jamaah_notBooked_room($id_account, $kode_reg, $data)
 	{
+                $status = array(2,3);
 		$this->db->select('*');
 		$this->db->from('jamaah_candidate');
 		$this->db->where('KODE_REGISTRASI', $kode_reg);
 		$this->db->where('ID_ACCOUNT', $id_account);
-                $this->db->where('STATUS_KANDIDAT', 2);
+                $this->db->where_in('STATUS_KANDIDAT', $status);
+                //$this->db->or_where('STATUS_KANDIDAT', 3);
                 $this->db->where_not_in('ID_CANDIDATE', $data);
 
 		return $this->db->get();
 	}
+
+        function get_payment_status($id_account, $kode_reg){
+            $this->db->select('STATUS_KANDIDAT');
+            $this->db->from('jamaah_candidate');
+            $this->db->where('KODE_REGISTRASI', $kode_reg);
+            $this->db->where('ID_ACCOUNT', $id_account);
+            $this->db->where('STATUS_KANDIDAT !=', 0);
+            $this->db->group_by("ID_ACCOUNT, KODE_REGISTRASI");
+
+            return $this->db->get();
+        }
 	
 	function hapus_data_calon_jamaah($id_candidate)
 	{
