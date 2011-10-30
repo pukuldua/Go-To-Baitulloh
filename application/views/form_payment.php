@@ -50,22 +50,22 @@
 	<tr height="30">
 		<td class="bg_kolom_right front_payment_top"><h4>Uang Muka</h4></td>
 		<td align="center"><h4>1.100 $</h4></td>
-		<td align="center"><h4>0,00 $</h4></td>
-		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
-		<td align="center"><h4>11 November 2011</h4></td>
+		<td align="center"><h4><? if(isset($jumlah_dp)) { echo $jumlah_dp; } ?> $</h4></td>
+		<td align="center"><span class="box_status_<?=$css_dp?>"><? if(isset($status_dp)) { echo $status_dp; } ?></span></td>
+		<td align="center"><h4><? if(isset($tgl_dp)) { echo $tgl_dp; } ?></h4></td>
     </tr>	
 	<tr height="30">
 		<td class="bg_kolom_right"><h4>Sisa Pelunasan</h4></td>
 		<td align="center"><h4><? if(isset($total_pelunasan)) { echo $total_pelunasan; } ?> $</h4></td>
-		<td align="center"><h4>0,00 $</h4></td>
-		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
-		<td align="center"><h4>12 Desember 2011</h4></td>
+		<td align="center"><h4><? if(isset($jumlah_lunas)) { echo $jumlah_lunas; } ?> $</h4></td>
+		<td align="center"><span class="box_status_<?=$css_lunas?>"><? if(isset($status_lunas)) { echo $status_lunas; } ?></span></td>
+		<td align="center"><h4><? if(isset($tgl_lunas)) { echo $tgl_lunas; } ?></h4></td>
     </tr>	
 	<tr height="30" valign="bottom">
 		<td class="bg_kolom_right"><h4>T O T A L</h4></td>
 		<td align="center"><h4><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $</h4></td>
-		<td align="center"><h4>0,00 $</h4></td>
-		<td align="center"><span class="box_status_belum">Belum Lunas</span></td>
+		<td align="center"><h4><? if(isset($total_pay_cek)) { echo $total_pay_cek; } ?> $</h4></td>
+		<td align="center"><span class="box_status_<?=$css_total?>"><? if(isset($total_status)) { echo $total_status; } ?></span></td>
 		<td></td>
     </tr>
 </table>
@@ -123,7 +123,7 @@
 				</tr>
 				<tr>
 					<? form_error('nominal') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Jumlah Rp. &nbsp;(*)</th>
+					<th valign="top">Jumlah $. &nbsp;(*)</th>
 					<td><input type="text" name="nominal" value="<?php echo set_value('nominal');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nominal') != '') {?>

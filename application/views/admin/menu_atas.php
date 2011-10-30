@@ -14,9 +14,15 @@
 		<div class="nav">
 			<div class="table">
 				<div class="nav-divider">&nbsp;</div>
-				<ul class="current">
+				<ul class="<?=($this->uri->segment(2)==='data_jamaah')?'current':'select'?>">
 					<li>
 						<a href="<?php echo site_url('admin/data_jamaah')?>"><b>Data Jama'ah</b><!--[if IE 7]><!--></a><!--<![endif]-->
+					</li>
+                </ul>
+				<div class="nav-divider">&nbsp;</div>
+				<ul class="<?=($this->uri->segment(2)==='konfirmasi')?'current':'select'?>">
+					<li>
+						<a href="<?php echo site_url('admin/konfirmasi')?>"><b>Konfirmasi Pembayaran</b><!--[if IE 7]><!--></a><!--<![endif]-->
 					</li>
                 </ul>
 				<div class="nav-divider">&nbsp;</div>

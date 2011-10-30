@@ -57,7 +57,7 @@ class jamaah_candidate_model extends CI_Model {
 		$this->CI->flexigrid->build_query();
 		
 		$return['records'] = $this->db->get();
-		$this->db->select('count(ID_CANDIDATE) as record_count')->from('jamaah_candidate');
+		$this->db->select('count(ID_CANDIDATE) as record_count')->from('jamaah_candidate')->where('KODE_REGISTRASI', $kode_reg )->where('ID_ACCOUNT', $id_account);
 		$this->CI->flexigrid->build_query(FALSE);
 		$record_count = $this->db->get();
 		$row = $record_count->row();
