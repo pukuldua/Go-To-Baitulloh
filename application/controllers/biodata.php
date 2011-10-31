@@ -175,17 +175,17 @@ class Biodata extends CI_Controller {
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
 		
-		$pecah_id = split(',' , $this->input->post('items'));
+		$pecah_id = explode(',' , $this->input->post('items'));
 		$log = "menghapus 1 Calon Jamaah";
 		
 		foreach($pecah_id as $index => $id_candidate)
 		{
 			if (is_numeric($id_candidate) && $id_candidate > 1)
 			{
-				$this->hapus_gambar($id_candidate, "foto");
-				$this->hapus_gambar($id_candidate, "paspor");
-				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
-				$this->log_model->log($id_user, $kode_reg, NULL, $log);
+		//		$this->hapus_gambar($id_candidate, "foto");
+		//		$this->hapus_gambar($id_candidate, "paspor");
+		//		$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
+		//		$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			}
 			
 			

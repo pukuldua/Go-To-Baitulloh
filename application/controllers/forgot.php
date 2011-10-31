@@ -88,17 +88,17 @@ class Forgot extends CI_Controller {
 				$htmlMessage =  $this->parser->parse('email_reset', $data, true);
 				
 				$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
-				$this->email->to('nasrul.hadi@live.com');
+				$this->email->to($data['email_user']);
 				$this->email->subject('Reset Password');
 				$this->email->message($htmlMessage);
 		
-				$this->email->send();
+			//	$this->email->send();
 				
 				$email_ubah = str_replace("@", "_at_", $data['email_user']);
-				redirect("forgot/success/".$email_ubah);
+			//	redirect("forgot/success/".$email_ubah);
 
 				
-			//	$content = $this->load->view('email_reset',$data);
+				$content = $this->load->view('email_reset',$data);
 				
 			}
 			else{
