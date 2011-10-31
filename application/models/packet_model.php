@@ -24,7 +24,7 @@ class Packet_model extends CI_Model {
 	}
 	
 	function get_packet_byAcc($id_acc, $kode_reg){
-		$this->db->select("packet.*, g.KODE_GROUP, p.NAMA_PROGRAM");
+		$this->db->select("packet.*,g.ID_GROUP, g.KODE_GROUP, g.KETERANGAN, p.NAMA_PROGRAM");
 		$this->db->from("packet");
                 $this->db->join("group_departure g","g.ID_GROUP = packet.ID_GROUP");
                 $this->db->join("program_class p", "p.ID_PROGRAM = packet.ID_PROGRAM");
