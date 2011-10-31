@@ -26,6 +26,8 @@ class Payment extends CI_Controller {
 		$this->load->model('room_type_model');
 		$this->load->model('room_availability_model');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('payment_model');
+		$this->load->model('group_departure_model');
 		
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
@@ -35,6 +37,8 @@ class Payment extends CI_Controller {
 		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
 		$data_jamaah = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND REQUESTED_NAMA != '0' AND REQUESTED_NAMA != ''");
 		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0'");
+		$data_pay_uangmuka = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '1'");
+		$data_pay_lunas = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '2'");
 		
 		
 		// CARI TOTAL PEMAKAI JASA NAMA PASPOR
@@ -58,6 +62,41 @@ class Payment extends CI_Controller {
 		
 		$data['hitung_total_maningtis'] = 20 * $data['hitung_jasa_maningtis'];
 		
+		
+		// CARI DATA UANG MUKA
+		if($data_pay_uangmuka->result() != NULL)
+		{
+			foreach($data_pay_uangmuka->result() as $row)
+			{
+				$data['status_dp'] = $row->TIPE_STATUS;
+				$data['jumlah_dp'] = $this->cek_ribuan($row->JUMLAH_KAMAR);
+				$data['jumlah_dp2'] = $row->JUMLAH_KAMAR;
+				$data['css_dp'] = "sudah";
+			}
+		}else{
+			$data['status_dp'] = "-";
+			$data['jumlah_dp'] = 0;
+			$data['css_dp'] = "belum";
+		}
+		
+		// CARI DATA PELUNASAN
+		if($data_pay_lunas->result() != NULL)
+		{
+			foreach($data_pay_lunas->result() as $row)
+			{
+				$data['status_lunas_pay'] = $row->STATUS;
+				$data['status_lunas'] = $row->TIPE_STATUS;
+				$data['jumlah_lunas'] = $this->cek_ribuan($row->JUMLAH_KAMAR);
+				$data['jumlah_lunas2'] = $row->JUMLAH_KAMAR;
+				$data['css_lunas'] = "sudah";
+			}
+		}else{
+			$data['status_lunas_pay'] = 0;
+			$data['status_lunas'] = "-";
+			$data['jumlah_lunas'] = 0;
+			$data['css_lunas'] = "belum";
+		}
+			
 		
 		// LOOPING PILIHAN PAKET 
 		$data['row_price'] = '';
@@ -84,8 +123,16 @@ class Payment extends CI_Controller {
 					$data['jumlah_kamar'] = $rows->JUMLAH;
 				}
 				
+				// CARI TANGGAL JATUH TEMPO DP DAN PELUNASAN
+				$data_group = $this->group_departure_model->get_group($row->ID_GROUP);
+				foreach($data_group->result() as $brs)
+				{
+					$data['tgl_dp'] = date('d F Y', strtotime($brs->JATUH_TEMPO_UANG_MUKA));
+					$data['tgl_lunas'] = date('d F Y', strtotime($brs->JATUH_TEMPO_PELUNASAN));
+				}
+				
 				// CARI DATA ROOM TYPE
-				$data_room_type = $this->room_type_model->get_roomType($id_room_type);
+				$data_room_type = $this->room_type_model->get_roomType($row->ID_GROUP);
 				foreach($data_room_type->result() as $rowss)
 				{
 					$data['tipe_kamar'] = $rowss->JENIS_KAMAR;
@@ -116,6 +163,19 @@ class Payment extends CI_Controller {
 		$data['total_biaya'] = $data['hitung_total'] + $data['hitung_total_maningtis'] + $data['biaya_harga_kamar'];
 		$data['total_pelunasan'] = $this->cek_ribuan($data['total_biaya'] - 1100);
 		$data['total_biaya2'] = $this->cek_ribuan($data['total_biaya']);
+		$data['total_pay'] = $data['jumlah_dp2'] + $data['jumlah_lunas2'];
+		$data['total_pay_cek'] = $this->cek_ribuan($data['total_pay']);
+		
+		if($data['total_pay'] > $data['total_biaya'] && $data['status_lunas_pay'] == 1)
+		{
+			$data['total_status'] = "Complete";
+			$data['css_total'] = "sudah";
+		}else{
+			$data['total_status'] = "Pending";
+			$data['css_total'] = "belum";
+		}
+			
+			
 					
 		$data['notifikasi'] = null;
 		
