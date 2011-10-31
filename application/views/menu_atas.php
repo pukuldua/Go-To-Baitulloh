@@ -33,7 +33,7 @@
                            </li>
                           </ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="<?=($this->uri->segment(1)==='login')?'current':'select'?>">
+						<ul class="<?=($this->uri->segment(1)==='login') || ($this->uri->segment(1)==='forgot')?'current':'select'?>">
                           <li>
                             <a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]-->
                           </li>

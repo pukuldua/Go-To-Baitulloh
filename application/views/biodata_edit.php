@@ -116,7 +116,13 @@
                      
                     </td>
 					<td>
-						<? if(form_error('thn_lahir') != '') {?>
+						<? if(form_error('tgl_lahir') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('tgl_lahir'); ?></div>
+						<? } elseif(form_error('bln_lahir') != '') { ?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('bln_lahir'); ?></div>
+						<? }elseif(form_error('thn_lahir') != '') {?>
 						<div class="error-left"></div>
 						<div class="error-inner"><?php echo form_error('thn_lahir'); ?></div>
 						<? }?>

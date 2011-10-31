@@ -107,12 +107,15 @@ class Paspor extends CI_Controller {
 			if($row->MAHRAM == 0) $mahram = "Ada";
 			elseif($row->MAHRAM == 1) $mahram = "Tidak Ada";
 			
-			if($row->NO_PASPOR != NULL && $row->TANGGAL_DIKELUARKAN != NULL)
-			{
-				$gos = 1;
-			}else{
-				$gos = 0;
-			}
+			if($row->NO_PASPOR != NULL && $row->TANGGAL_DIKELUARKAN != NULL) { $gos = 1; } 
+			  else{ $gos = 0; }
+			
+			if($row->TANGGAL_DIKELUARKAN != NULL) { $tgl_keluar = date("d M Y", strtotime($row->TANGGAL_DIKELUARKAN)); }
+			  else{ $tgl_keluar = ""; }
+			 
+			if($row->TANGGAL_HABIS != NULL) { $tgl_berakhir = date("d M Y", strtotime($row->TANGGAL_HABIS)); }
+			  else{ $tgl_berakhir = ""; }
+			 
 			
 			$record_items[] = array(
 			
@@ -124,8 +127,8 @@ class Paspor extends CI_Controller {
 				$gender,
 				$row->WARGA_NEGARA,
 				$row->NO_PASPOR,
-				$row->TANGGAL_DIKELUARKAN,
-				$row->TANGGAL_HABIS,
+				$tgl_keluar,
+				$tgl_berakhir,
 				$row->KANTOR_PEMBUATAN
 			);
 		}
@@ -224,12 +227,12 @@ class Paspor extends CI_Controller {
 		//setting rules
 		$config = array(
 				array('field'=>'no_paspor','label'=>'Nomor Paspor', 'rules'=>'required'),
-				array('field'=>'k_tgl_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'k_bln_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'k_thn_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'b_tgl_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'b_bln_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'b_thn_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'k_tgl_lahir','label'=>'Tgl. Dikeluarkan', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'k_bln_lahir','label'=>'Tgl. Dikeluarkan', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'k_thn_lahir','label'=>'Tgl. Dikeluarkan', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'b_tgl_lahir','label'=>'Tgl. Berakhir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'b_bln_lahir','label'=>'Tgl. Berakhir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'b_thn_lahir','label'=>'Tgl. Berakhir', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'kantor','label'=>'Kantor', 'rules'=>'required'),
 		//		array('field'=>'foto','label'=>'Scan Paspor', 'rules'=>'required'),
 			);
@@ -301,7 +304,7 @@ class Paspor extends CI_Controller {
 				if(!$this->upload->do_upload('foto'))
 				{
 					$error = $this->upload->display_errors();
-					echo "<script>alert('".$this->input->post('foto')."');window.location='javascript:history.back()';</script>";
+					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
 					exit;
 				
 				}else{

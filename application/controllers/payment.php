@@ -164,7 +164,7 @@ class Payment extends CI_Controller {
 		$data['total_pay'] = $data['jumlah_dp2'] + $data['jumlah_lunas2'];
 		$data['total_pay_cek'] = $this->cek_ribuan($data['total_pay']);
 		
-		if($data['total_pay'] > $data['total_biaya'] && $data['status_lunas_pay'] == 1)
+		if($data['total_pay'] == $data['total_biaya'] || $data['total_pay'] > $data['total_biaya'] && $data['status_lunas_pay'] == 1)
 		{
 			$data['total_status'] = "Complete";
 			$data['css_total'] = "sudah";

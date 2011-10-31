@@ -66,44 +66,16 @@
 					<div id="related-act-inner">
 						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
-							<h5>Add another product</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
+							<h5>Halaman Login</h5>
+                            <br />
+                            <ul class="greyarrow">
+								<li>Masukan <strong>Email</strong> yang valid sesusai saat proses registrasi User. dan <strong>Password</strong> yang dikirim melalui Email.</li>
+							</ul>
+                            <br />
+                            <ul class="greyarrow">
+								<li>Jika kurang yakin atau lupa dengan password Anda, silahkan klik <a href="<?=site_url().'/forgot/'?>">Lupa Password</a> untuk mendapatkan <strong>Password Baru</strong>. </li>
 							</ul>
 						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_minus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Delete products</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Edit categories</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							<div class="clear"></div>						
-					</div>
 					<!-- end related-act-inner -->
 						
 					<div class="clear"></div>			
@@ -113,7 +85,7 @@
 			<!-- end related-activities -->
 		</td>
 	</tr>
-	<tr>
+	<tr height="30">
 		<td><img src="<?=base_url()?>images/shared/blank.gif" width="695" height="1" alt="blank" /></td>
 		<td></td>
 	</tr>

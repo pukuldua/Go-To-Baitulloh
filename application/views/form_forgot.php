@@ -27,7 +27,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>&nbsp;</th>
+					<th></th>
 					<td valign="top">
 						<input type="submit" value="Send" class="form-submit" />
 						<input type="reset" value="" class="form-reset"  />
@@ -35,8 +35,10 @@
 					<td></td>
 				</tr>
 				<tr>
-					<th>&nbsp;</th>
-					<td valign="top"><br /><ul class="greyarrow"><li><a href="<?=site_url() ?>/login" title="Form Login">Login</a></li></ul></td>
+					<th></th>
+					<td valign="top">
+                    	<br />
+                        <ul class="greyarrow"><li><a href="<?=site_url() ?>/login" title="Form Login">Login</a></li></ul></td>
 					<td></td>
 				</tr>
 			</table>
@@ -60,43 +62,22 @@
 					<div id="related-act-inner">
 						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
-							<h5>Add another product</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
+							<h5>Halaman Lupa Password</h5>
+                            <br />
+                            <ul class="greyarrow">
+								<li>Masukan Email yang valid sesusai saat proses registrasi User. </li>
+							</ul>
+                            <br />
+                            <ul class="greyarrow">
+								<li>Sistem otomatis akan <strong>mereset</strong> password Anda dan mengirimkan <strong>Password baru</strong> melalui Email yg telah dimasukan. </li>
+							</ul>
+                            <br />
+                            <ul class="greyarrow">
+								<li>Jika masih ingat dengan password Anda, silahkan klik <a href="<?=site_url().'/login/'?>">Login</a> untuk masuk ke halaman User. </li>
 							</ul>
 						</div>
 							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_minus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Delete products</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-							
-						<div class="left"><a href=""><img src="<?=base_url()?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5>Edit categories</h5>
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elitsed do eiusmod tempor.
-							<ul class="greyarrow">
-								<li><a href="">Click here to visit</a></li> 
-								<li><a href="">Click here to visit</a> </li>
-							</ul>
-						</div>
-							<div class="clear"></div>						
+						<div class="clear"></div>					
 					</div>
 					<!-- end related-act-inner -->
 						
