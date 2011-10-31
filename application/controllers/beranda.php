@@ -13,35 +13,80 @@ class Beranda extends CI_Controller {
 		$this->front();
 	}
 	
-	function front(){
-		$this->load->model('group_departure_model');
-		$this->load->model('program_class_model');
-		$this->load->model('room_type_model');
-		$this->load->library('form_validation');
-		
-		$group = $this->group_departure_model->get_all_group();
-		$program = $this->program_class_model->get_all_program();
-		$room = $this->room_type_model->get_all_roomType();
+	function front(){		
+                $this->load->model('packet_model');
 
-		$group_options['0'] = '-- Pilih Group --';
-		foreach($group->result() as $row){
-				$group_options[$row->ID_GROUP] = $row->KODE_GROUP;
-		}
+                $id_user = $this->session->userdata("id_account");
+                $kode_reg = $this->session->userdata("kode_registrasi");
+
+                $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+
+                if ($packet->num_rows() > 0){
+                    $this->load->model('room_packet_model');
+                    
+                    foreach ($packet->result() as $row){
+                        $id_group = $row->ID_GROUP;
+                        $data['group'] = $row->KODE_GROUP;
+                        $data['keterangan_group'] = $row->KETERANGAN;
+                        $data['program'] = $row->NAMA_PROGRAM;
+                        $data['adult'] = $row->JUMLAH_ADULT;
+                        $data['with_bed'] = $row->CHILD_WITH_BED;
+                        $data['no_bed'] = $row->CHILD_NO_BED;
+                        $data['infant'] = $row->INFANT;
+                        $data['tgl_pesan'] = $row->TANGGAL_PESAN;
+                        $id_packet = $row->ID_PACKET;
+                    }
+
+                    // get data room
+                    $room = $this->room_packet_model->get_room_packet_byIDpack($id_packet);
+                    $data['room'] = $room->result();
+                    $data['is_order'] = TRUE;
+
+                    //get group info
+                    $this->load->model('group_departure_model');
+                    $data_group	= $this->group_departure_model->get_group_berdasarkan_id($id_group);
+                    foreach ($data_group->result() as $row){
+                        $data['jd'] = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_JD);
+                        $data['mk'] = $this->konversi_tanggal($row->TANGGAL_KEBERANGKATAN_MK);
+                        $data['paspor'] = $this->konversi_tanggal($row->JATUH_TEMPO_PASPOR);
+                        $data['lunas'] = $this->konversi_tanggal($row->JATUH_TEMPO_PELUNASAN);
+                        $data['dp'] = $this->konversi_tanggal($row->JATUH_TEMPO_UANG_MUKA);
+                        $data['berkas']  = $this->konversi_tanggal($row->JATUH_TEMPO_BERKAS );
+                    }
+
+                    $data['content'] = $this->load->view('home_ordered',$data,true);
+                }else{
+                    $this->load->library('form_validation');
+                    $this->load->model('group_departure_model');
+                    $this->load->model('program_class_model');
+                    $this->load->model('room_type_model');
+
+                    $group = $this->group_departure_model->get_all_group();
+                    $program = $this->program_class_model->get_all_program();
+                    $room = $this->room_type_model->get_all_roomType();
+
+                    $group_options['0'] = '-- Pilih Group --';
+                    foreach($group->result() as $row){
+                                    $group_options[$row->ID_GROUP] = $row->KODE_GROUP;
+                    }
+
+                    $program_options['0'] = '-- Pilih Program --';
+                    foreach($program->result() as $row){
+                                    $program_options[$row->ID_PROGRAM] = $row->NAMA_PROGRAM;
+                    }
+
+                    $room_options['0'] = '-- Pilih Jenis Kamar --';
+                    foreach($room->result() as $row){
+                                    $room_options[$row->ID_ROOM_TYPE] = $row->JENIS_KAMAR;
+                    }
+
+                    $data['group_options'] = $group_options;
+                    $data['program_options'] = $program_options;
+                    $data['room_options'] = $room_options;
+                    $data['is_order'] = FALSE;
+                    $data['content'] = $this->load->view('home',$data,true);
+                }
 		
-		$program_options['0'] = '-- Pilih Program --';
-		foreach($program->result() as $row){
-				$program_options[$row->ID_PROGRAM] = $row->NAMA_PROGRAM;
-		}
-		
-		$room_options['0'] = '-- Pilih Jenis Kamar --';
-		foreach($room->result() as $row){
-				$room_options[$row->ID_ROOM_TYPE] = $row->JENIS_KAMAR;
-		}
-			
-		$data['group_options'] = $group_options;
-		$data['program_options'] = $program_options;
-		$data['room_options'] = $room_options;
-		$data['content'] = $this->load->view('home',$data,true);
 		$this->load->view('front',$data);
 	}
 
