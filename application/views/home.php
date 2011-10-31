@@ -1,12 +1,7 @@
 <?php echo form_open('beranda/choose_packet'); ?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
-		<td>		
-			<? if(form_error('avilability') != '') {?>
-			<div class="error-left"></div>
-			<div class="error-inner"><?php echo form_error('avilability'); ?></div>
-			<? }?>
-			<input type="hidden" name="avilability" />
+		<td>
 			<!-- start id-form -->
 			<table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>

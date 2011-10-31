@@ -163,7 +163,7 @@ class Registration extends CI_Controller {
 		$this->email->initialize($config);
 		
 		$data['key'] = $key;
-		$data['subject'] = 'Account Activation';
+		$data['subject'] = 'Aktivasi Akun';
 		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
 		$data['PASSWORD'] = $this->tmp_pass;
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
