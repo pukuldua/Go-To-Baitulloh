@@ -20,9 +20,9 @@ class Rooming extends CI_Controller {
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
 
-                $payment = $this->jamaah_candidate_model->get_payment_status($id_user, $kode_reg);
+                $payment = $this->packet_model->get_payment_status($id_user, $kode_reg);
 
-                if ($payment->num_rows() > 0 && ($payment->row()->STATUS_KANDIDAT == 2 || $payment->row()->STATUS_KANDIDAT == 3)){
+                if ($payment->num_rows() > 0 && ($payment->row()->STATUS_PESANAN == 3)){
                     $data['is_pay'] = TRUE;
                     $room_options['0'] = '-- Pilih Kamar --';
 
@@ -106,12 +106,6 @@ class Rooming extends CI_Controller {
 		//$this->load->view('form_rooming',null,false);
 		$this->load->view('front',$data);
 	}
-
-        function dialog(){
-            $data['content'] = $this->load->view('dialog',null,true);
-            $this->load->view('front',$data);
-//            $this->load->view('dialog',null,false);
-        }
 
         function show_profile($id_candidate){
             $this->load->model('jamaah_candidate_model');

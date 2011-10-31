@@ -168,11 +168,11 @@ class Registration extends CI_Controller {
 		$data['PASSWORD'] = $this->tmp_pass;
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];
 		
-		$content = $this->load->view('email_activation',$data);
+		//$content = $this->load->view('email_activation',$data);
 		$htmlMessage =  $this->parser->parse('email_activation', $data, true);
 		
 		$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
-		$this->email->to('wanprabu@gmail.com');
+		$this->email->to($this->data_field['EMAIL']);
 
 		$this->email->subject('Aktivasi Akun');
 		$this->email->message($htmlMessage);

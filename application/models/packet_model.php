@@ -30,10 +30,21 @@ class Packet_model extends CI_Model {
                 $this->db->join("program_class p", "p.ID_PROGRAM = packet.ID_PROGRAM");
 		$this->db->where("ID_ACCOUNT", $id_acc);
 		$this->db->where("KODE_REGISTRASI", $kode_reg);
-		$this->db->where("STATUS_PESANAN ", 1);
+		$this->db->where("STATUS_PESANAN", 1);
+                $this->db->or_where("STATUS_PESANAN", 3);
 		
 		return $this->db->get();
 	}
+
+        function get_payment_status($id_account, $kode_reg){
+            $this->db->select('STATUS_PESANAN');
+            $this->db->from('packet');
+            $this->db->where('KODE_REGISTRASI', $kode_reg);
+            $this->db->where('ID_ACCOUNT', $id_account);
+            $this->db->group_by("ID_ACCOUNT, KODE_REGISTRASI");
+
+            return $this->db->get();
+        }
 	
 	function insert_packet($data){
 		$this->db->trans_begin();

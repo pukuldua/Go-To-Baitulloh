@@ -133,10 +133,11 @@ class Beranda extends CI_Controller {
             }
         }
         
-	function check_availability($group){
+	function check_availability(){
                 $this->load->model('group_departure_model');
                 $this->load->model('program_class_model');
-                
+
+                $group = $this->input->post('group');
                 $kelas_program = $this->input->post('program');
                 $jml_adult = $this->input->post('jml_adult');
                 $with_bed = $this->input->post('with_bed')=='' ? 0:$this->input->post('with_bed');
@@ -154,6 +155,7 @@ class Beranda extends CI_Controller {
                 $nama_program = $program_info->row()->NAMA_PROGRAM;
 
                 $total_candidate = $jml_adult + $with_bed + $no_bed + $infant;
+                $message = "";
 
                 // check pagu pesawat
                 $plane_flag = FALSE;
@@ -252,7 +254,8 @@ class Beranda extends CI_Controller {
 		$this->load->library('form_validation');
 		//setting rules
 		$config = array(
-				array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown|callback_check_availability'),
+                    array('field'=>'avilability','label'=>'avilability', 'rules'=>'callback_check_availability'),
+                    array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>'required|numeric'),
 				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>'numeric'),

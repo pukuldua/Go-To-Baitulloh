@@ -27,12 +27,12 @@ class Booked_room_model extends CI_Model {
 		$this->db->select("br.*, j.*, r.KODE_KAMAR, rt.JENIS_KAMAR");
 		$this->db->from("booked_room br");
 		$this->db->join("jamaah_candidate j", "j.ID_CANDIDATE = br.ID_CANDIDATE");
+                $this->db->join("packet p", "p.ID_ACCOUNT = j.ID_ACCOUNT AND p.KODE_REGISTRASI = j.KODE_REGISTRASI");
 		$this->db->join("room r", "r.ID_ROOM = br.ID_ROOM");
                 $this->db->join("room_type rt", "rt.ID_ROOM_TYPE = r.ID_ROOM_TYPE");
-		$this->db->where("ID_ACCOUNT", $id_acc);
-		$this->db->where("KODE_REGISTRASI", $kode_reg);
-		$this->db->where("STATUS_KANDIDAT", 2);
-                $this->db->or_where('STATUS_KANDIDAT', 3);
+		$this->db->where("j.ID_ACCOUNT", $id_acc);
+		$this->db->where("j.KODE_REGISTRASI", $kode_reg);
+		$this->db->where("p.STATUS_PESANAN", 3);
 
 		return $this->db->get();
 	}
@@ -41,12 +41,12 @@ class Booked_room_model extends CI_Model {
 		$this->db->select("br.*, j.*, r.KODE_KAMAR");
 		$this->db->from("booked_room br");
 		$this->db->join("jamaah_candidate j", "j.ID_CANDIDATE = br.ID_CANDIDATE");
+                $this->db->join("packet p", "p.ID_ACCOUNT = j.ID_ACCOUNT AND p.KODE_REGISTRASI = j.KODE_REGISTRASI");
 		$this->db->join("room r", "r.ID_ROOM = br.ID_ROOM");
-		$this->db->where("ID_ACCOUNT", $id_acc);
-		$this->db->where("KODE_REGISTRASI", $kode_reg);
+		$this->db->where("j.ID_ACCOUNT", $id_acc);
+		$this->db->where("j.KODE_REGISTRASI", $kode_reg);
                 $this->db->where("br.ID_ROOM", $id_room);
-		$this->db->where("STATUS_KANDIDAT", 2);
-                $this->db->or_where('STATUS_KANDIDAT', 3);		
+		$this->db->where("p.STATUS_PESANAN", 3);
 		
 		return $this->db->get();
 	}
@@ -55,10 +55,10 @@ class Booked_room_model extends CI_Model {
 		$this->db->select("br.*");
 		$this->db->from("booked_room br");
 		$this->db->join("jamaah_candidate j", "j.ID_CANDIDATE = br.ID_CANDIDATE");
-		$this->db->where("ID_ACCOUNT", $id_acc);
-		$this->db->where("KODE_REGISTRASI", $kode_reg);
-		$this->db->where("STATUS_KANDIDAT", 2);
-                $this->db->or_where('STATUS_KANDIDAT', 3);
+                $this->db->join("packet p", "p.ID_ACCOUNT = j.ID_ACCOUNT AND p.KODE_REGISTRASI = j.KODE_REGISTRASI");
+		$this->db->where("j.ID_ACCOUNT", $id_acc);
+		$this->db->where("j.KODE_REGISTRASI", $kode_reg);
+		$this->db->where("p.STATUS_PESANAN", 3);
 
 		return $this->db->get();
 	}
