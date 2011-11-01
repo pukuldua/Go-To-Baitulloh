@@ -10,6 +10,7 @@ class Activation extends CI_Controller {
 	function activate($keycode){
 		$this->load->model('accounts_model');
 		$this->load->model('log_model');
+                $this->load->model('packet_model');
 		
 		$kode_reg = $this->decode($keycode);
 		$account = $this->accounts_model->get_account_byKode($kode_reg);
@@ -20,13 +21,18 @@ class Activation extends CI_Controller {
 			if ($account->row()->STATUS == 0){
 				// update account status
 				$this->accounts_model->update_account(array('STATUS'=>1), $kode_reg);
+                                $this->log_model->log($account->row()->ID_ACCOUNT, $kode_reg, NULL,
+                                        "Aktivasi akun dengan KODE_REGISTRASI = $kode_reg");
+
+                                $packet = $this->packet_model->get_packet_byAcc($row->ID_ACCOUNT, $row->KODE_REGISTRASI);
 				
 				// redirect to login
 				$newdata = array(
 					'id_account'		=> $account->row()->ID_ACCOUNT,
 					'email' 			=> $account->row()->EMAIL,
 					'nama'				=> $account->row()->NAMA_USER,
-					'kode_registrasi' 	=> $account->row()->KODE_REGISTRASI
+					'kode_registrasi' 	=> $account->row()->KODE_REGISTRASI,
+                                    'order_packet' => $packet->num_rows() > 0 ? 1:0
 				);	
 				
 				$this->session->set_userdata($newdata);

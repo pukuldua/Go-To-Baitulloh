@@ -22,6 +22,14 @@ class Waiting_list_model extends CI_Model {
 		
 		return $this->db->get();
 	}
+
+        function get_waiting_byKode($kode){
+		$this->db->select("*");
+		$this->db->from("waiting_list");
+		$this->db->where("KODE_REGISTRASI", $kode);
+
+		return $this->db->get();
+	}
 	
 	function insert_waiting_list($data){
 		$this->db->trans_begin();

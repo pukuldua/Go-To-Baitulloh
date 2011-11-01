@@ -22,6 +22,10 @@ class Beranda extends CI_Controller {
                 $kode_reg = $this->session->userdata("kode_registrasi");
 
                 $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+                if ($packet->num_rows() < 1){
+                    $packet = $this->packet_model->get_packet_byAcc_waiting($id_user, $kode_reg);
+                    $data['waiting'] = TRUE;
+                }
 
                 if ($packet->num_rows() > 0){
                     $this->load->model('room_packet_model');
@@ -371,6 +375,37 @@ class Beranda extends CI_Controller {
 				return FALSE;
 		}else
 				return TRUE;
+    }
+
+    function check_departure($id_group){
+		$this->load->model('group_departure_model');
+		$val = $this->group_departure_model->get_group($id_group);
+
+		if ($val->num_rows() > 0){
+			$exp_date = strtotime($val->row()->JATUH_TEMPO_UANG_MUKA);
+			$today = strtotime(date("Y-m-d"));
+
+			if ($exp_date >= $today)
+				return TRUE;
+			else{
+				$this->form_validation->set_message('check_departure', 'Maaf, pendaftaran untuk grup ini sudah ditutup');
+				return FALSE;
+			}
+		}
+	}
+
+	//cek jumlah
+    function check_jml($value, $max){
+		if ($max > 20) {
+			$this->form_validation->set_message('check_jml', "Jumlah maksimum calon jamaah 20 orang tiap unit");
+			return FALSE;
+		}else{
+			if($value > $max){
+				$this->form_validation->set_message('check_jml', "Jumlah maksimum untuk %s adalah $max !");
+				return FALSE;
+			}else
+				return TRUE;
+		}
     }
 	
 	function getKamar(){

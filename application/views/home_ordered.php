@@ -53,7 +53,7 @@
 								<?php foreach ($room as $row) {?>
 								<tr valign="middle">
 									<td><? echo $row->JENIS_KAMAR." - "; ?></td>
-									<td>Jumlah :<? echo $row->JUMLAH; ?></td>
+									<td>Jumlah : <? echo $row->JUMLAH; ?></td>
 								</tr>
 								<? }?>
 							</table>
@@ -61,11 +61,19 @@
 					</td>
 					<td></td>
 				</tr>
+				<? if (isset($waiting) && $waiting){?>
 				<tr height="50">
-					<th valign="top"></th>
-					<td></td>
+					<th valign="top">Keterangan</th>
+					<td>						
+						<div class="error-left"></div>
+						<div class="error-repeat">
+							Anda masuk dalam daftar tunggu untuk pilihan paket di atas.
+						</div>		
+						<div class="error-inner"></div>
+					</td>
 					<td></td>
 				</tr>
+				<? } ?>
 				<tr>
 					<th></th>
 					<td valign="top"></td>
@@ -91,6 +99,15 @@
 					<div id="related-act-inner">
 						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></a></div>
 						<div class="right">
+							<? if (isset($waiting) && $waiting){?>
+							<h5>Info Waiting List</h5>
+							<ul class="greyarrow">
+							<li>Akun anda dinonaktifkan untuk sementara waktu.</li>
+							<li>Akun anda akan aktif kembali jika status daftar tunggu anda berubah.</li>
+							<li>Informasi tentang update status akun anda akan dikirim melalui email.</li>
+							</ul>
+							<br />Terima kasih.
+							<? } else {?>
 							<h5>Keterangan Group <a id="info_kode"></a></h5>
                             <br /><i><? echo $keterangan_group; ?></i>
 								
@@ -122,6 +139,7 @@
 							<ul class="greyarrow">
 								<li><? if (isset($berkas)) echo $berkas; ?></li> 
 							</ul>
+							<? } ?>
 						</div>
 							
 						<div class="clear"></div>		

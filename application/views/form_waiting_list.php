@@ -105,7 +105,7 @@
 							<ul class="greyarrow">
 							<li>Menonaktifkan akun anda sementara waktu.</li>
 							<li>Akun anda akan aktif kembali jika status daftar tunggu anda berubah.</li>
-							<li>Informasi tentang update status anda akan dikirim melalui email.</li>
+							<li>Informasi tentang update status akun anda akan dikirim melalui email.</li>
 							</ul>
 							<br />Terima kasih.
 						</div>

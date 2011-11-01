@@ -57,6 +57,19 @@
 					<td><?php echo $account['NO_ID_CARD']; ?></td>
 					<td></td>
 				</tr>
+				<? if (isset($waiting) && $waiting){?>
+				<tr height="50">
+					<th valign="top">Keterangan</th>
+					<td>						
+						<div class="error-left"></div>
+						<div class="error-repeat">
+							Anda masuk dalam daftar tunggu untuk pilihan paket di atas.
+						</div>		
+						<div class="error-inner"></div>
+					</td>
+					<td></td>
+				</tr>
+				<? } ?>
 			</table>
 			<!-- end id-form  -->
 		</td>
@@ -97,6 +110,14 @@
 						<div class="right">
 							<h5>Proses Selanjutnya</h5>
 								Silakan Cek Email anda untuk melakukan Aktivasi akun dan prosedur selanjutnya.
+							<? if (isset($waiting) && $waiting){?>
+							<h5>Info Waiting List</h5>							
+							<ul class="greyarrow">
+							<li>Dengan masuk ke daftar tunggu anda tidak bisa menggunakan fitur-fitur sistem registrasi online ini.</li>
+							<li>Akun anda akan aktif kembali jika status daftar tunggu anda berubah.</li>
+							<li>Informasi tentang update status akun anda akan dikirim melalui email.</li>
+							</ul>
+							<? } ?>							
 						</div>
 							<div class="clear"></div>						
 					</div>

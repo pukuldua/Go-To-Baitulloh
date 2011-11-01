@@ -919,6 +919,15 @@ font-family: Tahoma;
 	height:25px;
 	background: url(../images/forms/error_right.gif) right  no-repeat;
 }
+
+.error-repeat {
+	float:left;
+	padding: 7px 10px 0 4px;
+	color:#fff; 
+	line-height: 14px;
+	height:25px;
+	background: url(../images/forms/error_repeat.gif) right  repeat;
+}
 .file_1 {
 	border: 1px solid #acacac;
 	padding: 5px;

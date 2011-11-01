@@ -108,7 +108,8 @@ class Check_availability extends CI_Controller {
 				if($kamar[$i]!='0'  && $kamar[$i] != ''){
 					$room_type = $this->room_type_model->get_roomType($kamar[$i]);
 					$room_choice[$i] = "<pre>".$room_type->row()->JENIS_KAMAR." jumlah ".$jml_kamar[$i]." Kamar</pre>";
-					$tmp_capacity = $room_type->row()->CAPACITY * $jml_kamar[$i];
+					$room_choice2[$i] = array('ID_ROOM_TYPE'=>$kamar[$i], 'JUMLAH'=>$jml_kamar[$i]);
+                                        $tmp_capacity = $room_type->row()->CAPACITY * $jml_kamar[$i];
 					$room_capacity += $tmp_capacity;
 					
 					$tmp_candidate -= $tmp_capacity;
@@ -173,9 +174,12 @@ class Check_availability extends CI_Controller {
 			$data['with_bed'] = $with_bed;
 			$data['no_bed'] = $no_bed;
 			$data['infant'] = $infant;
+                        $data['group'] = $group;
+                        $data['program'] = $kelas_program;
 			$data['kode_group'] = $kode_group;
 			$data['nama_program'] = $nama_program;
 			$data['room_choice'] = $room_choice;
+                        $data['room_choice2'] = $room_choice2;
 			$data['plane_flag'] = $plane_flag;
 			$data['message'] = $message;
 			
