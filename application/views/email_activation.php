@@ -406,7 +406,10 @@
                                                                   <strong>
                                                		         <h4>
                                                                        <a href="<? echo site_url();?>/activation/activate/<? echo $key; ?>">Activate My Account</a></h4></strong></center>
-                                                              <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
+                                                              <? if ($waiting == 1) {?>
+															  <strong>Anda masuk dalam daftar tunggu. Silahkan cek email anda untuk mengetahui update terkait status daftar tunggu anda.</strong>
+															  <? }?>
+															  <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
                                                                 <ul>
                                                                   <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
                                                                     <strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />

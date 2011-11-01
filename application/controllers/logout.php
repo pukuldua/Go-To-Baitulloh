@@ -14,7 +14,8 @@ class Logout extends CI_Controller {
 		$log = "LOGOUT keluar dari sistem";
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
-		
+
+                if ($id_user != 0 && $kode_reg != 0)
 		$this->log_model->log($id_user, $kode_reg, NULL, $log); 
 		$this->session->sess_destroy();//mengosongkan  nilai session ketika user melakukan logout
 		

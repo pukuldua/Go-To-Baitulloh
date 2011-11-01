@@ -66,10 +66,12 @@ class Registration extends CI_Controller {
 				
 				$this->accounts_model->insert_new_account($this->data_field);						
 				$this->log_model->log(null, $this->data_field['KODE_REGISTRASI'], null, 'REGISTER new account, EMAIL = '.$this->data_field['EMAIL'].', KODE_REGISTRASI = '.$this->data_field['KODE_REGISTRASI']);
-				
+
+                                $waiting = 0;
 				// if waiting list
 				if ($this->input->post('waiting') == 1){
 					$this->load->model('waiting_list_model');
+                                        $waiting = 1;
 					
 					$id_acc = $this->accounts_model->get_account_byKode($this->data_field['KODE_REGISTRASI'])->row()->ID_ACCOUNT;
 					$data_waiting = array('KODE_REGISTRASI'=>$this->data_field['KODE_REGISTRASI'], 'ID_ACCOUNT'=>$id_acc);
@@ -86,17 +88,17 @@ class Registration extends CI_Controller {
                                         $infant = $this->input->post('infant')=='' ? 0:$this->input->post('infant');
 
                                         $data = array(
-                                            'ID_GROUP'=>$group, 'ID_ACCOUNT'=>$id_user, 'KODE_REGISTRASI' =>$kode_reg, 'ID_PROGRAM'=>$kelas_program,
+                                            'ID_GROUP'=>$group, 'ID_ACCOUNT'=>$id_acc, 'KODE_REGISTRASI' =>$this->data_field['KODE_REGISTRASI'], 'ID_PROGRAM'=>$kelas_program,
                                             'JUMLAH_ADULT'=>$jml_adult, 'CHILD_WITH_BED'=>$with_bed, 'CHILD_NO_BED'=>$no_bed, 'INFANT'=>$infant,
                                             'TANGGAL_PESAN'=>date("Y-m-d h:i:s"), 'STATUS_PESANAN'=>2
                                         );
 
                                         // insert into packet
                                         $this->packet_model->insert_packet($data);
-                                        $this->log_model->log($id_user, $kode_reg, null, 'INSERT data PACKET untuk akun dengan KODE_REGISTRASI = '.$kode_reg);
+                                        $this->log_model->log($id_acc, $this->data_field['KODE_REGISTRASI'], null, 'INSERT data PACKET untuk akun dengan KODE_REGISTRASI = '.$this->data_field['KODE_REGISTRASI']);
 
                                         // insert into room packet
-                                        $id_pack = $this->packet_model->get_packet_byAcc_waiting($id_user, $kode_reg);
+                                        $id_pack = $this->packet_model->get_packet_byAcc_waiting($id_acc, $this->data_field['KODE_REGISTRASI']);
                                         if ($id_pack->num_rows() > 0){
                                             $this->load->model('room_packet_model');
                                             $kamar = $this->input->post('kamar');
@@ -107,12 +109,12 @@ class Registration extends CI_Controller {
                                                     'ID_PACKET'=>$id_pack->row()->ID_PACKET, 'JUMLAH'=>$jml_kamar[$i]));
                                             }
 
-                                            $this->log_model->log($id_user, $kode_reg, null, 'INSERT data ROOM_PACKET untuk packet dengan ID_PACKET = '.$id_pack->row()->ID_PACKET);
+                                            $this->log_model->log($id_acc, $this->data_field['KODE_REGISTRASI'], null, 'INSERT data ROOM_PACKET untuk packet dengan ID_PACKET = '.$id_pack->row()->ID_PACKET);
                                         }
 				}
 				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);
-				//$this->send_email($keycode);
+				//$this->send_email($keycode, $waiting);
 				//set session notifikasi
 				//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
 				redirect('notification/show/'.$this->data_field['KODE_REGISTRASI']);
@@ -202,7 +204,7 @@ class Registration extends CI_Controller {
 				return TRUE;
     }
 	
-	function send_email($key){
+	function send_email($key, $waiting){
 		$this->load->library('email');
 		$this->load->library('parser');
 		
@@ -213,6 +215,7 @@ class Registration extends CI_Controller {
 		
 		$data['key'] = $key;
 		$data['subject'] = 'Aktivasi Akun';
+                $data['waiting'] = $waiting;
 		$data['NAMA_USER'] = $this->data_field['NAMA_USER'];
 		$data['PASSWORD'] = $this->tmp_pass;
 		$data['KODE_REGISTRASI'] = $this->data_field['KODE_REGISTRASI'];

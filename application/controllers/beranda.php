@@ -346,16 +346,21 @@ class Beranda extends CI_Controller {
 	
 	function check_validasi() {
 		$this->load->library('form_validation');
+
+                $adult = $this->input->post('jml_adult');
+		$with_bed = $this->input->post('with_bed')=='' ? 0:$this->input->post('with_bed');
+		$no_bed = $this->input->post('no_bed')=='' ? 0:$this->input->post('no_bed');
+		$infant = $this->input->post('infant')=='' ? 0:$this->input->post('infant');
+		$total = $adult + $with_bed + $no_bed + $infant;
+                
 		//setting rules
 		$config = array(
-                    array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown'),
+                    array('field'=>'group','label'=>'Group', 'rules'=>'callback_cek_dropdown|callback_check_departure'),
 				array('field'=>'program','label'=>'Kelas Program', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'jml_adult','label'=>'Jumlah Adult', 'rules'=>'required|numeric'),
-				array('field'=>'with_bed','label'=>'Child With Bed', 'rules'=>'numeric'),
-				array('field'=>'no_bed','label'=>'Child No Bed', 'rules'=>'numeric'),
-				array('field'=>'infant','label'=>'Infant', 'rules'=>'numeric'),
-				array('field'=>'kamar','label'=>'Kamar', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'jml_kamar','label'=>'Jumlah', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'jml_adult','label'=>'Jumlah Dewasa', 'rules'=>"required|integer|callback_check_jml[$total]"),
+				array('field'=>'with_bed','label'=>'Anak Dengan Ranjang', 'rules'=>"integer"),
+				array('field'=>'no_bed','label'=>'Anak Tanpa Ranjang', 'rules'=>"integer"),
+				array('field'=>'infant','label'=>'Bayi', 'rules'=>"integer|callback_check_jml[$adult]"),
 				array('field'=>'cek_setuju','label'=>'Persetujuan', 'rules'=>'required'),
 		);
 

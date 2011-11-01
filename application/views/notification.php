@@ -110,15 +110,22 @@
 						<div class="right">
 							<h5>Proses Selanjutnya</h5>
 								Silakan Cek Email anda untuk melakukan Aktivasi akun dan prosedur selanjutnya.
-							<? if (isset($waiting) && $waiting){?>
+						</div>
+						
+						<div class="clear"></div>
+						<div class="lines-dotted-short"></div>
+						
+						<? if (isset($waiting) && $waiting){?>
+						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></div>
+						<div class="right">
 							<h5>Info Waiting List</h5>							
 							<ul class="greyarrow">
-							<li>Dengan masuk ke daftar tunggu anda tidak bisa menggunakan fitur-fitur sistem registrasi online ini.</li>
+							<li>Dengan masuk ke daftar tunggu untuk sementara anda tidak bisa menggunakan fitur-fitur sistem registrasi online ini.</li>
 							<li>Akun anda akan aktif kembali jika status daftar tunggu anda berubah.</li>
 							<li>Informasi tentang update status akun anda akan dikirim melalui email.</li>
-							</ul>
-							<? } ?>							
+							</ul>								
 						</div>
+						<? } ?>	
 							<div class="clear"></div>						
 					</div>
 					<!-- end related-act-inner -->
