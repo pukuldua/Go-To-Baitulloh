@@ -8,6 +8,8 @@ class Cancel extends CI_Controller {
 		
 		if($this->session->userdata('email') == NULL)
 			redirect(site_url()."/login");
+
+                $this->cekOrder();
 		
 	}
 	function index()
@@ -156,6 +158,17 @@ class Cancel extends CI_Controller {
 			redirect(site_url()."/cancel");
 		}
 	} // end function
+
+        // cek order packet
+        function cekOrder(){
+            $this->load->model('packet_model');
+            $id_user = $this->session->userdata("id_account");
+            $kode_reg = $this->session->userdata("kode_registrasi");
+
+            $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+            if ($packet->num_rows() < 1)
+                    redirect('beranda');
+        }
 	
 }
 

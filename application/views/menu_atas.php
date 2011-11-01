@@ -33,7 +33,7 @@
                            </li>
                           </ul>
 						<div class="nav-divider">&nbsp;</div>
-						<ul class="<?=($this->uri->segment(1)==='login')?'current':'select'?>">
+						<ul class="<?=($this->uri->segment(1)==='login') || ($this->uri->segment(1)==='forgot')?'current':'select'?>">
                           <li>
                             <a href="<?php echo site_url('login')?>"><b>Login</b><!--[if IE 7]><!--></a><!--<![endif]-->
                           </li>
@@ -47,8 +47,9 @@
                           <li>
                         	<a href="<? echo site_url().'/beranda' ?>"><b>Konfirmasi Paket</b><!--[if IE 7]><!--></a><!--<![endif]-->
                           </li>
-                        </ul>
-						<div class="nav-divider">&nbsp;</div>		
+                        </ul>                                                
+						<div class="nav-divider">&nbsp;</div>
+                                                <?php if($this->session->userdata('order_packet') == 1){ ?>
 						
 						<ul class="<?=($this->uri->segment(1)==='biodata')?'current':'select'?>">
 							<li><a href="<? echo site_url() ?>/biodata"><b>Biodata</b><!--[if IE 7]><!--></a><!--<![endif]-->
@@ -76,6 +77,7 @@
 						<div class="nav-divider">&nbsp;</div>
 						<? }?>
 						<div class="clear"></div>
+                                                <? }?>
 					</div>
 					<div class="clear"></div>
 				</div>

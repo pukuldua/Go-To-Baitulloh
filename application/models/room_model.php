@@ -69,6 +69,7 @@ class Room_model extends CI_Model {
 		$this->db->from("room"); 	 	
 		$this->db->where("room.ID_GROUP", $group);
 		$this->db->where("AVAILABILITY", 1);
+                $this->db->group_by("room.ID_GROUP");
 		
 		return $this->db->get();
 	}

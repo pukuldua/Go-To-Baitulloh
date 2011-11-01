@@ -7,6 +7,7 @@ class Accounts_model extends CI_Model {
 		parent::__construct();
 	}
 
+        // get all account without waiting list
 	function get_all_login()
 	{
 		$this->db->select("ID_ACCOUNT, KODE_REGISTRASI, NAMA_USER, EMAIL, PASSWORD");

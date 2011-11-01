@@ -8,6 +8,8 @@ class Biodata extends CI_Controller {
 		
 		if($this->session->userdata('email') == NULL)
 			redirect(site_url()."/login");
+
+                $this->cekOrder();
 		
 	}
 	function index()
@@ -182,10 +184,10 @@ class Biodata extends CI_Controller {
 		{
 			if (is_numeric($id_candidate) && $id_candidate > 1)
 			{
-		//		$this->hapus_gambar($id_candidate, "foto");
-		//		$this->hapus_gambar($id_candidate, "paspor");
-		//		$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
-		//		$this->log_model->log($id_user, $kode_reg, NULL, $log);
+				$this->hapus_gambar($id_candidate, "foto");
+				$this->hapus_gambar($id_candidate, "paspor");
+				$this->jamaah_candidate_model->hapus_data_calon_jamaah($id_candidate);
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			}
 			
 			
@@ -307,23 +309,31 @@ class Biodata extends CI_Controller {
 			if(empty($mendengkur)) $mendengkur = 0;
 			$perihal_pribadi = $darah_tinggi.";".$takut_ketinggian.";".$smooking_room.";".$jantung.";".$asma.";".$mendengkur;
 			
-			// Upload Foto
-			$config['upload_path'] = './images/upload/foto/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
-			$config['max_size']	= '5000';
-			$config['encrypt_name']	= TRUE;
-			
-			$this->load->library('upload', $config);
-			
-			if(!$this->upload->do_upload('foto'))
+			$cek_foto = $_FILES['foto']['name'];
+			if($cek_foto != "")
 			{
-				$error = $this->upload->display_errors();
-				echo "<script>alert('".$this->input->post('foto')."');window.location='javascript:history.back()';</script>";
-				exit;
-			
-			}else{
+				// Upload Foto
+				$config['upload_path'] = './images/upload/foto/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
+				$config['max_size']	= '5000';
+				$config['encrypt_name']	= TRUE;
 				
-				$data_file = $this->upload->data();
+				$this->load->library('upload', $config);
+				
+				if(!$this->upload->do_upload('foto'))
+				{
+					$error = $this->upload->display_errors();
+					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
+					exit;
+				
+				}else{
+					
+					$data_file = $this->upload->data();
+				}
+				
+				$file_foto = $data_file['file_name'];
+			}else{
+				$file_foto = NULL;
 			}
 			
 			
@@ -352,7 +362,7 @@ class Biodata extends CI_Controller {
 				'MOBILE' => $this->input->post('hp'),
 				'LAYANAN_KHUSUS' => $pelayanan_khusus,
 				'PERIHAL_PRIBADI' => $perihal_pribadi,
-				'FOTO' => $data_file['file_name'],
+				'FOTO' => $file_foto,
 				'JASA_TAMBAHAN' => $this->input->post('jasa_maningtis'),
 				'REQUESTED_NAMA' => $this->input->post('jasa_paspor_nama'),
 				'MAHRAM' => $this->input->post('mahram'),
@@ -378,9 +388,9 @@ class Biodata extends CI_Controller {
 				array('field'=>'ayah_kandung','label'=>'Ayah Kandung', 'rules'=>'required'),
 				array('field'=>'warga_negara','label'=>'Warga Negara', 'rules'=>'required'),
 				array('field'=>'tempat_lahir','label'=>'Tempat Lahir', 'rules'=>'required'),
-				array('field'=>'tgl_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'bln_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
-				array('field'=>'thn_lahir','label'=>'Tanggal Lahir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'tgl_lahir','label'=>'Tgl. Lahir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'bln_lahir','label'=>'Tgl. Lahir', 'rules'=>'callback_cek_dropdown'),
+				array('field'=>'thn_lahir','label'=>'Tgl. Lahir', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'province','label'=>'Provisi', 'rules'=>'callback_cek_dropdown'),
 				array('field'=>'kota','label'=>'Kota', 'rules'=>'required'),
 				array('field'=>'alamat','label'=>'Alamat', 'rules'=>'required'),
@@ -427,6 +437,9 @@ class Biodata extends CI_Controller {
 		{
 			foreach($data_jamaah->result() as $row)
 			{
+				if($row->REQUESTED_NAMA != "0") { $req_nama = $row->REQUESTED_NAMA; }
+				  else{ $req_nama = NULL; }
+				
 				$data['e_id_candidate'] = $row->ID_CANDIDATE;
 				$data['e_id_account'] = $row->ID_ACCOUNT;
 				$data['e_nama_lengkap'] = $row->NAMA_LENGKAP;
@@ -448,7 +461,7 @@ class Biodata extends CI_Controller {
 				$data['e_perihal_pribadi'] = $row->PERIHAL_PRIBADI;
 				$data['e_pas_foto'] = $row->FOTO;
 				$data['e_jasa_tambahan'] = $row->JASA_TAMBAHAN;
-				$data['e_request_nama'] = $row->REQUESTED_NAMA;
+				$data['e_request_nama'] = $req_nama;
 				
 				// PECAH TANGGAL LAHIR
 				$pecah_tgl = explode("-", $data['e_tgl_lahir']);
@@ -588,9 +601,10 @@ class Biodata extends CI_Controller {
 			
 			} else {
 				
-				$request_nama = $this->input->post('jasa_paspor_nama_edit');
+				$request_nama = $this->input->post('jasa_paspor_nama');
 			}
 			
+		//	echo "<script>alert('".$this->input->post('jasa_paspor_nama')."');</script>";
 			
 			// cek foto
 			$cek_foto = $_FILES['foto']['name'];
@@ -667,6 +681,17 @@ class Biodata extends CI_Controller {
 			redirect('/biodata/edit/'.$id_candidate.'/'.$id_account);
 		}
 	}
+
+        // cek order packet
+        function cekOrder(){
+            $this->load->model('packet_model');
+            $id_user = $this->session->userdata("id_account");
+            $kode_reg = $this->session->userdata("kode_registrasi");
+
+            $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+            if ($packet->num_rows() < 1)
+                    redirect('beranda');
+        }
 					
 
 }

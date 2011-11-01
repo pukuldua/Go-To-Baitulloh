@@ -17,7 +17,8 @@ class Login extends CI_Controller {
 	{
 		
 		$this->load->model('accounts_model');
-		$this->load->model('log_model');                
+		$this->load->model('log_model');
+                $this->load->model('packet_model');
 		
 		$this->session->sess_destroy(); // menghapus semua session yang ada dalam aplikasi		
 		$valid 		= false; // kondisi awal parameter login
@@ -42,13 +43,15 @@ class Login extends CI_Controller {
 			foreach ($data_user->result() as $row){	
 				if($email == $row->EMAIL && md5($password) == $row->PASSWORD){
 					$valid = true;
+                                        $packet = $this->packet_model->get_packet_byAcc($row->ID_ACCOUNT, $row->KODE_REGISTRASI);
 					
 					//setting session terhadap data user
 					$newdata = array(
 						'id_account'		=> $row->ID_ACCOUNT,
 						'email' 			=> $row->EMAIL,
 						'nama'				=> $row->NAMA_USER,
-						'kode_registrasi' 	=> $row->KODE_REGISTRASI
+						'kode_registrasi' 	=> $row->KODE_REGISTRASI,
+                                                'order_packet' => $packet->num_rows() > 0 ? 1:0
 					);
 					
 					$this->session->set_userdata($newdata);

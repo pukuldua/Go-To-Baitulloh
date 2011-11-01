@@ -66,7 +66,7 @@
 				</tr>
 				<tr>
 					<th valign="top">Tanggal Lahir</th>
-					<td>: <? echo $e_kota.", ".$tgl_lahir; ?> </td>
+					<td>: <? echo $e_tempat_lahir.", ".$tgl_lahir; ?> </td>
 					<td></td>
                 
 	<tr>
@@ -126,7 +126,13 @@
                      
                     </td>
 					<td>
-						<? if(form_error('k_thn_lahir') != '') {?>
+						<? if(form_error('k_tgl_lahir') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('k_tgl_lahir'); ?></div>
+						<? } elseif(form_error('k_bln_lahir') != '') { ?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('k_bln_lahir'); ?></div>
+						<? }elseif(form_error('k_thn_lahir') != '') {?>
 						<div class="error-left"></div>
 						<div class="error-inner"><?php echo form_error('k_thn_lahir'); ?></div>
 						<? }?>
@@ -167,7 +173,13 @@
                      
                     </td>
 					<td>
-						<? if(form_error('b_thn_lahir') != '') {?>
+						<? if(form_error('b_tgl_lahir') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('b_tgl_lahir'); ?></div>
+						<? } elseif(form_error('b_bln_lahir') != '') { ?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('b_bln_lahir'); ?></div>
+						<? }elseif(form_error('b_thn_lahir') != '') {?>
 						<div class="error-left"></div>
 						<div class="error-inner"><?php echo form_error('b_thn_lahir'); ?></div>
 						<? }?>
@@ -248,7 +260,13 @@
                      
                     </td>
 					<td>
-						<? if(form_error('k_thn_lahir') != '') {?>
+						<? if(form_error('k_tgl_lahir') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('k_tgl_lahir'); ?></div>
+						<? } elseif(form_error('k_bln_lahir') != '') { ?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('k_bln_lahir'); ?></div>
+						<? }elseif(form_error('k_thn_lahir') != '') {?>
 						<div class="error-left"></div>
 						<div class="error-inner"><?php echo form_error('k_thn_lahir'); ?></div>
 						<? }?>
@@ -289,7 +307,13 @@
                      
                     </td>
 					<td>
-						<? if(form_error('b_thn_lahir') != '') {?>
+						<? if(form_error('b_tgl_lahir') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('b_tgl_lahir'); ?></div>
+						<? } elseif(form_error('b_bln_lahir') != '') { ?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('b_bln_lahir'); ?></div>
+						<? }elseif(form_error('b_thn_lahir') != '') {?>
 						<div class="error-left"></div>
 						<div class="error-inner"><?php echo form_error('b_thn_lahir'); ?></div>
 						<? }?>

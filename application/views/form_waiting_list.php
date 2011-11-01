@@ -1,23 +1,6 @@
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
-        	<!--  start step-holder -->
-			<div id="step-holder">
-				<div class="step-no-off">1</div>
-				<div class="step-light-left">Cek Ketersediaan</a></div>
-				<div class="step-light-right">&nbsp;</div>
-				<div class="step-no">2</div>
-				<div class="step-dark-left">Hasil Pengecekan</div>
-				<div class="step-dark-right">&nbsp;</div>
-				<div class="step-no-off">3</div>
-				<div class="step-light-left">Pendaftaran</div>
-				<div class="step-light-right">&nbsp;</div>
-				<div class="step-no-off">4</div>
-				<div class="step-light-left">Notifikasi</div>
-				<div class="step-light-round">&nbsp;</div>
-				<div class="clear"></div>
-			</div>
-			<!--  end step-holder -->
             <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
 				<tr>
                 	<td colspan="2">
@@ -46,8 +29,6 @@
 					<td colspan="2">
 						<h3>
 						<? if (isset($message)) echo $message; ?>
-						<br /><br />Anda bisa melakukan registrasi online terlebih dahulu, untuk mencatatkan data ke dalam sistem kami.
-                        <br />Silahkan login jika anda sudah memiliki akun.						
                         </h3>
 					</td>
 				</tr>
@@ -76,15 +57,28 @@
                 </tr>
 				<tr>
 					<td colspan="2">
-						<? if ($waiting) {?>
-                        <h3>Anda dapat mencentang poin di bawah ini, jika bersedia dimasukkan ke dalam daftar tunggu.
+                        <h3>Anda dapat mencentang poin di bawah ini, jika bersedia dimasukkan 
+						<br />ke dalam daftar tunggu untuk pilihan paket di atas.
 						</h3>						
-                    	<?php echo form_open('registration',array('name' => 'form_registrasi')); ?>
+                    	<?php echo form_open('beranda/waiting',array('name' => 'form_registrasi')); ?>
+							<div style="display: none;" >
+								<input type="text" name="group" value="<?php echo $group; ?>" />
+								<input type="text" name="program" value="<?php echo $program; ?>" />
+								<input type="text" name="jml_adult" value="<?php echo $jml_adult; ?>" />
+								<input type="text" name="with_bed" value="<?php echo $with_bed; ?>" />
+								<input type="text" name="no_bed" value="<?php echo $no_bed; ?>" />
+								<input type="text" name="infant" value="<?php echo $infant; ?>" />
+								
+								<? $no=0; foreach($room_choice2 as $row) {?>
+								<input name="kamar[]" id="kamar<? echo $no;?>" value="<? echo $row['ID_ROOM_TYPE']; ?>" />
+								<input name="jml_kamar[]" id="jml_kamar<? echo $no;?>" value="<? echo $row['JUMLAH'];?>" />
+								<? $no++; }?>
+							</div>
                         	<input name="waiting" id="waiting" type="checkbox" value="1" onchange="enableSubmit(this);" />&nbsp;
                             <label for="waiting">Menginginkan masuk Daftar Tunggu</label>
                             <br />
                             <input type="submit" value="" name="submit_button" class="form-submit" disabled="disabled" />
-                        <?php echo form_close(); }?>
+                        <?php echo form_close(); ?>
 					</td>
 				</tr>
             </table>
@@ -106,24 +100,17 @@
 					<div id="related-act-inner">
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
-							<? if ($plane_flag) {?>
-							<h5>Info Keberangkatan</h5>								
+							<h5>Info Waiting List</h5>
+							Dengan masuk daftar tunggu, anda berarti telah setuju untuk :
 							<ul class="greyarrow">
-								<li> Jakarta - Jedddah: <? echo "$depart_jd"; ?></li> 
-								<li> Jakarta - Makkah: <? echo "$depart_mk" ?></li>
+							<li>Menonaktifkan akun anda sementara waktu.</li>
+							<li>Akun anda akan aktif kembali jika status daftar tunggu anda berubah.</li>
+							<li>Informasi tentang update status anda akan dikirim melalui email.</li>
 							</ul>
-							<? }?>
+							<br />Terima kasih.
 						</div>
 							
-						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>
-						
-						<div class="left"><a href="<?php echo site_url('registration')?>"><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
-						<div class="right">
-							<h5><a href="<?php echo site_url('registration')?>">Registration</a></h5>
-								Form Registrasi Calon Jamaah Umroh
-						</div>
-							<div class="clear"></div>						
+						<div class="clear"></div>				
 					</div>
 					<!-- end related-act-inner -->
 						

@@ -8,6 +8,8 @@ class Payment extends CI_Controller {
 		
 		if($this->session->userdata('email') == NULL)
 			redirect(site_url()."/login");
+
+                $this->cekOrder();
 	}
 
 	function index()
@@ -164,7 +166,7 @@ class Payment extends CI_Controller {
 		$data['total_pay'] = $data['jumlah_dp2'] + $data['jumlah_lunas2'];
 		$data['total_pay_cek'] = $this->cek_ribuan($data['total_pay']);
 		
-		if($data['total_pay'] > $data['total_biaya'] && $data['status_lunas_pay'] == 1)
+		if($data['total_pay'] == $data['total_biaya'] || $data['total_pay'] > $data['total_biaya'] && $data['status_lunas_pay'] == 1)
 		{
 			$data['total_status'] = "Complete";
 			$data['css_total'] = "sudah";
@@ -335,6 +337,17 @@ class Payment extends CI_Controller {
 		
 		return $ubah;
 	}
+
+        // cek order packet
+        function cekOrder(){
+            $this->load->model('packet_model');
+            $id_user = $this->session->userdata("id_account");
+            $kode_reg = $this->session->userdata("kode_registrasi");
+
+            $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+            if ($packet->num_rows() < 1)
+                    redirect('beranda');
+        }
 		
 }
 

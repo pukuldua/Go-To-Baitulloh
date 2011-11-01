@@ -711,6 +711,18 @@ a:hover.action-delete	{
 	padding: 6px 6px 0 6px;
 	width: 683px;
 	}
+.form-front2	{
+	background: url(../images/forms/form_textarea_term.gif) no-repeat;
+	border: none;
+	resize: none;
+	color: #393939;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 178px;
+	overflow: auto;
+	padding: 6px 6px 0 6px;
+	width: 683px;
+	}
 .form-textarea-min	{
 	background: url(../images/forms/form_textarea_min.gif) no-repeat;
 	border: none;

@@ -6,6 +6,7 @@ class Rooming extends CI_Controller {
 	{
 		parent::__construct();
                 $this->cekSession();
+                $this->cekOrder();
 	}
 	
 	function index(){            
@@ -19,9 +20,9 @@ class Rooming extends CI_Controller {
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
 
-                $payment = $this->jamaah_candidate_model->get_payment_status($id_user, $kode_reg);
+                $payment = $this->packet_model->get_payment_status($id_user, $kode_reg);
 
-                if ($payment->num_rows() > 0 && ($payment->row()->STATUS_KANDIDAT == 2 || $payment->row()->STATUS_KANDIDAT == 3)){
+                if ($payment->num_rows() > 0 && ($payment->row()->STATUS_PESANAN == 3)){
                     $data['is_pay'] = TRUE;
                     $room_options['0'] = '-- Pilih Kamar --';
 
@@ -105,12 +106,6 @@ class Rooming extends CI_Controller {
 		//$this->load->view('form_rooming',null,false);
 		$this->load->view('front',$data);
 	}
-
-        function dialog(){
-            $data['content'] = $this->load->view('dialog',null,true);
-            $this->load->view('front',$data);
-//            $this->load->view('dialog',null,false);
-        }
 
         function show_profile($id_candidate){
             $this->load->model('jamaah_candidate_model');
@@ -256,6 +251,17 @@ class Rooming extends CI_Controller {
 		if(!$this->session->userdata('id_account'))
 			redirect('login');
   	}
+
+        // cek order packet
+        function cekOrder(){
+            $this->load->model('packet_model');
+            $id_user = $this->session->userdata("id_account");
+            $kode_reg = $this->session->userdata("kode_registrasi");
+
+            $packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+            if ($packet->num_rows() < 1)
+                    redirect('beranda');
+        }
 }
 
 /* End of file welcome.php */

@@ -92,13 +92,15 @@ class Forgot extends CI_Controller {
 				$this->email->subject('Reset Password');
 				$this->email->message($htmlMessage);
 		
-			//	$this->email->send();
+				$this->email->send();
 				
+				// set session sukses, trus redirect ke halaman sukses
+				$this->session->set_userdata('sukses','true');
 				$email_ubah = str_replace("@", "_at_", $data['email_user']);
-			//	redirect("forgot/success/".$email_ubah);
+				redirect("forgot/success/".$email_ubah);
 
 				
-				$content = $this->load->view('email_reset',$data);
+			//	$content = $this->load->view('email_reset',$data);
 				
 			}
 			else{
@@ -201,9 +203,17 @@ class Forgot extends CI_Controller {
 	function success($email)
 	{
 		$email = str_replace("_at_", "@", $email);
-		$data['msg'] = "Sistem berhasil mereset password <i><strong><a href='mailto:".$email."'> ".$email."</a></strong></i> . periksa inbox Email Anda";
-		$data['content'] = $this->load->view('form_reset', $data, true);
-		$this->load->view('front', $data);
+		if($this->session->set_userdata('sukses') == 'true')
+		{ 
+			$data['msg'] = "Sistem berhasil mereset password <i><strong><a href='mailto:".$email."'> ".$email."</a></strong></i> . periksa inbox Email Anda";
+			
+			$this->session->unset_userdata('sukses');
+				
+			$data['content'] = $this->load->view('form_reset', $data, true);
+			$this->load->view('front', $data);
+		}else{
+			redirect(site_url()."/login");
+		}
 	}
 	
 

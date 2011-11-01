@@ -102,7 +102,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>Masukkan Kode (*)</th>
+					<th>Kode Verifikasi (*)</th>
 					<td>
 						<script type="text/javascript"
 						   src="http://www.google.com/recaptcha/api/challenge?k=6LcqPskSAAAAAMj9vcsmOtZDhk0JrkPLCNjJ-FVw">

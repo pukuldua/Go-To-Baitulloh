@@ -133,11 +133,13 @@
 				</tr>
 			</table>
 			<? }} else {?>
+			<div class="form-front2">
 			<h2>
 				Maaf, Anda tercatat belum melakukan pembayaran.
 				<br /> Silahkan melakukan pembayaran pada rekening yang tersedia (disamping).
 				<br /> Dan lakukan konfirmasi melalui menu <strong>Pembayaran</strong>
 			</h2>
+			</div>
 			<? }?>
 			<!-- end id-form  -->
 		</td>
