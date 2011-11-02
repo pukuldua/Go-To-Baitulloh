@@ -528,7 +528,7 @@ class Beranda extends CI_Controller {
 
     //cek apakah user sudah login kedalam sistem
     function cekSession(){
-            if(!$this->session->userdata('id_account'))
+            if($this->session->userdata('id_account') == NULL || $this->session->userdata('id_account') == '')
                     redirect('login');
     }
 	
