@@ -134,6 +134,9 @@ class Konfirmasi extends CI_Controller {
 	function cek_status($id_payment, $jenis_pembayaran)
 	{
 		$this->load->model('payment_model');
+		$this->load->model('packet_model');
+		$this->load->model('program_class_model');
+		$this->load->model('group_departure_model');
 		$this->load->model('jamaah_candidate_model');
 		
 		$data_payment = $this->payment_model->get_all_payment_ByID($id_payment, $jenis_pembayaran);
@@ -145,21 +148,65 @@ class Konfirmasi extends CI_Controller {
 				$id_user_a = $row->ID_ACCOUNT;
 				$kode_reg_a = $row->KODE_REGISTRASI;
 				
+				// CARI DATA PAYMENT YG SUDAH APPROVED
+				$data_payment_app = $this->payment_model->get_payment_byAcc_complete($id_user_a, $kode_reg_a);
+				if($data_payment_app->num_rows() > 0)
+				{
+					$valid = FALSE;
+/*					echo "<script>alert('testing');</script>";
+*/				}else{
+					$valid = TRUE;
+/*					echo "<script>alert('ok');</script>";
+*/				}
+				
 				// UPDATE STATUS PAYMENT MENJADI APPROVED
 				$data_pay = array('STATUS' => 1); 
 				$this->payment_model->update_payment($data_pay, $row->ID_PAYMENT);
 				
-				
-				$data_candidate = $this->jamaah_candidate_model->get_total_jamaah($id_user_a, $kode_reg_a);
-				foreach($data_candidate->result() as $rows)
+				// UPDATE STATUS PACKET MENJADI 3 = SUDAH PAYMENT
+				$data_packet = $this->packet_model->get_packet_byAcc($id_user_a, $kode_reg_a);
+				foreach($data_packet->result() as $rows)
 				{
-					// UPDATE STATUS JAMAAH CANDIDATE
-					if($jenis_pembayaran == 1) { $tipe_status = 2; }
-					 elseif($jenis_pembayaran == 2) { $tipe_status = 3; }
+					$id_program = $rows->ID_PROGRAM;
+					$id_group = $rows->ID_GROUP;
 					
-					$data_update = array('STATUS_KANDIDAT' => $tipe_status ); 
-					$this->jamaah_candidate_model->update_jamaah($data_update, $rows->ID_CANDIDATE);
+					$data_update = array('STATUS_PESANAN' => 3 ); 
+					$this->packet_model->update_packet($data_update, $rows->ID_PACKET);
 				}
+				
+				// GET DATA MASKAPAI
+				$data_program = $this->program_class_model->get_program($id_program);
+				foreach($data_program->result() as $rows)
+				{
+					$nama_maskapai = $rows->MASKAPAI;
+				}
+				
+				// UPDATE PAGU
+				$data_group = $this->group_departure_model->get_group($id_group);
+				foreach($data_group->result() as $rows)
+				{
+					$pagu_ga = $rows->PAGU_GA;
+					$pagu_sv = $rows->PAGU_SV;
+				}
+				
+				// CARI TOTAL CALON JAMAAH
+				$data_total_jamaah = $this->jamaah_candidate_model->get_total_jamaah($id_user_a, $kode_reg_a);
+				if($data_total_jamaah->num_rows() > 0) { $total_candidate = $data_total_jamaah->num_rows(); }
+				  else { $total_candidate = 0; }
+				
+				if($nama_maskapai == "GARUDA INDONESIA") { $field_group = "PAGU_GA"; $pagu_awal = $pagu_ga; }
+				  elseif($nama_maskapai == "SAUDI AIRLINES") { $field_group = "PAGU_SV"; $pagu_awal = $pagu_sv;}
+				
+				// UPDATE PAGU GROUP
+				if($valid)
+				{
+					if($pagu_ga != 0 || $pagu_sv != 0)
+					{
+						$data_pagu = array($field_group => ($pagu_awal - $total_candidate));
+						$this->group_departure_model->update_group($id_group, $data_pagu);
+					}
+				}
+				
 			}
 			
 			redirect(site_url()."/admin/konfirmasi");

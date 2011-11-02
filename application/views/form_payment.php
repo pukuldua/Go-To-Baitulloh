@@ -1,3 +1,5 @@
+<?php echo $notifikasi;?>
+
 <div class="garis_pisah"> RINCIAN BIAYA</div>
 <center>
 <table width="100%" class="front_price" align="center">
@@ -79,8 +81,6 @@
 
 <? echo form_open_multipart('/payment/do_send'); ?>
 
-<?php echo $notifikasi;?>
-
 <br />
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
@@ -158,7 +158,7 @@
 				</tr>
                 <tr>
 					<th valign="top">Catatan</th>
-					<td><textarea name="bank_pengirim" class="form-textarea-min" /><?php echo set_value('catatan');?></textarea>
+					<td><textarea name="catatan" class="form-textarea-min" /><?php echo set_value('catatan');?></textarea>
                         </td>
 					<td>
 						<? if(form_error('catatan') != '') {?>

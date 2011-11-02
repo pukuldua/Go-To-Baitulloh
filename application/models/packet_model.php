@@ -68,6 +68,17 @@ class Packet_model extends CI_Model {
 		else
 			$this->db->trans_commit();
 	}
+	
+	function update_packet($data, $id_packet){
+		$this->db->trans_begin();
+		$this->db->where('ID_PACKET', $id_packet);
+		$this->db->update('packet', $data);
+		
+		if ($this->db->trans_status() === FALSE)
+			$this->db->trans_rollback();
+		else
+			$this->db->trans_commit();
+	}
 }
 
 ?>

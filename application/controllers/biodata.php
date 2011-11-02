@@ -604,7 +604,7 @@ class Biodata extends CI_Controller {
 				$request_nama = $this->input->post('jasa_paspor_nama');
 			}
 			
-		//	echo "<script>alert('".$this->input->post('jasa_paspor_nama')."');</script>";
+			/*echo "<script>alert('".$this->input->post('jasa_paspor_nama')."');</script>";*/
 			
 			// cek foto
 			$cek_foto = $_FILES['foto']['name'];
@@ -621,7 +621,7 @@ class Biodata extends CI_Controller {
 				if(!$this->upload->do_upload('foto'))
 				{
 					$error = $this->upload->display_errors();
-					echo "<script>alert('".$this->input->post('foto')."');window.location='javascript:history.back()';</script>";
+					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
 					exit;
 				
 				}else{

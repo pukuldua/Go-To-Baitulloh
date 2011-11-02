@@ -77,6 +77,17 @@ class Payment_model extends CI_Model {
 		return $this->db->query($data);
 	}
 	
+	function get_payment_byAcc_complete($id_acc, $kode_reg){
+        $status = array(1);
+        $this->db->select("*");
+		$this->db->from("payment");
+		$this->db->where("ID_ACCOUNT", $id_acc);
+		$this->db->where("KODE_REGISTRASI", $kode_reg);
+		$this->db->where_in("STATUS", $status);
+
+		return $this->db->get();
+	}
+	
 }
 
 ?>
