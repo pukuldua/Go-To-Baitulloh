@@ -398,8 +398,8 @@
                                                               <p><strong>Assalamualaikum, </strong><strong><?php echo $NAMA_USER;?></strong></p>
                                                               <p>Selamat datang pada Sistem Registrasi Online Umrah Kamilah. Berikut ini kami informasikan bahwa Anda telah berhasil melakukan registrasi pada  dengan,<br />
                                                                 <strong>Nama User: <?php echo $NAMA_USER;?><br />
-                                                                Kode Registrasi: <?php echo $PASSWORD;?><br />
-                                                              Password: <?php echo $KODE_REGISTRASI;?></strong></p>
+                                                                Kode Registrasi: <?php echo $KODE_REGISTRASI;?><br />
+                                                              Password: <?php echo $PASSWORD;?></strong></p>
                                                               <p>Untuk bisa menggunakan sistem kami, terlebih dulu aktifkan akun Anda dengan cara klik link di bawah ini.<br />
                                                               </p>
                                                               <center>

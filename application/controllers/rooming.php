@@ -248,9 +248,9 @@ class Rooming extends CI_Controller {
 
         //cek apakah user sudah login kedalam sistem
   	function cekSession(){
-		if(!$this->session->userdata('id_account'))
-			redirect('login');
-  	}
+            if($this->session->userdata('id_account') == NULL || $this->session->userdata('id_account') == '')
+                    redirect('login');
+    }
 
         // cek order packet
         function cekOrder(){
