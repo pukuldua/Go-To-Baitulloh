@@ -114,7 +114,7 @@ class Registration extends CI_Controller {
 				}
 				
 				$keycode = $this->secure($this->data_field['KODE_REGISTRASI']);
-				//$this->send_email($keycode, $waiting);
+				$this->send_email($keycode, $waiting);
 				//set session notifikasi
 				//$this->session->set_userdata('notification','Data Pengujian Kadar Air Telah Dimasukkan !!!');
 				redirect('notification/show/'.$this->data_field['KODE_REGISTRASI']);
@@ -149,8 +149,8 @@ class Registration extends CI_Controller {
 		$id_card = $this->input->post('id_card');
 		$kode = $this->input->post('recaptcha_challenge_field');
 		
-		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
-		$pwd = substr(md5('password-'.$nama.'-'.$email.'-'.date("Y j d H:i:s")), 0, 15);
+		$kode_reg = substr(md5('koderegistrasi-'.$nama.'-'.$email.'-'.date("Y m d H:i:s")), 0, 15);
+		$pwd = substr(md5('password-'.$nama.'-'.$email.'-'.date("Y m d")), 0, 5);
 		$this->tmp_pass = $pwd;
 
 		$this->data_field = array('KODE_REGISTRASI' => $kode_reg, 'ID_PROPINSI' => $province, 'NAMA_USER' => $nama, 
@@ -230,6 +230,7 @@ class Registration extends CI_Controller {
 		$this->email->message($htmlMessage);
 
 		$this->email->send();
+                //echo $this->tmp_pass;
 
 		// echo $this->email->print_debugger();
 	}

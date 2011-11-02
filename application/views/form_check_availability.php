@@ -159,12 +159,7 @@
 						<div class="right">
 							<h5>Keterangan Group <a id="info_kode"></a></h5>
                             <br /><i><div id="info_ket"></div></i>
-								
-                                <br />Keberangkatan <strong>Jeddah</strong> :
-							<ul class="greyarrow">
-								<li><a id="info_jd"></a>&nbsp;</li> 
-							</ul>
-                              <br />  Keberangkatan <strong>Mekkah</strong> :
+                              <br />  Keberangkatan :
 							<ul class="greyarrow">
 								<li><a id="info_mk"></a>&nbsp;</li> 
 							</ul>
@@ -264,7 +259,7 @@
 							 var bahan = response;
 							 var pecah = bahan.split("#");
 							 
-                             document.getElementById('info_jd').innerHTML = pecah[0];
+                             //document.getElementById('info_jd').innerHTML = pecah[0];
 							 document.getElementById('info_mk').innerHTML = pecah[1];
 							 document.getElementById('info_paspor').innerHTML = pecah[2];
 							 document.getElementById('info_lunas').innerHTML = pecah[3];
