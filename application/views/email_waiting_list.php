@@ -394,46 +394,62 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Aktivasi Akun</h4>
-                                                              <p><strong>Assalamualaikum, </strong><strong><?php echo $NAMA_USER;?></strong></p>
-                                                              <p>Selamat datang pada Sistem Registrasi Online Umrah Kamilah. Berikut ini kami informasikan bahwa Anda telah berhasil melakukan registrasi pada  dengan,<br />
-                                                                <strong>Nama User: <?php echo $NAMA_USER;?><br />
-                                                                Kode Registrasi: <?php echo $KODE_REGISTRASI;?><br />
-                                                              Password: <?php echo $PASSWORD;?></strong></p>
-                                                              <p>Untuk bisa menggunakan sistem kami, terlebih dulu aktifkan akun Anda dengan cara klik link di bawah ini.<br />
+                                                                <h4 class="h4">Status Daftar Tunggu</h4>
+                                                              <p><strong>Assalamualaikum, <?php echo $NAMA_USER;?></strong></p>
+                                                              <p>Terima kasih kami ucapkan atas pesanan paket umrah Anda bersama kami tertanggal <br />
+															  <strong><? echo $tanggal; ?> </strong>dan kesediaan Anda untuk menunggu dalam daftar tunggu.<br />
+															  Berdasarkan paket pesanan Anda berikut ini:<br />
+																<table style="font-weight:bold;">
+																	<tr>
+																		<td>Group</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $group;?></td>
+																	</tr>
+																	<tr>
+																		<td>Kelas Program </td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $program;?></td>
+																	</tr>
+																	<tr>
+																		<td>Jumlah Dewasa</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $adult;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Dengan Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $with_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Tanpa Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $no_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Bayi</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $infant;?></td>
+																	</tr>
+																	<tr>
+																		<td>Total Jamaah</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo ($adult+$with_bed+$no_bed+$infant);?></td>
+																	</tr>
+																	<tr>
+																		<td>Pilihan Kamar</td>
+																		<td>&nbsp;</td>
+																		<td><ul><?php foreach($room as $row){ echo "<li>".$row->JENIS_KAMAR." - Jumlah = ".$row->JUMLAH."</li>"; }?></ul></td>
+																	</tr>
+																</table>
+															</p>
+                                                              <p>Kami mohon maaf tidak dapat memenuhi pesanan paket tersebut karena paket telah penuh dan/atau tenggat waktu pemenuhan persyaratan keberangatan <br />
+															  juga telah habis. Semoga hal ini dapat dimaklumi dan Anda bersedia untuk memilih paket keberangkatan lainnya. <br />
                                                               </p>
-                                                              <center>
-                                                                  <strong>
-                                               		         <h4>
-                                                                       <a href="<? echo site_url();?>/activation/activate/<? echo $key; ?>">Activate My Account</a></h4></strong></center>
-                                                              <? if ($waiting == 1) {?>
-															  <strong>Anda masuk dalam daftar tunggu. Silahkan cek email anda untuk mengetahui update terkait status daftar tunggu anda.</strong>
-															  <? }?>
-															  <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
-                                                                <ul>
-                                                                  <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
-                                                                    <strong>BANK MUAMALAT cab. Kemayoran<br />
-                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
-                                                                    US Dollar : 2300-300-723 <br />
-                                                                    ID Rupiah : 2300-723-723</strong><br /><br />
-																	<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
-                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
-                                                                    USDollar : 101-000-644-5454<br />
-                                                                    IDRupiah : 101-000-644-5421</strong></li>
-                                                                  <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju menu <strong>Pembayaran</strong> yang ada pada halaman dashboard akun anda.</li>
-                                                                  <li>Isi Form untuk konfirmasi pembayaran Uang Muka maupun Pelunasan.</li>
-                                                                </ul>
-                                                              <p><strong>Pembatalan :</strong></p>
-                                                              <ul>
-                                                                <li> Untuk melakukan pembatalan, bisa melalui web dengan menuju menu <strong>Pembatalan</strong> yang ada pada halaman dashboard akun anda.</li>
-                                                              </ul>
-                                                              <p><strong>Catatan: </strong></p>
-                                                                <ul>
-                                                                  <li> Sebelum Memenuhi Kesepakatan Pendaftaran, komitmen booking seat keberangkatan belum terjadi.</li>
-                                                                  <li>Silakan disegerakan untuk Memenuhi Kesepakatan Pendaftaran dan melakukan konfirmasi pembayaran, sehingga Data anda bisa segera di proses. Dan Status Pendaftaran akan kami Booked.</li>
-                                                                  <li>Peserta belum terdaftar jika dana belum efektif masuk ke dalam rekening kamilah.</li>
-                                                                </ul>
-                                                                <p><br />
+																<p>Sehubungan dengan hal ini, status akun Anda sudah berubah menjadi <strong>Aktif</strong> kembali sehingga Anda dapat 
+																menggunakannya untuk memilih paket umrah yang lainnya. <br />
+																Terima Kasih.
+																</p>
+                                                              <p>															  
                                                                   <strong>Wassalamualaikum Wr. Wb<br />
                                                                   Umrahkamilah.com
                                                                   </strong>                                                            </p>
