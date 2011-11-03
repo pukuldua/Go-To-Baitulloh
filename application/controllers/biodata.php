@@ -312,6 +312,12 @@ class Biodata extends CI_Controller {
 			$cek_foto = $_FILES['foto']['name'];
 			if($cek_foto != "")
 			{
+				
+				if(!is_dir('./images/upload/foto'))
+				{
+					mkdir('./images/upload/foto',777);
+				}
+				
 				// Upload Foto
 				$config['upload_path'] = './images/upload/foto/';
 				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
@@ -323,7 +329,7 @@ class Biodata extends CI_Controller {
 				if(!$this->upload->do_upload('foto'))
 				{
 					$error = $this->upload->display_errors();
-					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
+					echo "<script>alert('".$error.$config['upload_path']."'); </script>";
 					exit;
 				
 				}else{
