@@ -35,8 +35,8 @@ class Payment extends CI_Controller {
 		
 		// PROSES QUERY
 		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
-		$data_jamaah = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND REQUESTED_NAMA != '0' AND REQUESTED_NAMA != ''");
-		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0'");
+		$data_jamaah = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND REQUESTED_NAMA != '0' AND REQUESTED_NAMA != '' AND STATUS_KANDIDAT != '0'");
+		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0' AND STATUS_KANDIDAT != '0'");
 		$data_pay_uangmuka = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '1'");
 		$data_pay_lunas = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '2'");
 		$data_total_jamaah = $this->jamaah_candidate_model->get_total_jamaah($id_user, $kode_reg);
@@ -45,31 +45,31 @@ class Payment extends CI_Controller {
 		// CARI TOTAL PEMAKAI JASA NAMA PASPOR
 		if($data_jamaah->num_rows() > 0)
 		{
-			$data['hitung_jasa_nama'] = $data_jamaah->num_rows();
+			$hitung_jasa_nama = $data_jamaah->num_rows();
 		}else {
-			$data['hitung_jasa_nama'] = 0;
+			$hitung_jasa_nama = 0;
 		}
 		
-		$data['hitung_total'] = 20 * $data['hitung_jasa_nama'];
+		$hitung_total = 20 * $hitung_jasa_nama;
 		
 		
 		// CARI TOTAL PENGGUNA JASA MANINGTIS
 		if($data_jamaah_maningtis->num_rows() > 0)
 		{
-			$data['hitung_jasa_maningtis'] = $data_jamaah_maningtis->num_rows();
+			$hitung_jasa_maningtis = $data_jamaah_maningtis->num_rows();
 		}else {
-			$data['hitung_jasa_maningtis'] = 0;
+			$hitung_jasa_maningtis = 0;
 		}
 		
-		$data['hitung_total_maningtis'] = 20 * $data['hitung_jasa_maningtis'];
+		$hitung_total_maningtis = 20 * $hitung_jasa_maningtis;
 		
 		
 		// HITUNG TOTAL CALON JAMAAH
 		if($data_total_jamaah->num_rows() > 0)
 		{
-			$data['total_calon_jamaah'] = $data_total_jamaah->num_rows();
+			$total_calon_jamaah = $data_total_jamaah->num_rows();
 		}else {
-			$data['total_calon_jamaah'] = 0;
+			$total_calon_jamaah = 0;
 		}
 		
 		
@@ -112,32 +112,31 @@ class Payment extends CI_Controller {
 		
 		// LOOPING PILIHAN PAKET 
 		$data['row_price'] = '';
-		$data['biaya_harga_kamar'] = 0;
+		$biaya_harga_kamar = 0;
 		
 		if($data_packet->result() != NULL)
 		{
 			foreach($data_packet->result() as $row)
 			{
-				$data['nama_group'] = $row->KODE_GROUP;
-				$data['nama_program'] = $row->NAMA_PROGRAM;
-				$data['cwb'] = $row->CHILD_WITH_BED;
-				$data['cnb'] = $row->CHILD_NO_BED;
-				$data['infant'] = $row->INFANT;
-				$data['id_packet'] = $row->ID_PACKET;
+				$nama_group = $row->KODE_GROUP;
+				$nama_program = $row->NAMA_PROGRAM;
+				$cwb = $row->CHILD_WITH_BED;
+				$cnb = $row->CHILD_NO_BED;
+				$infant = $row->INFANT;
+				$id_packet = $row->ID_PACKET;
 				$id_program = $row->ID_PROGRAM;
 				$id_group = $row->ID_GROUP;
-				
-				// CARI ID ROOM PACKET
-				$data_room_packet = $this->room_packet_model->get_room_packet_byIDpack($data['id_packet']);
-				foreach($data_room_packet->result() as $rows)
-				{
-					$id_room_packet = $rows->ID_ROOM_PACKET;
-					$data['jumlah_kamar'] = $rows->JUMLAH;
-					$id_room_type = $rows->ID_ROOM_TYPE;
-				}
-				
+			}
+			
+			$data_room_packet = $this->room_packet_model->get_room_packet_byIDpack($id_packet);
+			foreach($data_room_packet->result() as $rows)
+			{
+				$id_room_packet = $rows->ID_ROOM_PACKET;
+				$jumlah_kamar = $rows->JUMLAH;
+				$id_room_type = $rows->ID_ROOM_TYPE;
+					
 				// CARI TANGGAL JATUH TEMPO DP DAN PELUNASAN
-				$data_group = $this->group_departure_model->get_group($row->ID_GROUP);
+				$data_group = $this->group_departure_model->get_group($id_group);
 				foreach($data_group->result() as $brs)
 				{
 					$data['tgl_dp'] = date('d F Y', strtotime($brs->JATUH_TEMPO_UANG_MUKA));
@@ -148,7 +147,7 @@ class Payment extends CI_Controller {
 				$data_room_type = $this->room_type_model->get_roomType($id_room_type);
 				foreach($data_room_type->result() as $rowss)
 				{
-					$data['tipe_kamar'] = $rowss->JENIS_KAMAR;
+					$tipe_kamar = $rowss->JENIS_KAMAR;
 				}
 				
 				
@@ -156,24 +155,28 @@ class Payment extends CI_Controller {
 				$data_kamar_siap = $this->room_availability_model->get_price_room($id_room_packet, $id_program, $id_group);
 				foreach($data_kamar_siap->result() as $rowss)
 				{
-					$data['harga_kamar'] = $rowss->HARGA_KAMAR;
+					$harga_kamar = $rowss->HARGA_KAMAR;
 				}
 				
-				$data['total_harga_kamar'] = $data['harga_kamar'] * $data['total_calon_jamaah'];
-				$data['biaya_harga_kamar'] += $data['total_harga_kamar'];
-				
+				$total_harga_kamar = $harga_kamar * $jumlah_kamar;
+				$biaya_harga_kamar += $total_harga_kamar;
 				
 				$data['row_price'] .= '	<tr height="30">
 											<td align="right" class="front_price_no_border">
-											<h4>'.$data['nama_group'].' - '.$data['nama_program'].' - '.$data['tipe_kamar'].'</td>
-											<td align="center"><h4>'.$this->cek_ribuan($data['harga_kamar']).' $</h4></td>
-											<td align="center">'.$data['total_calon_jamaah'].'</td>
-											<td align="center"><h4>'.$this->cek_ribuan($data['total_harga_kamar']).' $</h4></td>
+											<h4>'.$nama_group.' - '.$nama_program.' - '.$tipe_kamar.'</td>
+											<td align="center"><h4>'.$this->cek_ribuan($harga_kamar).' $</h4></td>
+											<td align="center">'.$jumlah_kamar.'</td>
+											<td align="center"><h4>'.$this->cek_ribuan($total_harga_kamar).' $</h4></td>
 										</tr>';
 			}
 		}
 		
-		$data['total_biaya'] = $data['hitung_total'] + $data['hitung_total_maningtis'] + $data['biaya_harga_kamar'];
+		$data['hitung_jasa_nama'] = $hitung_jasa_nama;
+		$data['hitung_jasa_maningtis'] = $hitung_jasa_maningtis;
+		$data['hitung_total'] = $hitung_total;
+		$data['hitung_total_maningtis'] = $hitung_total_maningtis;
+		
+		$data['total_biaya'] = $hitung_total + $hitung_total_maningtis + $biaya_harga_kamar;
 		$data['total_pelunasan'] = $this->cek_ribuan($data['total_biaya'] - 1100);
 		$data['total_biaya2'] = $this->cek_ribuan($data['total_biaya']);
 		$data['total_pay'] = $data['jumlah_dp2'] + $data['jumlah_lunas2'];
@@ -187,11 +190,8 @@ class Payment extends CI_Controller {
 			$data['total_status'] = "Pending";
 			$data['css_total'] = "belum";
 		}
-			
-			
 					
 		$data['notifikasi'] = null;
-		
 		if($this->session->userdata('sukses') == 'true'){
 			$data['notifikasi'] = '<div id="message-green">
 				<table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -202,6 +202,20 @@ class Payment extends CI_Controller {
 				</table><br>
 			</div>';
 			$this->session->unset_userdata('sukses');
+		}
+		
+		$data['error_file'] = '';
+		if($this->session->userdata('upload_file') != '')
+		{
+			$data['error_file'] = '<div id="message-blue">
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="blue-left">'.$this->session->userdata('upload_file').'</td>
+								<td class="blue-right"><a class="close-blue"><img src="'.base_url().'images/table/icon_close_blue.gif"   alt="" /></a></td>
+							</tr>
+						</table><br>
+					</div>';
+			$this->session->unset_userdata('upload_file');
 		}
 				
 		$data['content'] = $this->load->view('form_payment',$data,true);
@@ -228,6 +242,11 @@ class Payment extends CI_Controller {
 			$cek_foto = $_FILES['foto']['name'];
 			if($cek_foto != "")
 			{
+				if(!is_dir('./images/upload/bukti_transfer'))
+				{
+					mkdir('./images/upload/bukti_transfer',0777);
+				}
+				
 				// Upload Foto
 				$config['upload_path'] = './images/upload/bukti_transfer/';
 				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
@@ -238,18 +257,20 @@ class Payment extends CI_Controller {
 				
 				if(!$this->upload->do_upload('foto'))
 				{
-					$error = $this->upload->display_errors();
-					echo "<script>alert('".$this->input->post('foto')."');window.location='javascript:history.back()';</script>";
-					exit;
+					$this->session->set_userdata('upload_file', $this->upload->display_errors("<p>Error Scan Bukti Transfer : ", "</p>"));
+					$data_file = NULL;
+					$valid_file = FALSE;
 				
 				}else{
 					$data_file = $this->upload->data();
+					$valid_file = TRUE;
 				}
 				
 				$bukti = $data_file['file_name'];
 			
 			} else {
 				$bukti = NULL;
+				$valid_file = TRUE;
 			}
 
 			// update table
@@ -282,10 +303,8 @@ class Payment extends CI_Controller {
 				'TANGGAL_ENTRI' => date("Y-m-d H:i:s"),
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s")
 				);
-			
-			$insert = $this->payment_model->insert_payment($data);
-			
-			
+
+
 			// KIRIM EMAIL PEMBERITAHUAN
 			/*$config['protocol'] = 'mail';
 			$config['mailtype'] = 'html';
@@ -302,11 +321,16 @@ class Payment extends CI_Controller {
 	
 			$this->email->send();*/
 			
-			
-			//buat session sukses
-			$this->session->set_userdata('sukses','true');
-			$this->log_model->log($id_user, $kode_reg, NULL, $log);
-			redirect(site_url().'/payment/');
+			if($valid_file)
+			{
+				//buat session sukses
+				$this->session->set_userdata('sukses','true');
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
+				$insert = $this->payment_model->insert_payment($data);
+				redirect(site_url().'/payment/');
+			}else{
+				$this->front();
+			}
 		}
 	}
 

@@ -1,4 +1,7 @@
-<?php echo $notifikasi;?>
+<?php 
+echo $notifikasi;
+echo $error_file;
+?>
 
 <div class="garis_pisah"> RINCIAN BIAYA</div>
 <center>

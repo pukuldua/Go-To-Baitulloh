@@ -125,7 +125,8 @@
 					function(e, selectedDate, $td, state)
 					{
 						/*updateSelects(selectedDate);*/
-						document.getElementById('date_on').value = +selectedDate.getDate()+'/'+selectedDate.getMonth()+'/'+selectedDate.getFullYear();
+						var bulan = parseInt(selectedDate.getMonth()) + 1;
+						document.getElementById('date_on').value = +selectedDate.getDate()+'/'+bulan+'/'+selectedDate.getFullYear();
 					}
 				).bind(
 					'dpClosed',
@@ -138,7 +139,6 @@
 				var updateSelects = function (selectedDate)
 				{
 					var selectedDate = new Date(selectedDate);
-					
 					/*
 					$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
 					$('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
@@ -154,7 +154,7 @@
 					{
 						var d = new Date(
 									$('#y').val(),
-									$('#m').val()-1,
+									$('#m').val(),
 									$('#d').val()
 								);
 						$('#date-pick').dpSetSelected(d.asString());
