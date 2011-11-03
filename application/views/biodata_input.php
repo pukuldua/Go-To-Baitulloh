@@ -1,4 +1,5 @@
-<? echo form_open_multipart('/biodata/do_daftar'); ?>
+<? echo form_open_multipart('/biodata/do_daftar');
+echo $error_file;?>
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
 		<td>
