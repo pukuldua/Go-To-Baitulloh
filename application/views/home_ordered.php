@@ -110,12 +110,8 @@
 							<? } else {?>
 							<h5>Keterangan Group <a id="info_kode"></a></h5>
                             <br /><i><? echo $keterangan_group; ?></i>
-								
-                                <br />Keberangkatan <strong>Jeddah</strong> :
-							<ul class="greyarrow">
-								<li><? if (isset($jd)) echo $jd; ?></li> 
-							</ul>
-                              <br />  Keberangkatan <strong>Mekkah</strong> :
+								                                
+                              <br />  Keberangkatan :
 							<ul class="greyarrow">
 								<li><? if (isset($mk)) echo $mk; ?></li> 
 							</ul>

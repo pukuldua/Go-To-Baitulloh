@@ -412,8 +412,12 @@
 															  <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
                                                                 <ul>
                                                                   <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
-                                                                    <strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
-                                                                    PT KAMILAH WISATA MUSLIM<br />
+                                                                    <strong>BANK MUAMALAT cab. Kemayoran<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
+                                                                    US Dollar : 2300-300-723 <br />
+                                                                    ID Rupiah : 2300-723-723</strong><br /><br />
+																	<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
                                                                     USDollar : 101-000-644-5454<br />
                                                                     IDRupiah : 101-000-644-5421</strong></li>
                                                                   <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju link berikut ini: http://umrahkamilah.com/1234/payment yang ada pada halaman dashboard akun anda.</li>
