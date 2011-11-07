@@ -65,17 +65,20 @@ echo form_open('cancel/do_send'); ?>
 					<div id="related-act-inner">
 						<div class="left"><img src="<?php echo base_url();?>images/forms/icon_edit.gif" width="21" height="21" alt="" /></div>
 						<div class="right">
-							<h5>Ketentuan Pembatalan Akun : <div id="div_room"></div></h5>							
+							<h5>Ketentuan Pembatalan Akun <div id="div_room"></div></h5>							
+						</div>
+											
+						
+						<div class="right" id="div_prev">
+							<ul class="greyarrow"><li>Hati-Hati melakukan pembatalan Akun, harap dibaca dan dipelajari keterangan dan syarat-syarat disamping. </li></ul>
+                            <ul class="greyarrow"><li>Pastikan Anda benar-benar akan membatalkan paket umrah dan semua calon jamaah.</li></ul>
+                            <ul class="greyarrow"><li>Anda akan menerima Email informasi pembatalan sesaat setelah menyetujui dan mengklik tombol Submit. </li></ul>
 						</div>
 							
 						<div class="clear"></div>
-						<div class="lines-dotted-short"></div>						
-						
-						<div class="right" id="div_prev">
-							<ul class="greyarrow"><li>text disini</li></ul>
-						</div>
-						
-							<div class="clear"></div>						
+						<div class="lines-dotted-short"></div>	
+						<div class="clear"></div>	
+                        					
 					</div>
 					<!-- end related-act-inner -->
 						

@@ -309,7 +309,8 @@ class Payment extends CI_Controller {
 				'JUMLAH' => $jumlah,
 				'JENIS' => $metode,
 				'CATATAN' => $catatan,
-				'BUKTI_FILE' => $bukti
+				'BUKTI_FILE' => $bukti,
+				'EMAIL_SES' => $email_ses
 				);
 			
 			if($valid_file)
@@ -386,7 +387,6 @@ class Payment extends CI_Controller {
 		
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
-		$email_ses = $this->session->userdata("email");
 		$data['nama_user'] = $this->session->userdata('nama');
 		
 		
@@ -398,6 +398,7 @@ class Payment extends CI_Controller {
 		$data['JENIS'] = $konfirmasi['JENIS'];
 		$data['CATATAN'] = $konfirmasi['CATATAN'];
 		$data['BUKTI_FILE'] = $konfirmasi['BUKTI_FILE'];
+		$data['EMAIL_SES'] = $konfirmasi['EMAIL_SES'];
 		
 		// PROSES QUERY
 		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
@@ -516,12 +517,12 @@ class Payment extends CI_Controller {
 		$data['subject'] = "Konfirmasi Pembayaran";		
 		
 		$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
-		$this->email->to($email_ses);
+		$this->email->to($data['EMAIL_SES']);
 		$this->email->subject('Konfirmasi Pembayaran');
 		$this->email->message($htmlMessage);
 
 		$this->email->send();
-		
+		//echo $data['EMAIL_SES'];	
 		//$content = $this->load->view('email_payment',$data);
 	}
 	
