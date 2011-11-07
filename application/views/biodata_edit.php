@@ -51,17 +51,6 @@ echo $error_file;
 					</td>
 				</tr>
 				<tr>
-					<? form_error('ayah_kandung') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Ayah Kandung (*)</th>
-					<td><input type="text" name="ayah_kandung" value="<?php echo $e_ayah_kandung;?>" class="<? echo $class;?>" /></td>
-					<td>
-						<? if(form_error('ayah_kandung') != '') {?>
-						<div class="error-left"></div>
-						<div class="error-inner"><?php echo form_error('ayah_kandung'); ?></div>
-						<? }?>
-					</td>
-				</tr>
-				<tr>
 					<? form_error('warga_negara') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">Warga Negara (*)</th>
 					<td><input type="text" name="warga_negara" value="<?php echo $e_warga_negara;?>" class="<? echo $class;?>" /></td>
@@ -176,17 +165,6 @@ echo $error_file;
 						<? }?>
 					</td>
 				</tr>-->
-				<tr height="40">
-					<? form_error('mahram') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top"></th>
-					<td><input type="checkbox" name="mahram" value="1" <?=($e_mahram==1)?'checked="checked"':''?> /> &nbsp;&nbsp;Tidak Ada Mahram</td>
-					<td>
-						<? if(form_error('mahram') != '') {?>
-						<div class="error-left"></div>
-						<div class="error-inner"><?php echo form_error('mahram'); ?></div>
-						<? }?>
-					</td>
-				</tr>
                 <tr>
 					<? form_error('telp') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
 					<th valign="top">No Telepon (*)</th>
@@ -210,19 +188,6 @@ echo $error_file;
 					</td>
 				</tr>
 				<tr>
-					<? form_error('relasi') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
-					<th valign="top">Relation (*)</th>
-					<td><? $relasi = $e_id_relation; if(set_value('relasi')!='') $relasi = set_value('relasi');
-							echo form_dropdown('relasi', $relasi_options, $relasi,'id="relasi" class="styledselect_form_1"'); ?>
-                        </td>
-					<td>
-						<? if(form_error('relasi') != '') {?>
-						<div class="error-left"></div>
-						<div class="error-inner"><?php echo form_error('relasi'); ?></div>
-						<? }?>
-					</td>
-				</tr>
-				<tr>
 					<? form_error('baju') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
 					<th valign="top">Ukuran Baju (*)</th>
 					<td><? $baju = $e_id_size; if(set_value('baju')!='') $baju = set_value('baju');
@@ -234,6 +199,35 @@ echo $error_file;
 						<div class="error-inner"><?php echo form_error('baju'); ?></div>
 						<? }?>
 					</td>
+				</tr>
+				<tr>
+					<? form_error('ayah_kandung') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
+					<th valign="top">Ayah Kandung (*)</th>
+					<td><input type="text" name="ayah_kandung" value="<?php echo $e_ayah_kandung;?>" class="<? echo $class;?>" /></td>
+					<td>
+						<? if(form_error('ayah_kandung') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('ayah_kandung'); ?></div>
+						<? }?>
+					</td>
+				</tr>
+				<tr>
+					<? form_error('relasi') == '' ? $class = 'inp-form2':$class = 'inp-form-error2'; ?>
+					<th valign="top">Hubungan (*)</th>
+					<td><? $relasi = $e_id_relation; if(set_value('relasi')!='') $relasi = set_value('relasi');
+							echo form_dropdown('relasi', $relasi_options, $relasi,'id="relasi" class="styledselect-biodata" onchange="SetMahram(this)"'); ?>
+                        </td>
+					<td>
+						<? if(form_error('relasi') != '') {?>
+						<div class="error-left"></div>
+						<div class="error-inner"><?php echo form_error('relasi'); ?></div>
+						<? }?>
+					</td>
+				</tr>
+                <tr height="40">
+					<td colspan="3"><div id="cek_mahram" style="display:<?=(($e_id_relation==6) && ($e_gender==2))?'block':'none'?>"><input type="checkbox" name="mahram" value="1" <?=($e_mahram==1)?'checked="checked"':''?> /> &nbsp;&nbsp;<strong>Tidak ada Mahram</strong> <i>(Untuk Perempuan di bawah 45 tahun)</i></div>
+                    <div id="cek_rifqah" style="display:none; border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;">Rifqah = Calon Jamaah Perempuan di atas 45 Tahun</div></td>
+					<td>
 				</tr>
                 <tr>
                     <td colspan="3"><img src="<?=base_url()?>images/shared/blank.gif" width="480" height="1" alt="blank" /></td>
@@ -277,10 +271,16 @@ echo $error_file;
 						<div class="error-inner"><?php echo form_error('foto'); ?></div>
 						<? } else { ?>
                         <div class="bubble-left"></div>
-						<div class="bubble-inner">JPEG, GIF 5MB max per image</div>
+						<div class="bubble-inner">JPEG, PNG 5MB max per image</div>
 						<div class="bubble-right"></div>
                         <? } ?>
 					</td>
+				</tr>
+                <tr height="40">
+					<td colspan="2">
+                    <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;margin-bottom:3px;">Foto Formal setengah Badan</div>
+                     <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;">Ukuran Foto 4x6</div></td>
+                     <td><td>
 				</tr>
 				<tr>
 					<th valign="top" colspan="2">Permintaan Pelayanan Khusus</th>
@@ -399,6 +399,25 @@ function jasaPaspor(input)
 	} else {
 		document.getElementById('jasa_paspor_nama').value='<?php echo $e_request_nama ?>';
 		document.getElementById('jasa_paspor_nama').disabled=true;
+	}
+}
+
+function SetMahram(input)
+{
+	var jenkel = document.getElementById('gender').value;
+	var relasi = document.getElementById('relasi').value;
+	
+	if(jenkel == 2 && relasi == 6)
+	{
+		document.getElementById('cek_mahram').style.display="inline";
+	}else{
+		document.getElementById('cek_mahram').style.display="none";
+	}
+	
+	if(relasi == 5){
+		document.getElementById('cek_rifqah').style.display="inline";
+	}else{
+		document.getElementById('cek_rifqah').style.display="none"
 	}
 }
 
