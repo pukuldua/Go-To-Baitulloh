@@ -166,8 +166,12 @@
 						<? } else {?>
 						<div class="right">
 							<h5>Rekening untuk pembayaran : </h5>
+							<strong>BANK MUAMALAT cab. Kemayoran<br />
+							a.n. PT KAMILAH WISATA MUSLIM<br />
+							US Dollar : 2300-300-723 <br />
+							ID Rupiah : 2300-723-723</strong><br /><br />
 							<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
-							PT KAMILAH WISATA MUSLIM<br />
+							a.n. PT KAMILAH WISATA MUSLIM<br />
 							USDollar : 101-000-644-5454<br />
 							IDRupiah : 101-000-644-5421</strong>
 						</div>

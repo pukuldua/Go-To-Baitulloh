@@ -34,10 +34,14 @@ class Biodata extends CI_Controller {
 		$this->load->helper('flexigrid');
 		$this->load->library('form_validation');		
 		
+		// call session
+		$id_account = $this->session->userdata('id_account');
+		$kode_reg = $this->session->userdata('kode_registrasi');
+		
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$total_data 	= $this->jamaah_candidate_model->get_total_data();
+		$total_data 	= $this->jamaah_candidate_model->get_total_data_sortir($id_account, $kode_reg);
 		$total_data		= ''.$total_data ;
 		$this->lihat_data_calon_jamaah($total_data);
 	}
@@ -67,7 +71,7 @@ class Biodata extends CI_Controller {
 		'width' => 'auto',
 		'height' => 300,
 		'rp' => 10,
-		'rpOptions' => '[5,10,15,20,25,30,'.$total_data.']',
+		'rpOptions' => '[5,10,20,25,30,50,'.$total_data.']',
 		'pagestat' => 'Menampilkan: {from} sampai {to} dari {total} hasil.',
 		'blockOpacity' => 0.5,
 		'title' => 'Biodata Calon Jamaah',
@@ -262,6 +266,20 @@ class Biodata extends CI_Controller {
 		$data['province_options'] = $province_options;
 		$data['relasi_options'] = $relasi_options;
 		$data['chlothes_options'] = $chlothes_options;
+		$data['error_file'] = '';
+		if($this->session->userdata('upload_file') != '')
+		{
+			$data['error_file'] = '<div id="message-blue">
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td class="blue-left">'.$this->session->userdata('upload_file').'</td>
+								<td class="blue-right"><a class="close-blue"><img src="'.base_url().'images/table/icon_close_blue.gif"   alt="" /></a></td>
+							</tr>
+						</table><br>
+					</div>';
+			
+		}
+		$this->session->unset_userdata('upload_file');
 		$data['content'] = $this->load->view('biodata_input', $data, true);
 		$this->load->view('front', $data);
 	}
@@ -276,7 +294,7 @@ class Biodata extends CI_Controller {
 		
 		$id_user = $this->session->userdata("id_account");
 		$kode_reg = $this->session->userdata("kode_registrasi");
-
+		
 		if ($this->cek_validasi() == FALSE){
 			$this->input();
 		}
@@ -312,6 +330,12 @@ class Biodata extends CI_Controller {
 			$cek_foto = $_FILES['foto']['name'];
 			if($cek_foto != "")
 			{
+				
+				if(!is_dir('./images/upload/foto'))
+				{
+					mkdir('./images/upload/foto',0777);
+				}
+				
 				// Upload Foto
 				$config['upload_path'] = './images/upload/foto/';
 				$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
@@ -322,18 +346,20 @@ class Biodata extends CI_Controller {
 				
 				if(!$this->upload->do_upload('foto'))
 				{
-					$error = $this->upload->display_errors();
-					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
-					exit;
+					$this->session->set_userdata('upload_file', $this->upload->display_errors("<p>Error Foto : ", "</p>"));
+					$data_file = NULL;
+					$valid_file = FALSE;
 				
 				}else{
 					
 					$data_file = $this->upload->data();
+					$valid_file = TRUE;
 				}
 				
 				$file_foto = $data_file['file_name'];
 			}else{
 				$file_foto = NULL;
+				$valid_file = TRUE;
 			}
 			
 			
@@ -370,11 +396,16 @@ class Biodata extends CI_Controller {
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s"),
 				'STATUS_KANDIDAT' => 1);
 			
-			$insert = $this->jamaah_candidate_model->insert_jamaah($data);
+			if($valid_file)
+			{
+				$this->jamaah_candidate_model->insert_jamaah($data);
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
 			
-			$this->log_model->log($id_user, $kode_reg, NULL, $log);
-			
-			redirect('/biodata/list_jamaah/');
+				redirect('/biodata/list_jamaah/');
+			}
+			else{
+				$this->input();
+			}
 		}
 	}
 	
@@ -526,6 +557,22 @@ class Biodata extends CI_Controller {
 				}
 				
 				
+				$data['error_file'] = '';
+				if($this->session->userdata('upload_file') != '')
+				{
+					$data['error_file'] = '<div id="message-blue">
+								<table border="0" width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="blue-left">'.$this->session->userdata('upload_file').'</td>
+										<td class="blue-right"><a class="close-blue"><img src="'.base_url().'images/table/icon_close_blue.gif"   alt="" /></a></td>
+									</tr>
+								</table><br>
+							</div>';
+					$this->session->unset_userdata('upload_file');
+				}
+				
+				
+				
 				$data['content'] = $this->load->view('biodata_edit', $data, true);
 				$this->load->view('front', $data);
 			
@@ -604,7 +651,10 @@ class Biodata extends CI_Controller {
 				$request_nama = $this->input->post('jasa_paspor_nama');
 			}
 			
-			/*echo "<script>alert('".$this->input->post('jasa_paspor_nama')."');</script>";*/
+			if(!is_dir('./images/upload/foto'))
+			{
+				mkdir('./images/upload/foto',0777);
+			}
 			
 			// cek foto
 			$cek_foto = $_FILES['foto']['name'];
@@ -620,18 +670,20 @@ class Biodata extends CI_Controller {
 				
 				if(!$this->upload->do_upload('foto'))
 				{
-					$error = $this->upload->display_errors();
-					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
-					exit;
+					$this->session->set_userdata('upload_file', $this->upload->display_errors("<p>Error Foto : ", "</p>"));
+					$data_file = NULL;
+					$valid_file = FALSE;
 				
 				}else{
 					$data_file = $this->upload->data();
+					$valid_file = TRUE;
 				}
 				
 				$valid = TRUE;
 			
 			} else {
 				$valid = FALSE;
+				$valid_file = TRUE;
 			}
 			
 			
@@ -659,26 +711,28 @@ class Biodata extends CI_Controller {
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s")
 				);
 			
-			if($valid)
+			if($valid_file)
 			{
-				$foto = array('FOTO' => $data_file['file_name']);
-				$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
-				
-				$file_gambar = $data_file['file_path'].$this->input->post('foto_edit');
-				if(is_file($file_gambar))
+				if($valid)
 				{
-					unlink($file_gambar);
+					$foto = array('FOTO' => $data_file['file_name']);
+					$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
+					
+					$file_gambar = $data_file['file_path'].$this->input->post('foto_edit');
+					if(is_file($file_gambar))
+					{
+						unlink($file_gambar);
+					}
 				}
+				
+				//buat session sukses
+				$this->session->set_userdata('sukses','true');
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
+				$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
+				redirect('/biodata/edit/'.$id_candidate.'/'.$id_account);
+			}else{
+				$this->edit($id_candidate, $id_account);
 			}
-			
-			//buat session sukses
-			$this->session->set_userdata('sukses','true');
-			
-			$this->log_model->log($id_user, $kode_reg, NULL, $log);
-			
-			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
-			
-			redirect('/biodata/edit/'.$id_candidate.'/'.$id_account);
 		}
 	}
 

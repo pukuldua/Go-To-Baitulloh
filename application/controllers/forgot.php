@@ -216,5 +216,4 @@ class Forgot extends CI_Controller {
 		}
 	}
 	
-
 }

@@ -17,6 +17,15 @@ class Accounts_model extends CI_Model {
 		return $this->db->get();
 	}
 
+        function get_account($id_account, $kode){
+		$this->db->select("*");
+		$this->db->from("accounts");
+                $this->db->where('ID_ACCOUNT', $id_account);
+		$this->db->where("KODE_REGISTRASI", $kode);
+
+		return $this->db->get();
+	}
+        
 	function get_account_byKode($kode){
 		$this->db->select("*");
 		$this->db->from("accounts");

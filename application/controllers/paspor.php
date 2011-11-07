@@ -23,10 +23,14 @@ class Paspor extends CI_Controller {
 		$this->load->helper('flexigrid');
 		$this->load->library('form_validation');		
 		
+		// call session
+		$id_account = $this->session->userdata('id_account');
+		$kode_reg = $this->session->userdata('kode_registrasi');
+		
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$total_data 	= $this->jamaah_candidate_model->get_total_data();
+		$total_data 	= $this->jamaah_candidate_model->get_total_data_sortir($id_account, $kode_reg);
 		$total_data		= ''.$total_data ;
 		$this->lihat_data_calon_jamaah($total_data);
 	}
@@ -56,7 +60,7 @@ class Paspor extends CI_Controller {
 		'width' => 'auto',
 		'height' => 300,
 		'rp' => 10,
-		'rpOptions' => '[5,10,15,'.$total_data.']',
+		'rpOptions' => '[5,10,20,25,30,50,'.$total_data.']',
 		'pagestat' => 'Menampilkan: {from} sampai {to} dari {total} hasil.',
 		'blockOpacity' => 0.5,
 		'title' => 'Dokumen Calon Jamaah',
@@ -116,7 +120,9 @@ class Paspor extends CI_Controller {
 			 
 			if($row->TANGGAL_HABIS != NULL) { $tgl_berakhir = date("d M Y", strtotime($row->TANGGAL_HABIS)); }
 			  else{ $tgl_berakhir = ""; }
-			 
+			
+			if($row->REQUESTED_NAMA == '0') { $req_nama = ""; }
+			  else { $req_nama = $row->REQUESTED_NAMA; }
 			
 			$record_items[] = array(
 			
@@ -124,7 +130,7 @@ class Paspor extends CI_Controller {
 				$no = $no+1,
 				'<a href=\''.site_url().'/paspor/edit/'.$row->ID_CANDIDATE.'/'.$row->ID_ACCOUNT.'/'.$gos.'\'><img border=\'0\' src=\''.base_url().'images/flexigrid/book.png\'></a> ',
 				$row->NAMA_LENGKAP,	
-				$row->REQUESTED_NAMA,
+				$req_nama,
 				$gender,
 				$row->WARGA_NEGARA,
 				$row->NO_PASPOR,
@@ -209,7 +215,21 @@ class Paspor extends CI_Controller {
 						</table><br>
 					</div>';
 					$this->session->unset_userdata('sukses');
-				}				
+				}
+				
+				$data['error_file'] = '';
+				if($this->session->userdata('upload_file') != '')
+				{
+					$data['error_file'] = '<div id="message-blue">
+								<table border="0" width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="blue-left">'.$this->session->userdata('upload_file').'</td>
+										<td class="blue-right"><a class="close-blue"><img src="'.base_url().'images/table/icon_close_blue.gif"   alt="" /></a></td>
+									</tr>
+								</table><br>
+							</div>';
+					$this->session->unset_userdata('upload_file');
+				}
 				
 				$data['content'] = $this->load->view('paspor_edit', $data, true);
 				$this->load->view('front', $data);
@@ -218,7 +238,7 @@ class Paspor extends CI_Controller {
 		
 		} else {
 			
-			redirect(site_url()."/biodata/list_jamaah");
+			redirect(site_url()."/paspor/");
 		}
 		
 	}
@@ -304,13 +324,14 @@ class Paspor extends CI_Controller {
 				
 				if(!$this->upload->do_upload('foto'))
 				{
-					$error = $this->upload->display_errors();
-					echo "<script>alert('Esktensi yg diperbolehkan JPG, JPEG, PNG, BMP dan ukuran File tidak boleh lebih dari 5 MB !!'); window.location='javascript:history.back()';</script>";
-					exit;
+					$this->session->set_userdata('upload_file', $this->upload->display_errors("<p>Error Foto : ", "</p>"));
+					$data_file = NULL;
+					$valid_file = FALSE;
 				
 				}else{
 					
 					$data_file = $this->upload->data();
+					$valid_file = TRUE;
 				}
 				
 				$valid = TRUE;
@@ -318,6 +339,7 @@ class Paspor extends CI_Controller {
 			} else {
 				
 				$valid = FALSE;
+				$valid_file = TRUE;
 			}
 			
 			
@@ -330,28 +352,28 @@ class Paspor extends CI_Controller {
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s")
 				);
 			
-			if($valid)
+			if($valid_file)
 			{
-				$foto = array('SCAN_PASPOR' => $data_file['file_name']);
-				$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
-				
-				$file_gambar = $data_file['file_path'].$this->input->post('paspor_edit');
-				if(is_file($file_gambar))
+				if($valid)
 				{
-					unlink($file_gambar);
+					$foto = array('SCAN_PASPOR' => $data_file['file_name']);
+					$this->jamaah_candidate_model->update_jamaah($foto, $id_candidate);
+					
+					$file_gambar = $data_file['file_path'].$this->input->post('paspor_edit');
+					if(is_file($file_gambar))
+					{
+						unlink($file_gambar);
+					}
 				}
+			
+				$tipe = 1;
+				$this->session->set_userdata('sukses','true');
+				$this->log_model->log($id_user, $kode_reg, NULL, $log);
+				$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
+				redirect('/paspor/edit/'.$id_candidate.'/'.$id_account.'/'.$tipe.'/');
+			}else{
+				$this->edit($id_candidate, $id_account, $tipe);
 			}
-			
-			$tipe = 1;
-			
-			//buat session sukses
-			$this->session->set_userdata('sukses','true');
-			
-			$this->log_model->log($id_user, $kode_reg, NULL, $log);
-			
-			$update = $this->jamaah_candidate_model->update_jamaah($data, $id_candidate);
-			
-			redirect('/paspor/edit/'.$id_candidate.'/'.$id_account.'/'.$tipe.'/');
 		}
 	}
 

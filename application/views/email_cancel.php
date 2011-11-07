@@ -403,7 +403,7 @@
                                                                 <h4 class="h4">Pembatalan Calon Jamaah</h4>
 <p><br /><i><strong>Assalamualaikum, <?=$nama_user?></strong></i></p> 
 
-<p>Sesuai dgn permintaan Saudara perihal layanan Pembatalan Calon Jamaah. berikut kami lampirkan data profile dari calon jamaah yg dinonaktifkan  : <br /><br />  
+<p>Sesuai dgn permintaan Anda perihal layanan Pembatalan Calon Jamaah. berikut kami lampirkan data profile dari calon jamaah yg dinonaktifkan  : <br /><br />  
 </p>                                                                
 <p>
 <?=$list_calon?>

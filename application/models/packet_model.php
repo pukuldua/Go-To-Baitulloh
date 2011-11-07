@@ -49,7 +49,7 @@ class Packet_model extends CI_Model {
 		return $this->db->get();
 	}
 
-        function get_payment_status($id_account, $kode_reg){
+        function get_packet_status($id_account, $kode_reg){
             $this->db->select('STATUS_PESANAN');
             $this->db->from('packet');
             $this->db->where('KODE_REGISTRASI', $kode_reg);
@@ -70,14 +70,10 @@ class Packet_model extends CI_Model {
 	}
 	
 	function update_packet($data, $id_packet){
-		$this->db->trans_begin();
 		$this->db->where('ID_PACKET', $id_packet);
 		$this->db->update('packet', $data);
 		
-		if ($this->db->trans_status() === FALSE)
-			$this->db->trans_rollback();
-		else
-			$this->db->trans_commit();
+		return $this->db->get();
 	}
 }
 

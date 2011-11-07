@@ -68,6 +68,7 @@ class Cancel extends CI_Controller {
 		$this->load->library('parser');
 		$this->load->model('canceled_candidate_model');
 		$this->load->model('jamaah_candidate_model');
+		$this->load->model('packet_model');
 		$this->load->model('log_model');
 
 		$log = "Melakukan PEMBATALAN Calon Jamaah";
@@ -103,6 +104,20 @@ class Cancel extends CI_Controller {
 						'STATUS_KANDIDAT' => 0,
 						); 
 				$this->jamaah_candidate_model->update_jamaah($data_update, $row->ID_CANDIDATE);
+				
+				
+				// UPDATE TABLE JAMAAH CANDIDATE
+				$data_packet = $this->packet_model->get_packet_status($id_account, $kode_reg);
+				if($data_packet->result() > 0 )
+				{
+					foreach($data_packet->result() as $row)
+					{
+						$data_update_packet = array(
+							'STATUS_PESANAN' => 0,
+							); 
+						$this->packet_model->update_packet($data_update_packet, $row->ID_PACKET);
+					}
+				}
 				
 				
 				// KIRIM EMAIL PEMBERITAHUAN
@@ -143,7 +158,7 @@ class Cancel extends CI_Controller {
 			$this->email->subject('Pembatalan Calon Jamaah');
 			$this->email->message($htmlMessage);
 	
-			$this->email->send();
+			//$this->email->send();
 			
 			
 			//buat session sukses
@@ -156,7 +171,25 @@ class Cancel extends CI_Controller {
 		
 		} else { 
 			
-			redirect(site_url()."/cancel");
+			/*// UPDATE TABLE PAKCET
+			$this->load->model('packet_model');
+			$id_account = $this->session->userdata('id_account');
+		    $kode_reg = $this->session->userdata('kode_registrasi');
+			
+			$data_packet = $this->packet_model->get_packet_status($id_account, $kode_reg);
+			if($data_packet->result() != NULL )
+			{
+				foreach($data_packet->result() as $rows)
+				{
+					$datas = $rows->ID_PACKET;
+					$data_update_packet = array(
+						'STATUS_PESANAN' => 0,
+						); 
+					$this->packet_model->update_packet($data_update_packet, $row->ID_PACKET);
+				}
+			}*/
+				
+			redirect(site_url()."/".$datas);
 		}
 	} // end function
 

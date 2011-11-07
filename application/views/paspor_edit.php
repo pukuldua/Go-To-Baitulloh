@@ -1,6 +1,8 @@
-<? echo form_open_multipart('/paspor/do_edit'); ?>
-
-<?php echo $notifikasi;?>
+<? 
+echo form_open_multipart('/paspor/do_edit');
+echo $notifikasi;
+echo $error_file;
+?>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">

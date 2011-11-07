@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -394,24 +394,91 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Reset Password</h4>
-<p>Assalamualaikum, <?=$nama_user?></p> 
-
-<p>Sesuai dgn permintaan Anda perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
-</p>                                                                
-<p><strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$nama_user?>
-  <br />
-  <strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$email_user?>
-  <br />
-<strong>Password Baru :</strong> <?=$generate_pass?> </p>
-                                                                
-<p> Gunakan password diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="<? echo site_url().'/login'; ?>">Login</a> .Segera mengganti Password setelah berhasil masuk ke halaman member.</p>
-                                                                
-<p><strong>Wassalamualaikum Wr. Wb</strong><br />
-<strong>Umrahkamilah.com </strong></p>
-														  </div>
+                                                                <h4 class="h4">Status Daftar Tunggu</h4>
+                                                              <p><strong>Assalamualaikum, <?php echo $NAMA_USER;?></strong></p>
+                                                              <p>Terima kasih kami ucapkan atas pesanan paket umrah Anda bersama kami tertanggal <br />
+															  <strong><? echo $tanggal; ?> </strong>dan kesediaan Anda untuk menunggu dalam daftar tunggu.<br />
+															  Berdasarkan paket pesanan Anda berikut ini:<br />
+																<table style="font-weight:bold;">
+																	<tr>
+																		<td>Group</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $group;?></td>
+																	</tr>
+																	<tr>
+																		<td>Kelas Program </td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $program;?></td>
+																	</tr>
+																	<tr>
+																		<td>Jumlah Dewasa</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $adult;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Dengan Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $with_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Tanpa Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $no_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Bayi</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $infant;?></td>
+																	</tr>
+																	<tr>
+																		<td>Total Jamaah</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo ($adult+$with_bed+$no_bed+$infant);?></td>
+																	</tr>
+																	<tr>
+																		<td>Pilihan Kamar</td>
+																		<td>&nbsp;</td>
+																		<td><ul><?php foreach($room as $row){ echo "<li>".$row->JENIS_KAMAR." - Jumlah = ".$row->JUMLAH."</li>"; }?></ul></td>
+																	</tr>
+																</table>
+                                                              <p>Kami informasikan bahwa untuk saat ini pesanan paket tersebut telah tersedia. <br />
+															  Oleh karena itu Anda disarankan untuk segera melengkapi pembayaran dan persyaratan keberangkatan. <br />
+                                                              </p>
+															  <p>
+																Sehubungan dengan hal ini, status akun Anda sudah berubah menjadi <strong>Aktif</strong> kembali sehingga Anda dapat 
+																melanjutkan proses registrasi umrah melalui sistem online. <br />
+																Terima Kasih.
+															  </p>
+																<p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
+                                                                <ul>
+                                                                  <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
+                                                                    <strong>BANK MUAMALAT cab. Kemayoran<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
+                                                                    US Dollar : 2300-300-723 <br />
+                                                                    ID Rupiah : 2300-723-723</strong><br /><br />
+																	<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
+                                                                    USDollar : 101-000-644-5454<br />
+                                                                    IDRupiah : 101-000-644-5421</strong></li>
+                                                                  <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju menu <strong>Pembayaran</strong> yang ada pada halaman dashboard akun anda.</li>
+                                                                  <li>Isi Form untuk konfirmasi pembayaran Uang Muka maupun Pelunasan.</li>
+                                                                </ul>
+                                                              <p><strong>Pembatalan :</strong></p>
+                                                              <ul>
+                                                                <li> Untuk melakukan pembatalan, bisa melalui web dengan menuju menu <strong>Pembatalan</strong> yang ada pada halaman dashboard akun anda.</li>
+                                                              </ul>
+                                                              <p><strong>Catatan: </strong></p>
+                                                                <ul>
+                                                                  <li> Sebelum Memenuhi Kesepakatan Pendaftaran, komitmen booking seat keberangkatan belum terjadi.</li>
+                                                                  <li>Silakan disegerakan untuk Memenuhi Kesepakatan Pendaftaran dan melakukan konfirmasi pembayaran, sehingga Data anda bisa segera di proses. Dan Status Pendaftaran akan kami Booked.</li>
+                                                                  <li>Peserta belum terdaftar jika dana belum efektif masuk ke dalam rekening kamilah.</li>
+                                                                </ul>
+                                                                <p><br />
+                                                              <p>															  
+                                                                  <strong>Wassalamualaikum Wr. Wb<br />
+                                                                  Umrahkamilah.com
+                                                                  </strong>                                                            </p>
+                                                            </div>
 														</td>
                                                     </tr>
                                                 </table>
@@ -441,11 +508,11 @@
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
 																Cilandak  Jakarta Selatan 12420<br />
 																Telp : +6221  7279 4230<br />
-																Fax : +6221 7590 3619</p>
+																Fax : +6221  7590 3619</p>
                                                       </div></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
+                                                        <td valign="middle" id="utility" align="center">
                                                             <div mc:edit="std_utility">
                                                                 Online Registration System - Kamilah Wisata<br />
                                                               Membangun Karakter Jamaah Menuju Kehidupan yang Lebih Baik,<br />

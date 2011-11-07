@@ -26,6 +26,12 @@
 					</li>
                 </ul>
 				<div class="nav-divider">&nbsp;</div>
+                                <ul class="<?=($this->uri->segment(2)==='waiting_list')?'current':'select'?>">
+					<li>
+						<a href="<?php echo site_url('admin/waiting_list')?>"><b>Daftar Tunggu</b><!--[if IE 7]><!--></a><!--<![endif]-->
+					</li>
+                </ul>
+				<div class="nav-divider">&nbsp;</div>
 			</div>
 			<div class="clear"></div>
 		</div>

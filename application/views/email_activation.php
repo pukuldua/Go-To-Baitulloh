@@ -412,16 +412,20 @@
 															  <p><strong>Pembayaran &amp; Konfirmasi Pembayaran:</strong></p>
                                                                 <ul>
                                                                   <li>Untuk Pembayaran Uang Muka dan Pelunasan bisa di anda transfer melalui Bank sebagai Berikut:<br />
-                                                                    <strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
-                                                                    PT KAMILAH WISATA MUSLIM<br />
+                                                                    <strong>BANK MUAMALAT cab. Kemayoran<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
+                                                                    US Dollar : 2300-300-723 <br />
+                                                                    ID Rupiah : 2300-723-723</strong><br /><br />
+																	<strong>Bank Mandiri Cab. PIM 1 Pondok Indah<br />
+                                                                    a.n. PT KAMILAH WISATA MUSLIM<br />
                                                                     USDollar : 101-000-644-5454<br />
                                                                     IDRupiah : 101-000-644-5421</strong></li>
-                                                                  <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju link berikut ini: http://umrahkamilah.com/1234/payment yang ada pada halaman dashboard akun anda.</li>
+                                                                  <li> Untuk Konfirmasi Pembayaran melalui Web adalah dengan menuju menu <strong>Pembayaran</strong> yang ada pada halaman dashboard akun anda.</li>
                                                                   <li>Isi Form untuk konfirmasi pembayaran Uang Muka maupun Pelunasan.</li>
                                                                 </ul>
                                                               <p><strong>Pembatalan :</strong></p>
                                                               <ul>
-                                                                <li> Untuk melakukan pembatalan, bisa melalui web dengan menuju link berikut ini: http://umrahkamilah.com/pembatalan yang ada pada halaman dashboard akun anda.</li>
+                                                                <li> Untuk melakukan pembatalan, bisa melalui web dengan menuju menu <strong>Pembatalan</strong> yang ada pada halaman dashboard akun anda.</li>
                                                               </ul>
                                                               <p><strong>Catatan: </strong></p>
                                                                 <ul>

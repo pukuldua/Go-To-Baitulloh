@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -394,24 +394,66 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Reset Password</h4>
-<p>Assalamualaikum, <?=$nama_user?></p> 
-
-<p>Sesuai dgn permintaan Anda perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
-</p>                                                                
-<p><strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$nama_user?>
-  <br />
-  <strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$email_user?>
-  <br />
-<strong>Password Baru :</strong> <?=$generate_pass?> </p>
-                                                                
-<p> Gunakan password diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="<? echo site_url().'/login'; ?>">Login</a> .Segera mengganti Password setelah berhasil masuk ke halaman member.</p>
-                                                                
-<p><strong>Wassalamualaikum Wr. Wb</strong><br />
-<strong>Umrahkamilah.com </strong></p>
-														  </div>
+                                                                <h4 class="h4">Status Daftar Tunggu</h4>
+                                                              <p><strong>Assalamualaikum, <?php echo $NAMA_USER;?></strong></p>
+                                                              <p>Terima kasih kami ucapkan atas pesanan paket umrah Anda bersama kami tertanggal <br />
+															  <strong><? echo $tanggal; ?> </strong>dan kesediaan Anda untuk menunggu dalam daftar tunggu.<br />
+															  Berdasarkan paket pesanan Anda berikut ini:<br />
+																<table style="font-weight:bold;">
+																	<tr>
+																		<td>Group</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $group;?></td>
+																	</tr>
+																	<tr>
+																		<td>Kelas Program </td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $program;?></td>
+																	</tr>
+																	<tr>
+																		<td>Jumlah Dewasa</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $adult;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Dengan Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $with_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Anak Tanpa Ranjang</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $no_bed;?></td>
+																	</tr>
+																	<tr>
+																		<td>Bayi</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo $infant;?></td>
+																	</tr>
+																	<tr>
+																		<td>Total Jamaah</td>
+																		<td>&nbsp;</td>
+																		<td><?php echo ($adult+$with_bed+$no_bed+$infant);?></td>
+																	</tr>
+																	<tr>
+																		<td>Pilihan Kamar</td>
+																		<td>&nbsp;</td>
+																		<td><ul><?php foreach($room as $row){ echo "<li>".$row->JENIS_KAMAR." - Jumlah = ".$row->JUMLAH."</li>"; }?></ul></td>
+																	</tr>
+																</table>
+															</p>
+                                                              <p>Kami mohon maaf tidak dapat memenuhi pesanan paket tersebut karena paket telah penuh dan/atau tenggat waktu pemenuhan persyaratan keberangatan <br />
+															  juga telah habis. Semoga hal ini dapat dimaklumi dan Anda bersedia untuk memilih paket keberangkatan lainnya. <br />
+                                                              </p>
+																<p>Sehubungan dengan hal ini, status akun Anda sudah berubah menjadi <strong>Aktif</strong> kembali sehingga Anda dapat 
+																menggunakannya untuk memilih paket umrah yang lainnya. <br />
+																Terima Kasih.
+																</p>
+                                                              <p>															  
+                                                                  <strong>Wassalamualaikum Wr. Wb<br />
+                                                                  Umrahkamilah.com
+                                                                  </strong>                                                            </p>
+                                                            </div>
 														</td>
                                                     </tr>
                                                 </table>
@@ -441,11 +483,11 @@
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
 																Cilandak  Jakarta Selatan 12420<br />
 																Telp : +6221  7279 4230<br />
-																Fax : +6221 7590 3619</p>
+																Fax : +6221  7590 3619</p>
                                                       </div></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
+                                                        <td valign="middle" id="utility" align="center">
                                                             <div mc:edit="std_utility">
                                                                 Online Registration System - Kamilah Wisata<br />
                                                               Membangun Karakter Jamaah Menuju Kehidupan yang Lebih Baik,<br />
