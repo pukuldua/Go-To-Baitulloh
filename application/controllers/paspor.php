@@ -23,10 +23,14 @@ class Paspor extends CI_Controller {
 		$this->load->helper('flexigrid');
 		$this->load->library('form_validation');		
 		
+		// call session
+		$id_account = $this->session->userdata('id_account');
+		$kode_reg = $this->session->userdata('kode_registrasi');
+		
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$total_data 	= $this->jamaah_candidate_model->get_total_data();
+		$total_data 	= $this->jamaah_candidate_model->get_total_data_sortir($id_account, $kode_reg);
 		$total_data		= ''.$total_data ;
 		$this->lihat_data_calon_jamaah($total_data);
 	}
@@ -56,7 +60,7 @@ class Paspor extends CI_Controller {
 		'width' => 'auto',
 		'height' => 300,
 		'rp' => 10,
-		'rpOptions' => '[5,10,15,'.$total_data.']',
+		'rpOptions' => '[5,10,20,25,30,50,'.$total_data.']',
 		'pagestat' => 'Menampilkan: {from} sampai {to} dari {total} hasil.',
 		'blockOpacity' => 0.5,
 		'title' => 'Dokumen Calon Jamaah',
@@ -116,7 +120,9 @@ class Paspor extends CI_Controller {
 			 
 			if($row->TANGGAL_HABIS != NULL) { $tgl_berakhir = date("d M Y", strtotime($row->TANGGAL_HABIS)); }
 			  else{ $tgl_berakhir = ""; }
-			 
+			
+			if($row->REQUESTED_NAMA == '0') { $req_nama = ""; }
+			  else { $req_nama = $row->REQUESTED_NAMA; }
 			
 			$record_items[] = array(
 			
@@ -124,7 +130,7 @@ class Paspor extends CI_Controller {
 				$no = $no+1,
 				'<a href=\''.site_url().'/paspor/edit/'.$row->ID_CANDIDATE.'/'.$row->ID_ACCOUNT.'/'.$gos.'\'><img border=\'0\' src=\''.base_url().'images/flexigrid/book.png\'></a> ',
 				$row->NAMA_LENGKAP,	
-				$row->REQUESTED_NAMA,
+				$req_nama,
 				$gender,
 				$row->WARGA_NEGARA,
 				$row->NO_PASPOR,

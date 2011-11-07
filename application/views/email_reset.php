@@ -397,7 +397,7 @@
                                                                 <h4 class="h4">Reset Password</h4>
 <p>Assalamualaikum, <?=$nama_user?></p> 
 
-<p>Sesuai dgn permintaan Saudara perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
+<p>Sesuai dgn permintaan Anda perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
 </p>                                                                
 <p><strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
   <?=$nama_user?>

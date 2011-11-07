@@ -171,7 +171,7 @@ class Cancel extends CI_Controller {
 		
 		} else { 
 			
-			// UPDATE TABLE PAKCET
+			/*// UPDATE TABLE PAKCET
 			$this->load->model('packet_model');
 			$id_account = $this->session->userdata('id_account');
 		    $kode_reg = $this->session->userdata('kode_registrasi');
@@ -187,7 +187,7 @@ class Cancel extends CI_Controller {
 						); 
 					$this->packet_model->update_packet($data_update_packet, $row->ID_PACKET);
 				}
-			}
+			}*/
 				
 			redirect(site_url()."/".$datas);
 		}

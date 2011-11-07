@@ -34,10 +34,14 @@ class Biodata extends CI_Controller {
 		$this->load->helper('flexigrid');
 		$this->load->library('form_validation');		
 		
+		// call session
+		$id_account = $this->session->userdata('id_account');
+		$kode_reg = $this->session->userdata('kode_registrasi');
+		
 		//call model here	
 		$this->load->model('jamaah_candidate_model');
 		
-		$total_data 	= $this->jamaah_candidate_model->get_total_data();
+		$total_data 	= $this->jamaah_candidate_model->get_total_data_sortir($id_account, $kode_reg);
 		$total_data		= ''.$total_data ;
 		$this->lihat_data_calon_jamaah($total_data);
 	}
@@ -67,7 +71,7 @@ class Biodata extends CI_Controller {
 		'width' => 'auto',
 		'height' => 300,
 		'rp' => 10,
-		'rpOptions' => '[5,10,15,20,25,30,'.$total_data.']',
+		'rpOptions' => '[5,10,20,25,30,50,'.$total_data.']',
 		'pagestat' => 'Menampilkan: {from} sampai {to} dari {total} hasil.',
 		'blockOpacity' => 0.5,
 		'title' => 'Biodata Calon Jamaah',
