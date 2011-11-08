@@ -33,11 +33,11 @@ class Konfirmasi extends CI_Controller {
 		$colModel['ATAS_NAMA'] 				= array('Rek . Atas Nama',110,TRUE,'center',1);
 		$colModel['BANK_PENGIRIM'] 			= array('Bank Pengirim',100,TRUE,'center',1);
 		$colModel['JUMLAH_KAMAR'] 			= array('Jumlah Transfer',100,TRUE,'center',1);
-		$colModel['TANGGAL_TRANSFER'] 		= array('Tanggal Transfer',100,FALSE,'center',0);
+		$colModel['TANGGAL_TRANSFER'] 		= array('Tanggal Transfer',80,FALSE,'center',0);
 		$colModel['BUKTI TRANSFER'] 		= array('Scan Bukti',70,FALSE,'center',0);
 		$colModel['CATATAN'] 				= array('Catatan',150,FALSE,'center',1);
-		$colModel['TIPE_PEMBAYARAN'] 		= array('Jenis Pembayaran',100,TRUE,'center',1);
-		$colModel['TANGGAL_ENTRI']		 	= array('Tgl. Entri',100,FALSE,'center',0);
+		$colModel['TIPE_PEMBAYARAN'] 		= array('Jenis Pembayaran',130,TRUE,'center',1);
+		$colModel['TANGGAL_ENTRI']		 	= array('Tgl. Entri',80,FALSE,'center',0);
 		$colModel['TIPE_STATUS']			= array('Status',80,FALSE,'center',1);
 		
 		$gridParams = array(
@@ -99,7 +99,7 @@ class Konfirmasi extends CI_Controller {
 			
 			
 			// filter catatan
-			if($row->CATATAN == 0) { $catatan = "-"; }
+			if($row->CATATAN == '0') { $catatan = "-"; }
 			  else { $catatan = $row->CATATAN; }
 			  
 			
@@ -165,13 +165,16 @@ class Konfirmasi extends CI_Controller {
 				
 				// UPDATE STATUS PACKET MENJADI 3 = SUDAH PAYMENT
 				$data_packet = $this->packet_model->get_packet_byAcc($id_user_a, $kode_reg_a);
-				foreach($data_packet->result() as $rows)
+				if($data_packet->result() != NULL)
 				{
-					$id_program = $rows->ID_PROGRAM;
-					$id_group = $rows->ID_GROUP;
-					
-					$data_update = array('STATUS_PESANAN' => 3 ); 
-					$this->packet_model->update_packet($data_update, $rows->ID_PACKET);
+					foreach($data_packet->result() as $rows)
+					{
+						$id_program = $rows->ID_PROGRAM;
+						$id_group = $rows->ID_GROUP;
+						
+						$data_update = array('STATUS_PESANAN' => 3 ); 
+						$this->packet_model->update_packet($data_update, $rows->ID_PACKET);
+					}
 				}
 				
 				// GET DATA MASKAPAI

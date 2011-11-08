@@ -183,7 +183,7 @@ class Paspor extends CI_Controller {
 				elseif($row->GENDER == 2) $data['e_gender'] = "Perempuan";
 				
 				// UBAH TANGGAL LAHIR
-				$data['tgl_lahir'] = date("d F Y", strtotime($data['e_tgl_lahir']));
+				$data['tgl_lahir'] = $this->konversi_tanggal($data['e_tgl_lahir']);
 				
 				// PECAH TANGGAL PASPOR
 				if($data['e_tgl_keluar'] != NULL)
@@ -376,6 +376,53 @@ class Paspor extends CI_Controller {
 			}
 		}
 	}
+	
+	function konversi_tanggal($tgl){
+      $tanggal = substr($tgl,8,2);
+      $bln    = substr($tgl,5,2);
+	  $bulan = ""; $strHari = "";
+      $tahun    = substr($tgl,0,4);
+
+      switch ($bln){
+        case 1:
+          $bulan =  "Januari";
+          break;
+        case 2:
+          $bulan =  "Februari";
+          break;
+        case 3:
+          $bulan = "Maret";
+          break;
+        case 4:
+          $bulan =  "April";
+          break;
+        case 5:
+          $bulan =  "Mei";
+          break;
+        case 6:
+          $bulan =  "Juni";
+          break;
+        case 7:
+          $bulan =  "Juli";
+          break;
+        case 8:
+          $bulan =  "Agustus";
+          break;
+        case 9:
+          $bulan =  "September";
+          break;
+        case 10:
+          $bulan =  "Oktober";
+          break;
+        case 11:
+          $bulan =  "November";
+          break;
+        case 12:
+          $bulan =  "Desember";
+          break;
+	   }
+	   return $tanggal.' '.$bulan.' '.$tahun;
+    }
 
         // cek order packet
         function cekOrder(){

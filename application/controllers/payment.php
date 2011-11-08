@@ -39,6 +39,7 @@ class Payment extends CI_Controller {
 		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0' AND STATUS_KANDIDAT != '0'");
 		$data_pay_uangmuka = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '1'");
 		$data_pay_lunas = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '2'");
+		$data_pay_tax = $this->payment_model->query_payment("select * from payment_view where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JENIS_PEMBAYARAN = '3'");
 		$data_total_jamaah = $this->jamaah_candidate_model->get_total_jamaah($id_user, $kode_reg);
 		
 		
@@ -89,6 +90,26 @@ class Payment extends CI_Controller {
 			$data['jumlah_dp2'] = 0;
 			$data['css_dp'] = "belum";
 		}
+		
+		// CARI DATA TAX
+		if($data_pay_tax->result() != NULL)
+		{
+			foreach($data_pay_tax->result() as $row)
+			{
+				$data['status_tax_pay'] = $row->STATUS;
+				$data['status_tax'] = $row->TIPE_STATUS;
+				$data['jumlah_tax'] = $this->cek_ribuan($row->JUMLAH_KAMAR);
+				$data['jumlah_tax2'] = $row->JUMLAH_KAMAR;
+				$data['css_tax'] = "sudah";
+			}
+		}else{
+			$data['status_tax_pay'] = 0;
+			$data['status_tax'] = "-";
+			$data['jumlah_tax'] = 0;
+			$data['jumlah_tax2'] = 0;
+			$data['css_tax'] = "belum";
+		}
+		
 		
 		// CARI DATA PELUNASAN
 		if($data_pay_lunas->result() != NULL)
@@ -182,7 +203,7 @@ class Payment extends CI_Controller {
 		$data['total_pay'] = $data['jumlah_dp2'] + $data['jumlah_lunas2'];
 		$data['total_pay_cek'] = $this->cek_ribuan($data['total_pay']);
 		
-		if(($data['total_pay'] == $data['total_biaya'] || $data['total_pay'] > $data['total_biaya']) && $data['status_lunas_pay'] == 1)
+		if(($data['total_pay'] == $data['total_biaya'] || $data['total_pay'] > $data['total_biaya']) && ($data['jumlah_tax2'] == '700000' || $data['jumlah_tax2'] > '700000') && $data['status_lunas_pay'] == 1 && $data['status_tax_pay'] == 1 )
 		{
 			$data['total_status'] = "Complete";
 			$data['css_total'] = "sudah";

@@ -1,14 +1,15 @@
 <?php
-$msg = "Syarat-Syarat Layanan Google
+$msg = "PENDAFTARAN DAN PEMBATALAN
 
-Selamat Datang di Google!
+a. Uang muka sebesar 50% (pada saat pendaftaran dan pelunasan dua minggu sebelum keberangkatan)
 
-1. Hubungan Anda dengan Google
+b. Pembatalan 30 hari sebelum keberangkatan 25% dari biaya
 
-1.1 Penggunaan produk, piranti lunak, layanan dan situs web Google oleh Anda (dalam dokumen ini secara keseluruhan disebut “Layanan” dan tidak termasuk setiap layanan yang disediakan kepada Anda oleh Google berdasarkan perjanjian tertulis terpisah) tunduk pada syarat-syarat perjanjian yang sah antara Anda dan Google. “Google” berarti Google Inc., yang berkantor pusat di 1600 Amphitheatre Parkway, Mountain View, CA 94043, Amerika Serikat. Dokumen ini menjelaskan pembuatan perjanjian dan menetapkan sebagian dari syarat-syarat perjanjian tersebut.
+c. Pembatalan 14 hari sebelum keberangkatan 50% dari biaya
 
-1.2 Kecuali disepakati lain secara tertulis dengan Google, perjanjian Anda dengan Google selalu minimal mencakup syarat-syarat dan ketentuan yang ditetapkan dalam dokumen ini. Di bawah disebut sebagai “Syarat-Syarat Universal”.
-";
+d. Pembatalan 07 hari sebelum keberangkatan 75% dari biaya
+
+e. Pembatalan 03 hari sebelum keberangkatan 100% dari biaya";
 
 echo $notifikasi;
 

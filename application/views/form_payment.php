@@ -66,10 +66,17 @@ echo $error_file;
 		<td align="center"><span class="box_status_<?=$css_lunas?>"><? if(isset($status_lunas)) { echo $status_lunas; } ?></span></td>
 		<td align="center"><h4><? if(isset($tgl_lunas)) { echo $tgl_lunas; } ?></h4></td>
     </tr>	
+	<tr height="30">
+		<td class="bg_kolom_right"><h4>Airport Tax & Manasik</h4></td>
+		<td align="center"><h4><i>Rp. 700.000</i></h4></td>
+		<td align="center"><h4>Rp. <? if(isset($jumlah_tax)) { echo $jumlah_tax; } ?></h4></td>
+		<td align="center"><span class="box_status_<?=$css_tax?>"><? if(isset($status_tax)) { echo $status_tax; } ?></span></td>
+		<td align="center"><!--<h4><? if(isset($tgl_lunas)) { echo $tgl_lunas; } ?></h4>--></td>
+    </tr>	
 	<tr height="30" valign="bottom">
 		<td class="bg_kolom_right"><h4>T O T A L</h4></td>
-		<td align="center"><h4><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $</h4></td>
-		<td align="center"><h4><? if(isset($total_pay_cek)) { echo $total_pay_cek; } ?> $</h4></td>
+		<td align="center"><h4><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $ + <i>Rp. 700.000</i></h4></td>
+		<td align="center"><h4><? if(isset($total_pay_cek)) { echo $total_pay_cek; } ?> $ + Rp. <? if(isset($jumlah_tax)) { echo $jumlah_tax; } ?></h4></td>
 		<td align="center"><span class="box_status_<?=$css_total?>"><? if(isset($total_status)) { echo $total_status; } ?></span></td>
 		<td></td>
     </tr>
@@ -126,7 +133,7 @@ echo $error_file;
 				</tr>
 				<tr>
 					<? form_error('nominal') == '' ? $class = 'inp-form':$class = 'inp-form-error'; ?>
-					<th valign="top">Jumlah $. &nbsp;(*)</th>
+					<th valign="top">Jumlah &nbsp;(*)</th>
 					<td><input type="text" name="nominal" value="<?php echo set_value('nominal');?>" class="<? echo $class;?>" /></td>
 					<td>
 						<? if(form_error('nominal') != '') {?>
@@ -134,6 +141,17 @@ echo $error_file;
 						<div class="error-inner"><?php echo form_error('nominal'); ?></div>
 						<? }?>
 					</td>
+				</tr>
+                <tr>
+                    <td colspan="3"><img src="<?php echo base_url()?>images/shared/blank.gif" width="480" height="1" alt="blank" /></td>
+                </tr>
+                <tr height="40">
+					<td colspan="3">
+                    <div id="" style="border:1px #e0e0e0 solid; background:#f5f5f5; color:#707070; padding:6px 17px 6px 17px;margin-bottom:2px;"><strong>INFORMASI PEMBAYARAN PAKET UMRAH</strong></div>
+                     <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;margin-bottom:2px;">- Jenis Pembayaran Uang Muka dan Pelunasan menggunakan US Dollar ($)</div> 
+                     <div id="" style="border:1px #d8e1e9 solid; background:#f5f9fc; color:#2e74b2; padding:6px 17px 6px 17px;margin-bottom:2px;">- Jenis Pembayaran Airport Tax & Manasik menggunakan Rupiah (Rp.)</div> 
+                     <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 5px 6px 17px;margin-bottom:2px;">- Format Penulisan Nominal : 1.100 USD ditulis 1100 atau Rp.700.000 ditulis 700000</div> 
+                     </td>
 				</tr>
 			</table>
 			<!-- end id-form  -->
@@ -148,6 +166,7 @@ echo $error_file;
 							  '0'  => '-- Jenis Pembayaran --',
 							  '1'  => 'Uang Muka',
 							  '2'  => 'Sisa Pelunasan',
+							  '3'  => 'Airport Tax dan Manasik',
 							);
 							
 							echo form_dropdown('metode', $metode_options, $metode,'id="metode" class="styledselect_form_1"'); ?>
@@ -180,7 +199,7 @@ echo $error_file;
 						<div class="error-inner"><?php echo form_error('foto'); ?></div>
 						<? } else { ?>
                         <div class="bubble-left"></div>
-						<div class="bubble-inner">JPEG, GIF 5MB max per image</div>
+						<div class="bubble-inner">JPEG, PNG 5MB max per image</div>
 						<div class="bubble-right"></div>
                         <? } ?>
 					</td>
@@ -195,10 +214,6 @@ echo $error_file;
 				</tr>
 			</table>
          </td>
-	</tr>
-	<tr>
-		<td><img src="<?php echo base_url()?>images/shared/blank.gif" width="480" height="1" alt="blank" /></td>
-		<td></td>
 	</tr>
 </table>
 <? echo form_close(); ?>		 

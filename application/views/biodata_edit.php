@@ -278,8 +278,8 @@ echo $error_file;
 				</tr>
                 <tr height="40">
 					<td colspan="2">
-                    <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;margin-bottom:3px;">Foto Formal setengah Badan</div>
-                     <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;">Ukuran Foto 4x6</div></td>
+                    <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;margin-bottom:3px;">File Foto : Foto Formal setengah Badan</div>
+                     <div id="" style="border:1px #d8e1e9 solid; background:#e4edf5; color:#2e74b2; padding:6px 17px 6px 17px;">File Foto : Ukuran Foto 4x6</div></td>
                      <td><td>
 				</tr>
 				<tr>

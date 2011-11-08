@@ -178,6 +178,18 @@
 								<li><a id="info_berkas"></a>&nbsp;</li> 
 							</ul>
 						</div>
+						
+						<div class="clear"></div>		
+					</div>
+                    
+                    <div id="related-act-inner">
+						<div class="left"><a href=""><img src="<?php echo base_url();?>images/forms/icon_plus.gif" width="21" height="21" alt="" /></a></div>
+						<div class="right">
+							<h5>Perysaratan Umum<a id="info_kode"></a></h5>
+							<ul class="greyarrow">
+								<li>Calon Jamaah harus memiliki Passport asli minimal 6 bulan masa berlaku dengan 3 suku kata.</li> 
+							</ul>
+						</div>
 							
 						<div class="clear"></div>		
 					</div>

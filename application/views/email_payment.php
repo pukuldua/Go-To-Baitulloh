@@ -505,10 +505,22 @@
 		<td width="10" class="bg_head2"><strong>:</strong></td>
 		<td width="500" class="bg_head2"><? echo $TGL_TRANSFER; ?></td>
     </tr>
+    <? 
+	if($JENIS == 1)
+	{
+		$jenis_e = "UANG MUKA";
+	}elseif($JENIS == 2)
+	{
+		$jenis_e = "PELUNASAN";
+	}elseif($JENIS == 3)
+	{
+		$jenis_e = "Airport Tax dan Manasik";
+	}
+	?>
 	<tr height="30">
 		<td width="200" class="bg_head">Tipe Pembayaran</td>
 		<td width="10" class="bg_head"><strong>:</strong></td>
-		<td width="400" class="bg_head"><? ($JENIS == 1) ? $jenis_s = "UANG MUKA" : $jenis_s = "PELUNASAN"; echo $jenis_s;?></td>
+		<td width="400" class="bg_head"><? echo $jenis_e;?></td>
     </tr>
 	<tr height="30">
 		<td width="150" class="bg_head2">Catatan</td>

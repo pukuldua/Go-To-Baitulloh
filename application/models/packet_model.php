@@ -72,8 +72,6 @@ class Packet_model extends CI_Model {
 	function update_packet($data, $id_packet){
 		$this->db->where('ID_PACKET', $id_packet);
 		$this->db->update('packet', $data);
-		
-		return $this->db->get();
 	}
 }
 

@@ -110,12 +110,12 @@ class Cancel extends CI_Controller {
 				$data_packet = $this->packet_model->get_packet_status($id_account, $kode_reg);
 				if($data_packet->result() > 0 )
 				{
-					foreach($data_packet->result() as $row)
+					foreach($data_packet->result() as $rows)
 					{
 						$data_update_packet = array(
 							'STATUS_PESANAN' => 0,
 							); 
-						$this->packet_model->update_packet($data_update_packet, $row->ID_PACKET);
+						$this->packet_model->update_packet($data_update_packet, $rows->ID_PACKET);
 					}
 				}
 				
@@ -158,7 +158,7 @@ class Cancel extends CI_Controller {
 			$this->email->subject('Pembatalan Calon Jamaah');
 			$this->email->message($htmlMessage);
 	
-			//$this->email->send();
+			$this->email->send();
 			
 			
 			//buat session sukses
@@ -189,7 +189,7 @@ class Cancel extends CI_Controller {
 				}
 			}*/
 				
-			redirect(site_url()."/".$datas);
+			redirect(site_url()."/cancel");
 		}
 	} // end function
 
