@@ -41,6 +41,11 @@ class Room_packet_model extends CI_Model {
 		else
 			$this->db->trans_commit();
 	}
+
+        function delete_data_bypacket($id){
+            $this->db->where("ID_PACKET", $id);
+            $this->db->delete("room_packet");
+        }
 }
 
 ?>

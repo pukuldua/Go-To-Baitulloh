@@ -29,6 +29,7 @@ class Waiting_list extends CI_Controller {
 		$total_data		= ''.$total_data ;
 		
 		$colModel['no'] 					= array('No',30,TRUE,'center',0);
+                $colModel['delete'] = array('Hapus',50,TRUE,'center',0);
 		$colModel['KODE_REGISTRASI'] 		= array('Kode Registrasi',110,TRUE,'center',0);
 		$colModel['NAMA_USER'] 			= array('Nama User',100,TRUE,'center',1);
 		$colModel['KOTA'] 					= array('Kota',80,TRUE,'center',1);
@@ -57,7 +58,17 @@ class Waiting_list extends CI_Controller {
 		$grid_js = build_grid_js('flex1',site_url("/admin/waiting_list/grid_tunggu/"),$colModel,'no','asc',$gridParams,null);
 		$data['js_grid'] = $grid_js;
 		
-		$data['added_js'] = "";
+		$data['added_js'] =
+			"<script type='text/javascript'>
+                        function hapus(hash)
+                        {
+                            //var data = hash.split('/');
+                            if(confirm('Anda yakin ingin menghapus data waiting list ini ?')){
+                                    location.href='".site_url()."/admin/waiting_list/delete_waiting_list/'+hash;
+                            }
+                        }
+			</script>
+			";
 
 		$data['content'] = $this->load->view('admin/data_pembayaran',$data,true);
 		$this->load->view('admin/front',$data);		
@@ -95,6 +106,7 @@ class Waiting_list extends CI_Controller {
 			$record_items[] = array(
 				$row->ID_ACCOUNT,
 				$no = $no+1,
+                            '<img border=\'0\' src=\''.base_url().'images/shared/hapus.png\' onClick="hapus(\''.$row->ID_ACCOUNT.'/'.$row->KODE_REGISTRASI.'/'.$row->ID_PACKET.'\')" />',
 				$row->KODE_REGISTRASI,	
 				$row->NAMA_USER,
                             $row->KOTA, $row->EMAIL, $row->TELP, $row->MOBILE,
@@ -113,11 +125,25 @@ class Waiting_list extends CI_Controller {
 			$this->output->set_output('{"page":"1","total":"0","rows":[]}');			
 	}
 
-        function delete_waiting_list($id_acc, $kode_reg){
+        function delete_waiting_list($id_acc, $kode_reg, $id_pack){
+            $this->load->model('waiting_list_model');
+            $this->load->model('packet_model');
+            $waiting = $this->waiting_list_model->get_waiting_byDetail($id_acc, $kode_reg);
+
+            if ($waiting->num_rows() > 0){
+                $packet = $this->packet_model->get_packet_byAcc_waiting($id_acc, $kode_reg);
+
+                if ($packet->num_rows() > 0){
+
+                }else
+                    show_404();
+            }else
+                show_404();
             // delete room packet
             // delete packet
             // delete waiting list
             // send email
+            echo $id_acc." ".$kode_reg." $id_pack";
         }
 
         function send_email ($id_acc, $kode_reg, $jenis){
