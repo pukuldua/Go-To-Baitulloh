@@ -32,6 +32,15 @@ class Waiting_list_model extends CI_Model {
 		return $this->db->get();
 	}
 
+        function get_waiting_byDetail($id_acc, $kode){
+		$this->db->select("*");
+		$this->db->from("waiting_list");
+		$this->db->where("ID_ACCOUNT", $id_acc);
+                $this->db->where("KODE_REGISTRASI", $kode);
+
+		return $this->db->get();
+	}
+
         function get_grid_waiting_list(){
             $this->db->select('*');
             $this->db->from('accounts a');
@@ -66,6 +75,12 @@ class Waiting_list_model extends CI_Model {
 		else
 			$this->db->trans_commit();
 	}
+
+        function delete_waiting_list($id_acc, $kode_reg){
+            $this->db->where("ID_ACCOUNT", $id_acc);
+            $this->db->where("KODE_REGISTRASI", $kode_reg);
+            $this->db->delete("waiting_list");
+        }
 }
 
 ?>

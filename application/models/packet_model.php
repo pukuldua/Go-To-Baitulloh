@@ -73,6 +73,11 @@ class Packet_model extends CI_Model {
 		$this->db->where('ID_PACKET', $id_packet);
 		$this->db->update('packet', $data);
 	}
+
+        function delete_packet($id){
+            $this->db->where("ID_PACKET", $id);
+            $this->db->delete("packet");
+        }
 }
 
 ?>
