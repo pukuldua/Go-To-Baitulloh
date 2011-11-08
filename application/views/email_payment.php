@@ -99,7 +99,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/**
@@ -119,7 +119,7 @@
 				margin-right:0;
 				margin-bottom:10px;
 				margin-left:0;
-				/*@editable*/ text-align:left;
+				/*@editable*/ /*text-align:left*/;
 			}
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
@@ -329,6 +329,54 @@
 			#monkeyRewards img{
 				max-width:190px;
 			}
+			
+			table.front_price {
+			  border-collapse: collapse;
+			}
+			
+			table.front_price td {
+			  border-bottom:1px dashed #CCC;
+			  padding: 5px;
+			  -moz-border-radius: ;
+			}
+			
+			.bg_head {
+				background:#F7F7F7;
+			}
+			
+			.bg_head2 {
+				background:#FCFCFC;
+			}
+			
+			table.front_payment {
+				border-width: 1px;
+				border-spacing: 1px;
+				border-style: dashed;
+				border-color: gray;
+				border-collapse: collapse;
+			}
+			table.front_payment th {
+				border-width: 1px;
+				padding: 5px;
+				border-style: dashed;
+				border-color: gray;
+				-moz-border-radius: ;
+			}
+			table.front_payment td {
+				border-width: 1px;
+				padding: 5px;
+				border-style: dashed;
+				border-color: #CCC;
+				-moz-border-radius: ;
+			}
+			.garis_pisah {
+				border-bottom:1px solid #CCC;
+				margin:0px 0px 20px 0px;
+				text-align:left;
+				font-size:14px;
+				font-weight:bold;
+				padding:0px 0px 5px 5px;
+			}
 		</style>
 	</head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
@@ -394,24 +442,88 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h4 class="h4">Reset Password</h4>
-<p>Assalamualaikum, <?=$nama_user?></p> 
+                                                                <h4 class="h4">Konfirmasi Pembayaran</h4>
+                                                              <p><strong>Assalamualaikum, <?php echo $nama_user;?></strong></p>
+                                                              <p>Terima kasih kami ucapkan atas pesanan paket umrah Anda bersama kami dan kesediaan Anda untuk melakukan pembayaran paket keberangkatan umrah anda. berikut rincian biaya paket Anda dan biaya yg telah dibayarkan: <br />
+<br />
+<div class="garis_pisah"> RINCIAN BIAYA</div>
+																
+<table width="100%" class="front_price" align="center">
+	<tr height="30">
+		<td width="300" class="bg_head"></td>
+		<td width="150" class="bg_head" align="center"><strong>HARGA</strong></td>
+		<td width="150" class="bg_head" align="center"><strong>JML. KAMAR</strong></td>
+		<td width="150" class="bg_head" align="center"><strong>TOTAL</strong></td>
+    </tr>	
+	<? 
+	if(isset($row_price))
+	{
+		echo $row_price;
+	}
+	?>	
+	<tr height="30">
+		<td align="right" class="front_price_no_border">Biaya Jasa Tambah Nama</td>
+		<td align="center">20.00 $</td>
+		<td align="center"><? if(isset($hitung_jasa_nama)) { echo $hitung_jasa_nama; } ?></td>
+		<td align="center"><? if(isset($hitung_total)) { echo $hitung_total; } ?> $</td>
+    </tr>	
+	<tr height="30">
+		<td align="right" class="front_price_no_border">Biaya Jasa Pengurusan Buku Maningtis</td>
+		<td align="center">20.00 $</td>
+		<td align="center"><? if(isset($hitung_jasa_maningtis)) { echo $hitung_jasa_maningtis; } ?></td>
+		<td align="center"><? if(isset($hitung_total_maningtis)) { echo $hitung_total_maningtis; } ?> $</td>
+    </tr>	
+	<tr height="30" valign="bottom">
+		<td class="bg_head"></td>
+		<td class="bg_head"></td>
+		<td class="bg_head"><strong>TOTAL BIAYA</strong></td>
+		<td class="bg_head" align="center"><strong><? if(isset($total_biaya2)) { echo $total_biaya2; } ?> $</strong></td>
+    </tr>
+</table>
+<br />
+<br />
+<div class="garis_pisah"> RINCIAN PEMBAYARAN</div>
 
-<p>Sesuai dgn permintaan Anda perihal layanan Reset Password. kami mengirimkan rincian sebagai berikut :  
-</p>                                                                
-<p><strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$nama_user?>
-  <br />
-  <strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-  <?=$email_user?>
-  <br />
-<strong>Password Baru :</strong> <?=$generate_pass?> </p>
-                                                                
-<p> Gunakan password diatas untuk masuk ke halaman member <strong>Online System Umrah Kamilah</strong> dengan mengklik tautan <a href="<? echo site_url().'/login'; ?>">Login</a> .Segera mengganti Password setelah berhasil masuk ke halaman member.</p>
-                                                                
-<p><strong>Wassalamualaikum Wr. Wb</strong><br />
-<strong>Umrahkamilah.com </strong></p>
-														  </div>
+<table width="100%" class="front_price" align="center">
+	<tr height="30">
+		<td width="200" class="bg_head">Bank pengirim</td>
+		<td width="10" class="bg_head"><strong>:</strong></td>
+		<td width="400" class="bg_head"><? echo strtoupper($NAMA_BANK); ?></td>
+    </tr>
+	<tr height="30">
+		<td width="150" class="bg_head2">Rek. Atas Nama</td>
+		<td width="10" class="bg_head2"><strong>:</strong></td>
+		<td width="500" class="bg_head2"><? echo strtoupper($NAMA_REKENING); ?></td>
+    </tr>
+	<tr height="30">
+		<td width="200" class="bg_head">Jumlah ($)</td>
+		<td width="10" class="bg_head"><strong>:</strong></td>
+		<td width="400" class="bg_head"><? echo $JUMLAH." $"; ?></td>
+    </tr>
+	<tr height="30">
+		<td width="150" class="bg_head2">Tgl. Transfer</td>
+		<td width="10" class="bg_head2"><strong>:</strong></td>
+		<td width="500" class="bg_head2"><? echo $TGL_TRANSFER; ?></td>
+    </tr>
+	<tr height="30">
+		<td width="200" class="bg_head">Tipe Pembayaran</td>
+		<td width="10" class="bg_head"><strong>:</strong></td>
+		<td width="400" class="bg_head"><? ($JENIS == 1) ? $jenis_s = "UANG MUKA" : $jenis_s = "PELUNASAN"; echo $jenis_s;?></td>
+    </tr>
+	<tr height="30">
+		<td width="150" class="bg_head2">Catatan</td>
+		<td width="10" class="bg_head2"><strong>:</strong></td>
+		<td width="500" class="bg_head2"><? echo $CATATAN; ?></td>
+    </tr>
+</table>
+<br /><br />
+															Pesan dan rincian konfirmasi pembayaran ini sudah tersimpan ke dalam sistem dan kami akan segera memproses pembayaran Anda. proses sendiri memerlukan waktu paling lama 3x24 jam dan Anda akan menerima Email Balasan dari kami jika sejumlah uang berdasar rincian di atas yg Anda transfer sudah masuk ke rekening kami.<br />
+																Terima Kasih.
+                                                              <p>															  
+                                                                  <strong>Wassalamualaikum Wr. Wb<br />
+                                                                  Umrahkamilah.com
+                                                              </strong>                                                            </p>
+                                                            </div>
 														</td>
                                                     </tr>
                                                 </table>
@@ -441,11 +553,11 @@
 																Jl. Haji Nawi Raya no.  10 Gandaria Selatan<br />
 																Cilandak  Jakarta Selatan 12420<br />
 																Telp : +6221  7279 4230<br />
-																Fax : +6221 7590 3619</p>
+																Fax : +6221  7590 3619</p>
                                                       </div></td>
                                                     </tr>
                                                     <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
+                                                        <td valign="middle" id="utility" align="center">
                                                             <div mc:edit="std_utility">
                                                                 Online Registration System - Kamilah Wisata<br />
                                                               Membangun Karakter Jamaah Menuju Kehidupan yang Lebih Baik,<br />

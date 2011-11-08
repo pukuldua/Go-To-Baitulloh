@@ -152,7 +152,7 @@ class Payment extends CI_Controller {
 				
 				
 				// CARI HARGA KAMAR
-				$data_kamar_siap = $this->room_availability_model->get_price_room($id_room_packet, $id_program, $id_group);
+				$data_kamar_siap = $this->room_availability_model->get_price_room($id_room_type, $id_program, $id_group);
 				foreach($data_kamar_siap->result() as $rowss)
 				{
 					$harga_kamar = $rowss->HARGA_KAMAR;
@@ -215,19 +215,17 @@ class Payment extends CI_Controller {
 							</tr>
 						</table><br>
 					</div>';
-			$this->session->unset_userdata('upload_file');
+			
 		}
 				
 		$data['content'] = $this->load->view('form_payment',$data,true);
 		$this->load->view('front',$data);
+		$this->session->unset_userdata('upload_file');
 	}
 	
 	function do_send()
 	{
 		$this->load->library('form_validation');
-		$this->load->library('email');
-		$this->load->library('parser');
-		
 		$this->load->model('payment_model');
 		$this->load->model('log_model');
 		
@@ -303,31 +301,28 @@ class Payment extends CI_Controller {
 				'TANGGAL_ENTRI' => date("Y-m-d H:i:s"),
 				'TANGGAL_UPDATE' => date("Y-m-d H:i:s")
 				);
-
-
-			// KIRIM EMAIL PEMBERITAHUAN
-			/*$config['protocol'] = 'mail';
-			$config['mailtype'] = 'html';
-	
-			$this->email->initialize($config);
 			
-			$htmlMessage =  $this->parser->parse('email_konfirmasi', $data, true);
-			$data['subject'] = "Konfirmasi Pembayaran";
-			
-			$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
-			$this->email->to($email_ses);
-			$this->email->subject('Konfirmasi Pembayaran');
-			$this->email->message($htmlMessage);
-	
-			$this->email->send();*/
+			$konfirmasi = array(
+				'NAMA_REKENING' => $nama_rekening,
+				'TGL_TRANSFER' => $tgl_transfer_fix,
+				'NAMA_BANK' => $bank_pengirim,
+				'JUMLAH' => $jumlah,
+				'JENIS' => $metode,
+				'CATATAN' => $catatan,
+				'BUKTI_FILE' => $bukti,
+				'EMAIL_SES' => $email_ses
+				);
 			
 			if($valid_file)
 			{
-				//buat session sukses
+				//jika upload file scan berhasil
 				$this->session->set_userdata('sukses','true');
 				$this->log_model->log($id_user, $kode_reg, NULL, $log);
-				$insert = $this->payment_model->insert_payment($data);
+				$this->payment_model->insert_payment($data);
+				$this->send_email($konfirmasi);
+				
 				redirect(site_url().'/payment/');
+			
 			}else{
 				$this->front();
 			}
@@ -374,7 +369,164 @@ class Payment extends CI_Controller {
 		
 		return $ubah;
 	}
+	
+	function send_email($konfirmasi)
+	{
+		// LOAD LIBRARY, SESSION DAN MODEL
+		$this->load->library('form_validation');
+		$this->load->library('email');
+		$this->load->library('parser');
+		
+		$this->load->model('packet_model');
+		$this->load->model('room_packet_model');
+		$this->load->model('room_type_model');
+		$this->load->model('room_availability_model');
+		$this->load->model('jamaah_candidate_model');
+		$this->load->model('payment_model');
+		$this->load->model('group_departure_model');
+		
+		$id_user = $this->session->userdata("id_account");
+		$kode_reg = $this->session->userdata("kode_registrasi");
+		$data['nama_user'] = $this->session->userdata('nama');
+		
+		
+		// LOAD DATA INPUTAN KONFIRMASI
+		$data['NAMA_REKENING'] = $konfirmasi['NAMA_REKENING'];
+		$data['TGL_TRANSFER'] = date("d F Y", strtotime($konfirmasi['TGL_TRANSFER']));
+		$data['NAMA_BANK'] = $konfirmasi['NAMA_BANK'];
+		$data['JUMLAH'] = $this->cek_ribuan($konfirmasi['JUMLAH']);
+		$data['JENIS'] = $konfirmasi['JENIS'];
+		$data['CATATAN'] = $konfirmasi['CATATAN'];
+		$data['BUKTI_FILE'] = $konfirmasi['BUKTI_FILE'];
+		$data['EMAIL_SES'] = $konfirmasi['EMAIL_SES'];
+		
+		// PROSES QUERY
+		$data_packet = $this->packet_model->get_packet_byAcc($id_user, $kode_reg);
+		$data_jamaah = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND REQUESTED_NAMA != '0' AND REQUESTED_NAMA != '' AND STATUS_KANDIDAT != '0'");
+		$data_jamaah_maningtis = $this->jamaah_candidate_model->query_jamaah("select * from jamaah_candidate where ID_ACCOUNT = '".$id_user."' AND KODE_REGISTRASI = '".$kode_reg."' AND JASA_TAMBAHAN != '0' AND STATUS_KANDIDAT != '0'");
+		$data_total_jamaah = $this->jamaah_candidate_model->get_total_jamaah($id_user, $kode_reg);
+		
+		
+		// CARI TOTAL PEMAKAI JASA NAMA PASPOR
+		if($data_jamaah->num_rows() > 0)
+		{
+			$hitung_jasa_nama = $data_jamaah->num_rows();
+		}else {
+			$hitung_jasa_nama = 0;
+		}
+		
+		$hitung_total = 20 * $hitung_jasa_nama;
+		
+		
+		// CARI TOTAL PENGGUNA JASA MANINGTIS
+		if($data_jamaah_maningtis->num_rows() > 0)
+		{
+			$hitung_jasa_maningtis = $data_jamaah_maningtis->num_rows();
+		}else {
+			$hitung_jasa_maningtis = 0;
+		}
+		
+		$hitung_total_maningtis = 20 * $hitung_jasa_maningtis;
+		
+		
+		// HITUNG TOTAL CALON JAMAAH
+		if($data_total_jamaah->num_rows() > 0)
+		{
+			$total_calon_jamaah = $data_total_jamaah->num_rows();
+		}else {
+			$total_calon_jamaah = 0;
+		}
+		
+		
+		// LOOPING PILIHAN PAKET 
+		$data['row_price'] = '';
+		$biaya_harga_kamar = 0;
+		
+		if($data_packet->result() != NULL)
+		{
+			foreach($data_packet->result() as $row)
+			{
+				$nama_group = $row->KODE_GROUP;
+				$nama_program = $row->NAMA_PROGRAM;
+				$cwb = $row->CHILD_WITH_BED;
+				$cnb = $row->CHILD_NO_BED;
+				$infant = $row->INFANT;
+				$id_packet = $row->ID_PACKET;
+				$id_program = $row->ID_PROGRAM;
+				$id_group = $row->ID_GROUP;
+			}
+			
+			$data_room_packet = $this->room_packet_model->get_room_packet_byIDpack($id_packet);
+			foreach($data_room_packet->result() as $rows)
+			{
+				$id_room_packet = $rows->ID_ROOM_PACKET;
+				$jumlah_kamar = $rows->JUMLAH;
+				$id_room_type = $rows->ID_ROOM_TYPE;
+					
+				// CARI TANGGAL JATUH TEMPO DP DAN PELUNASAN
+				$data_group = $this->group_departure_model->get_group($id_group);
+				foreach($data_group->result() as $brs)
+				{
+					$data['tgl_dp'] = date('d F Y', strtotime($brs->JATUH_TEMPO_UANG_MUKA));
+					$data['tgl_lunas'] = date('d F Y', strtotime($brs->JATUH_TEMPO_PELUNASAN));
+				}
+				
+				// CARI DATA ROOM TYPE
+				$data_room_type = $this->room_type_model->get_roomType($id_room_type);
+				foreach($data_room_type->result() as $rowss)
+				{
+					$tipe_kamar = $rowss->JENIS_KAMAR;
+				}
+				
+				
+				// CARI HARGA KAMAR
+				$data_kamar_siap = $this->room_availability_model->get_price_room($id_room_type, $id_program, $id_group);
+				foreach($data_kamar_siap->result() as $rowss)
+				{
+					$harga_kamar = $rowss->HARGA_KAMAR;
+				}
+				
+				$total_harga_kamar = $harga_kamar * $jumlah_kamar;
+				$biaya_harga_kamar += $total_harga_kamar;
+				
+				$data['row_price'] .= '	<tr height="30">
+											<td align="right" class="front_price_no_border">
+											'.$nama_group.' - '.$nama_program.' - '.$tipe_kamar.'</td>
+											<td align="center">'.$this->cek_ribuan($harga_kamar).' $</td>
+											<td align="center">'.$jumlah_kamar.'</td>
+											<td align="center">'.$this->cek_ribuan($total_harga_kamar).' $</td>
+										</tr>';
+			}
+		}
+		
+		$data['hitung_jasa_nama'] = $hitung_jasa_nama;
+		$data['hitung_jasa_maningtis'] = $hitung_jasa_maningtis;
+		$data['hitung_total'] = $hitung_total;
+		$data['hitung_total_maningtis'] = $hitung_total_maningtis;
+		$data['total_biaya'] = $hitung_total + $hitung_total_maningtis + $biaya_harga_kamar;
+		$data['total_biaya2'] = $this->cek_ribuan($data['total_biaya']);
+	
+		
+		// PROSES KIRIM EMAIL KONFIRMASI
+		$config['protocol'] = 'mail';
+		$config['mailtype'] = 'html';
 
+		$this->email->initialize($config);
+		
+		$htmlMessage =  $this->parser->parse('email_payment', $data, true);
+		$data['subject'] = "Konfirmasi Pembayaran";		
+		
+		$this->email->from('noreply@umrahkamilah.com', 'Kamilah Wisata Muslim');
+		$this->email->to($data['EMAIL_SES']);
+		$this->email->subject('Konfirmasi Pembayaran');
+		$this->email->message($htmlMessage);
+
+		$this->email->send();
+		//echo $data['EMAIL_SES'];	
+		//$content = $this->load->view('email_payment',$data);
+	}
+	
+	
         // cek order packet
         function cekOrder(){
             $this->load->model('packet_model');

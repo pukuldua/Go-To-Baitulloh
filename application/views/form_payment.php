@@ -9,7 +9,7 @@ echo $error_file;
 	<tr height="30">
 		<td width="300" class="front_price_no_border"></td>
 		<td width="150" align="center"><h3>HARGA</h3></td>
-		<td width="150" align="center"><h3>JUMLAH</h3></td>
+		<td width="150" align="center"><h3>JML. KAMAR</h3></td>
 		<td width="150" align="center"><h3>TOTAL</h3></td>
     </tr>	
 	<? 
@@ -25,7 +25,7 @@ echo $error_file;
 		<td align="center"><h4><? if(isset($hitung_total)) { echo $hitung_total; } ?> $</h4></td>
     </tr>	
 	<tr height="30">
-		<td align="right" class="front_price_no_border"><h4>Biaya Jasa Penngurusan Buku Maningtis</h4></td>
+		<td align="right" class="front_price_no_border"><h4>Biaya Jasa Pengurusan Buku Maningtis</h4></td>
 		<td align="center"><h4>20.00 $</h4></td>
 		<td align="center"><? if(isset($hitung_jasa_maningtis)) { echo $hitung_jasa_maningtis; } ?></td>
 		<td align="center"><h4><? if(isset($hitung_total_maningtis)) { echo $hitung_total_maningtis; } ?> $</h4></td>
