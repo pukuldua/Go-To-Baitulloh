@@ -23,6 +23,17 @@ class Packet_model extends CI_Model {
 		return $this->db->get();
 	}
 	
+	function get_packet_byAccAll($id_acc, $kode_reg){
+        $this->db->select("packet.*,g.ID_GROUP, g.KODE_GROUP, g.KETERANGAN, p.NAMA_PROGRAM");
+		$this->db->from("packet");
+        $this->db->join("group_departure g","g.ID_GROUP = packet.ID_GROUP");
+        $this->db->join("program_class p", "p.ID_PROGRAM = packet.ID_PROGRAM");
+		$this->db->where("ID_ACCOUNT", $id_acc);
+		$this->db->where("KODE_REGISTRASI", $kode_reg);
+		
+		return $this->db->get();
+	}
+	
 	function get_packet_byAcc($id_acc, $kode_reg){
             $status = array(1,3);
             $this->db->select("packet.*,g.ID_GROUP, g.KODE_GROUP, g.KETERANGAN, p.NAMA_PROGRAM");

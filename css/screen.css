@@ -1781,6 +1781,7 @@ table.front_price td {
 	-moz-border-radius: ;
 }
 
+
 .front_price_no_border {
 	border-bottom:1px white solid !important;
 }
@@ -1833,4 +1834,21 @@ table.front_price td {
 	right: 40px;
 }
 
+.box_info_1 {
+	border:1px #d8e1e9 solid; 
+	background:#e4edf5; 
+	color:#333; 
+	padding:6px 17px 6px 17px;
+	margin-bottom:2px;
+	font-size:12px;
+}
+
+.box_info_2 {
+	border:1px #d8e1e9 solid; 
+	background:#f5f9fc; 
+	color:#333; 
+	padding:6px 17px 6px 17px;
+	margin-bottom:2px;
+	font-size:12px;
+}
 
