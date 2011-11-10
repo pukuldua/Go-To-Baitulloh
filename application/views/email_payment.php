@@ -484,6 +484,28 @@
 <br />
 <div class="garis_pisah"> RINCIAN PEMBAYARAN</div>
 
+    <? 
+	if($JENIS == 1)
+	{
+		$jenis_e = "UANG MUKA";
+		$mata_uang = "$";
+		$mata_dolar = " $";
+		$mata_rupiah = NULL;
+	}elseif($JENIS == 2)
+	{
+		$jenis_e = "PELUNASAN";
+		$mata_uang = "$";
+		$mata_dolar = " $";
+		$mata_rupiah = NULL;
+	}elseif($JENIS == 3)
+	{
+		$jenis_e = "Airport Tax dan Manasik";
+		$mata_uang = "Rp";
+		$mata_dolar = NULL;
+		$mata_rupiah = "Rp. ";
+	}
+	?>
+    
 <table width="100%" class="front_price" align="center">
 	<tr height="30">
 		<td width="200" class="bg_head">Bank pengirim</td>
@@ -496,27 +518,15 @@
 		<td width="500" class="bg_head2"><? echo strtoupper($NAMA_REKENING); ?></td>
     </tr>
 	<tr height="30">
-		<td width="200" class="bg_head">Jumlah ($)</td>
+		<td width="200" class="bg_head">Jumlah (<? echo $mata_uang; ?>)</td>
 		<td width="10" class="bg_head"><strong>:</strong></td>
-		<td width="400" class="bg_head"><? echo $JUMLAH." $"; ?></td>
+		<td width="400" class="bg_head"><? echo $mata_rupiah.$JUMLAH.$mata_dolar; ?></td>
     </tr>
 	<tr height="30">
 		<td width="150" class="bg_head2">Tgl. Transfer</td>
 		<td width="10" class="bg_head2"><strong>:</strong></td>
 		<td width="500" class="bg_head2"><? echo $TGL_TRANSFER; ?></td>
     </tr>
-    <? 
-	if($JENIS == 1)
-	{
-		$jenis_e = "UANG MUKA";
-	}elseif($JENIS == 2)
-	{
-		$jenis_e = "PELUNASAN";
-	}elseif($JENIS == 3)
-	{
-		$jenis_e = "Airport Tax dan Manasik";
-	}
-	?>
 	<tr height="30">
 		<td width="200" class="bg_head">Tipe Pembayaran</td>
 		<td width="10" class="bg_head"><strong>:</strong></td>

@@ -41,7 +41,7 @@ echo $error_file;
 							  '2'  => 'Perempuan',
 							);
 							
-							echo form_dropdown('gender', $gender_options, $gender,'id="gender" class="styledselect_form_1"'); ?>
+							echo form_dropdown('gender', $gender_options, $gender,'id="gender"  class="styledselect-biodata" onchange="SetMahram(this)" '); ?>
                         </td>
 					<td>
 						<? if(form_error('gender') != '') {?>

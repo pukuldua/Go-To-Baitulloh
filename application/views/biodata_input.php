@@ -37,7 +37,7 @@ echo $error_file;?>
 							  '2'  => 'Perempuan',
 							);
 							
-							echo form_dropdown('gender', $gender_options, $gender,'id="gender" class="styledselect_form_1" '); ?>
+							echo form_dropdown('gender', $gender_options, $gender,'id="gender" class="styledselect-biodata" onchange="SetMahram(this)" '); ?>
                         </td>
 					<td>
 						<? if(form_error('gender') != '') {?>
@@ -95,7 +95,7 @@ echo $error_file;?>
 							$thn_lahirs = 0; if(set_value('thn_lahir')!='') $thn_lahirs = set_value('thn_lahir');
 							
 							$list_thn['0'] = "Thn";
-							for($i=1900;$i<=2010;$i++)
+							for($i=1920;$i<=2011;$i++)
 							{
 								$list_thn[$i] = $i;
 							}

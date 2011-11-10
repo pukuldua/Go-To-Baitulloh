@@ -135,7 +135,7 @@ class Cancel extends CI_Controller {
 				  <strong>Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong> ".$row->NAMA_LENGKAP."
 				  <br />
 				  <strong>Tgl Lahir&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
-				  ".$row->TEMPAT_LAHIR.", ".date("d F Y", strtotime($row->TANGGAL_LAHIR))."
+				  ".$row->TEMPAT_LAHIR.", ".$this->konversi_tanggal($row->TANGGAL_LAHIR))."
 				  <br />
 				  <strong>Jenis Kelamin&nbsp;&nbsp;&nbsp;:</strong>
 				  ".$gender." 
@@ -192,6 +192,54 @@ class Cancel extends CI_Controller {
 			redirect(site_url()."/cancel");
 		}
 	} // end function
+
+	
+	function konversi_tanggal($tgl){
+      $tanggal = substr($tgl,8,2);
+      $bln    = substr($tgl,5,2);
+	  $bulan = ""; $strHari = "";
+      $tahun    = substr($tgl,0,4);
+
+      switch ($bln){
+        case 1:
+          $bulan =  "Januari";
+          break;
+        case 2:
+          $bulan =  "Februari";
+          break;
+        case 3:
+          $bulan = "Maret";
+          break;
+        case 4:
+          $bulan =  "April";
+          break;
+        case 5:
+          $bulan =  "Mei";
+          break;
+        case 6:
+          $bulan =  "Juni";
+          break;
+        case 7:
+          $bulan =  "Juli";
+          break;
+        case 8:
+          $bulan =  "Agustus";
+          break;
+        case 9:
+          $bulan =  "September";
+          break;
+        case 10:
+          $bulan =  "Oktober";
+          break;
+        case 11:
+          $bulan =  "November";
+          break;
+        case 12:
+          $bulan =  "Desember";
+          break;
+	   }
+	   return $tanggal.' '.$bulan.' '.$tahun;
+    }
 
         // cek order packet
         function cekOrder(){

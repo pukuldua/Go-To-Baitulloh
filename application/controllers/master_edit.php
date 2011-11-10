@@ -49,6 +49,8 @@ class Master_edit extends CI_Controller {
 			
 			$this->group_departure_model->update_group($row->ID_GROUP, $data);
 		}
+		
+		redirect(site_url()."/login");
 	}
 }
 
